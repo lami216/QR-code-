@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 import { QRConfigurator } from '../../components/qr/ContentForm';
 import { QRPreview } from '../../components/qr/QRPreview';
 import { DownloadControls } from '../../components/qr/DownloadControls';
+import { StylingControls } from '../../components/qr/StylingControls';
 import { useQRGenerator } from '../../hooks/useQRGenerator';
 import { FaBolt, FaDownload, FaMagic, FaArrowLeft, FaCog } from 'react-icons/fa';
 import Link from 'next/link';
@@ -71,23 +72,23 @@ export default function GeneratorPage() {
   }, [generateQR]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800">
       {/* Navigation */}
       <nav className="border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
             <Link
               href="/"
-              className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <FaArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Back to Home</span>
             </Link>
 
             <div className="flex items-center space-x-2">
-              <FaMagic className="text-2xl text-blue-600 dark:text-blue-400" />
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                QRMagic
+              <FaMagic className="text-2xl text-teal-600 dark:text-teal-400" />
+              <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                QR Studio
               </span>
             </div>
           </div>
@@ -114,8 +115,8 @@ export default function GeneratorPage() {
 
         {/* Header */}
         <header className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-blue-700 dark:from-white dark:to-blue-400 bg-clip-text text-transparent mb-3">
-            QR Code Generator
+          <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 dark:from-white dark:to-teal-400 bg-clip-text text-transparent mb-3">
+            QR Studio
           </h1>
           <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
             Create and customize your QR code in real-time with instant preview
@@ -129,12 +130,12 @@ export default function GeneratorPage() {
             <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-xl">
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-xl">
-                    <FaBolt className="text-blue-600 dark:text-blue-400 text-lg" />
+                  <div className="p-2 bg-teal-100 dark:bg-teal-900 rounded-xl">
+                    <FaBolt className="text-teal-600 dark:text-teal-400 text-lg" />
                   </div>
                   <div>
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                      QR Code Configuration
+                      Content details
                     </h2>
                     <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
                       Configure content and design settings
@@ -145,15 +146,21 @@ export default function GeneratorPage() {
               </div>
             </section>
 
+            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-xl">
+              <div className="p-6">
+                <StylingControls styling={styling} onChange={setStyling} />
+              </div>
+            </section>
+
             {/* Manual Generate Button */}
             <div className="flex justify-center">
               <button
                 onClick={handleManualGenerate}
                 disabled={isLoading || !content.data}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:scale-100 flex items-center gap-2 shadow-lg disabled:cursor-not-allowed"
+                className="bg-teal-600 hover:bg-teal-700 disabled:bg-teal-400 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:scale-100 flex items-center gap-2 shadow-lg disabled:cursor-not-allowed"
               >
                 <FaBolt className={isLoading ? 'animate-spin' : ''} />
-                {isLoading ? 'Generating...' : 'Generate QR Code'}
+                {isLoading ? 'Generating...' : 'Refresh Preview'}
               </button>
             </div>
           </div>
@@ -181,6 +188,7 @@ export default function GeneratorPage() {
                     qrCode={qrCode}
                     size={Math.min(styling.size, 280)}
                     isLoading={isLoading}
+                    previewStyle={styling.previewStyle ?? 'card'}
                     className="w-full"
                   />
                 </div>

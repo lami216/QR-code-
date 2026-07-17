@@ -25,7 +25,7 @@ export default function PrivacyPolicy() {
     {
       icon: FaShieldAlt,
       title: "Information We Collect",
-      content: "QRMagic operates on a privacy-first principle. We do not collect, store, or process any personal data on our servers. All QR code generation happens locally in your browser."
+      content: "QR Studio operates on a privacy-first principle. We do not collect, store, or process any personal data on our servers. All QR code generation happens locally in your browser."
     },
     {
       icon: FaUserLock,
@@ -53,17 +53,17 @@ export default function PrivacyPolicy() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-950 dark:to-indigo-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-100 dark:from-gray-900 dark:via-teal-950 dark:to-cyan-950">
       {/* Header */}
       <header className="border-b border-gray-200/50 dark:border-gray-700/50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 sm:px-6 py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <Link href="/" className="flex items-center space-x-3 group cursor-pointer w-full sm:w-auto">
-              <FiArrowLeft className="text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300" />
+              <FiArrowLeft className="text-gray-600 dark:text-gray-400 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300" />
               <div className="flex items-center space-x-2">
-                <FaMagic className="text-2xl text-blue-600 dark:text-blue-400" />
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  QRMagic
+                <FaMagic className="text-2xl text-teal-600 dark:text-teal-400" />
+                <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                  QR Studio
                 </span>
               </div>
             </Link>
@@ -80,7 +80,7 @@ export default function PrivacyPolicy() {
           
           {/* Header */}
           <div className="text-center mb-8 sm:mb-10">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl sm:rounded-2xl flex items-center justify-center">
               <FaShieldAlt className="text-xl sm:text-2xl text-white" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
@@ -95,7 +95,7 @@ export default function PrivacyPolicy() {
           <section className="mb-8 sm:mb-10">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">Our Commitment</h2>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
-              At QRMagic, we believe in building trust through transparency. We've designed our 
+              At QR Studio, we believe in building trust through transparency. We've designed our 
               platform with privacy as a fundamental principle, not an afterthought.
             </p>
           </section>
@@ -105,7 +105,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">Privacy Principles</h2>
             <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
               {principles.map((principle, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 bg-blue-50/50 dark:bg-blue-900/20 rounded-lg">
+                <div key={index} className="flex items-center space-x-3 p-3 bg-teal-50/50 dark:bg-teal-900/20 rounded-lg">
                   <FiCheckCircle className="text-green-500 flex-shrink-0 text-sm sm:text-base" />
                   <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{principle}</span>
                 </div>
@@ -118,11 +118,11 @@ export default function PrivacyPolicy() {
             {sections.map((section, index) => (
               <section key={index} className="group cursor-pointer">
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="p-2 sm:p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg sm:rounded-xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <div className="p-2 sm:p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg sm:rounded-xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                     <section.icon className="text-white text-lg sm:text-xl" />
                   </div>
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
                       {section.title}
                     </h3>
                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
@@ -139,7 +139,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">Questions?</h2>
             <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
               If you have any questions about our privacy practices, contact us at{' '}
-              <Link href="mailto:privacy@qrmagic.app" className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer">
+              <Link href="mailto:privacy@qrmagic.app" className="text-teal-600 dark:text-teal-400 hover:underline cursor-pointer">
                 ab.zarinc@gmail.com
               </Link>
             </p>
@@ -148,7 +148,7 @@ export default function PrivacyPolicy() {
           {/* Copyright */}
           <section className="mt-6 pt-4 border-t border-gray-200/30 dark:border-gray-700/30">
             <p className="text-center text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
-              © {currentYear} QRMagic. All rights reserved.
+              © {currentYear} QR Studio. All rights reserved.
             </p>
           </section>
         </div>
@@ -157,7 +157,7 @@ export default function PrivacyPolicy() {
       {/* Footer */}
       <footer className="border-t border-gray-200/50 dark:border-gray-700/50 mt-6 sm:mt-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg">
         <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 text-center">
-          <Link href="/" className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 cursor-pointer text-sm sm:text-base">
+          <Link href="/" className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-300 cursor-pointer text-sm sm:text-base">
             <FaHome className="text-sm sm:text-base" />
             <span>Back to Home</span>
           </Link>

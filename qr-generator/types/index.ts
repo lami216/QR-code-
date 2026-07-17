@@ -10,6 +10,13 @@ export interface QRStyling {
   errorCorrection: 'L' | 'M' | 'Q' | 'H';
   size: number;
   margin: number;
+  colorMode?: 'solid' | 'gradient';
+  gradientStart?: string;
+  gradientEnd?: string;
+  moduleStyle?: 'square' | 'rounded' | 'dots';
+  eyeStyle?: 'square' | 'rounded' | 'dots';
+  previewStyle?: 'card' | 'phone' | 'poster';
+  template?: string;
   logo?: File | null;
 }
 
