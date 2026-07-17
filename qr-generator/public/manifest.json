@@ -1,11 +1,11 @@
 {
-  "name": "QR Code Generator",
+  "name": "QR Studio",
   "short_name": "QR Generator",
   "description": "Free, customizable QR code generator with no signup required",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#3b82f6",
+  "theme_color": "#0f766e",
   "orientation": "portrait-primary",
   "icons": [
     {

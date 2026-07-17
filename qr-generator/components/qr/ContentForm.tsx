@@ -1,393 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { QRContent, WiFiConfig, VCardData, EmailData, EventData } from '../../types';
-import { 
-  FaTextWidth, 
-  FaLink, 
-  FaEnvelope, 
-  FaPhone, 
-  FaWifi, 
-  FaAddressCard, 
-  FaCalendarAlt,
-  FaGlobe,
-} from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { EmailData, EventData, QRContent, VCardData, WiFiConfig } from '../../types';
+import { FaAddressCard, FaCalendarAlt, FaEnvelope, FaGlobe, FaLink, FaPhone, FaTextWidth, FaWifi } from 'react-icons/fa';
 
-interface QRConfiguratorProps {
-  content: QRContent;
-  onContentChange: (content: QRContent) => void;
-}
+interface QRConfiguratorProps { content: QRContent; onContentChange: (content: QRContent) => void; }
+const inputClass = 'w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white text-slate-900 placeholder:text-slate-400';
+const Field = ({ label, children }: { label: string; children: React.ReactNode }) => <label className="block space-y-1.5"><span className="text-sm font-semibold text-slate-700">{label}</span>{children}</label>;
 
-export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
-  content,
-  onContentChange
-}) => {
-  const [wifiConfig, setWifiConfig] = useState<WiFiConfig>({
-    ssid: '',
-    password: '',
-    encryption: 'WPA'
-  });
+export const QRConfigurator: React.FC<QRConfiguratorProps> = ({ content, onContentChange }) => {
+  const [wifiConfig, setWifiConfig] = useState<WiFiConfig>({ ssid: '', password: '', encryption: 'WPA' });
+  const [vcardData, setVcardData] = useState<VCardData>({ firstName: '', lastName: '', email: '', phone: '', company: '', title: '', website: '', address: '' });
+  const [emailData, setEmailData] = useState<EmailData>({ address: '', subject: '', body: '' });
+  const [eventData, setEventData] = useState<EventData>({ title: '', description: '', location: '', startTime: '', endTime: '', timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
 
-  const [vcardData, setVcardData] = useState<VCardData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    company: '',
-    title: '',
-    website: '',
-    address: ''
-  });
-
-  const [emailData, setEmailData] = useState<EmailData>({
-    address: '',
-    subject: '',
-    body: ''
-  });
-
-  const [eventData, setEventData] = useState<EventData>({
-    title: '',
-    description: '',
-    location: '',
-    startTime: '',
-    endTime: '',
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-  });
-
-  // Initialize form data when content type changes
   useEffect(() => {
     if (content.data && typeof content.data === 'object') {
-      switch (content.type) {
-        case 'wifi':
-          setWifiConfig(content.data as WiFiConfig);
-          break;
-        case 'vcard':
-          setVcardData(content.data as VCardData);
-          break;
-        case 'email':
-          setEmailData(content.data as EmailData);
-          break;
-        case 'event':
-          setEventData(content.data as EventData);
-          break;
-      }
+      if (content.type === 'wifi') setWifiConfig(content.data as WiFiConfig);
+      if (content.type === 'vcard') setVcardData(content.data as VCardData);
+      if (content.type === 'email') setEmailData(content.data as EmailData);
+      if (content.type === 'event') setEventData(content.data as EventData);
     }
-  }, [content.type]);
+  }, [content.type, content.data]);
 
-  const contentTypes: { 
-    value: QRContent['type']; 
-    label: string; 
-    icon: React.ReactNode; 
-  }[] = [
-    { value: 'text', label: 'Text', icon: <FaTextWidth /> },
-    { value: 'url', label: 'URL', icon: <FaLink /> },
-    { value: 'email', label: 'Email', icon: <FaEnvelope /> },
-    { value: 'phone', label: 'Phone', icon: <FaPhone /> },
-    { value: 'wifi', label: 'WiFi', icon: <FaWifi /> },
-    { value: 'vcard', label: 'Contact', icon: <FaAddressCard /> },
-    { value: 'event', label: 'Event', icon: <FaCalendarAlt /> }
+  const contentTypes = [
+    { value: 'text' as const, label: 'Text', icon: <FaTextWidth /> },
+    { value: 'url' as const, label: 'Website', icon: <FaLink /> },
+    { value: 'email' as const, label: 'Email', icon: <FaEnvelope /> },
+    { value: 'phone' as const, label: 'Phone', icon: <FaPhone /> },
+    { value: 'wifi' as const, label: 'WiFi', icon: <FaWifi /> },
+    { value: 'vcard' as const, label: 'Contact', icon: <FaAddressCard /> },
+    { value: 'event' as const, label: 'Event', icon: <FaCalendarAlt /> },
   ];
 
-
-
   const handleContentTypeChange = (type: QRContent['type']) => {
-    let initialData: string | Record<string, any> = '';
-    
-    switch (type) {
-      case 'wifi':
-        initialData = { ssid: '', password: '', encryption: 'WPA' };
-        break;
-      case 'vcard':
-        initialData = { 
-          firstName: '', 
-          lastName: '', 
-          email: '', 
-          phone: '', 
-          company: '', 
-          title: '', 
-          website: '', 
-          address: '' 
-        };
-        break;
-      case 'email':
-        initialData = { address: '', subject: '', body: '' };
-        break;
-      case 'event':
-        initialData = { 
-          title: '', 
-          description: '', 
-          location: '', 
-          startTime: '', 
-          endTime: '', 
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone 
-        };
-        break;
-      default:
-        initialData = '';
-    }
-    
-    onContentChange({ type, data: initialData });
+    const defaults = { wifi: { ssid: '', password: '', encryption: 'WPA' }, vcard: { firstName: '', lastName: '', email: '', phone: '', company: '', title: '', website: '', address: '' }, email: { address: '', subject: '', body: '' }, event: { title: '', description: '', location: '', startTime: '', endTime: '', timezone: Intl.DateTimeFormat().resolvedOptions().timeZone } };
+    onContentChange({ type, data: (defaults as any)[type] ?? '' });
   };
 
   const renderContentForm = () => {
     switch (content.type) {
-      case 'text':
-        return (
-          <div className="space-y-3">
-            <textarea
-              value={content.data as string}
-              onChange={(e) => onContentChange({ ...content, data: e.target.value })}
-              placeholder="Enter text to encode..."
-              className="w-full h-24 p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500"
-            />
-            <p className="text-xs text-gray-500">Characters: {(content.data as string)?.length || 0}</p>
-          </div>
-        );
-      
-      case 'url':
-        return (
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaGlobe className="text-gray-400" />
-            </div>
-            <input
-              type="url"
-              value={content.data as string}
-              onChange={(e) => onContentChange({ ...content, data: e.target.value })}
-              placeholder="https://example.com"
-              className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        );
-      
-      case 'email':
-        return (
-          <div className="space-y-3">
-            <input
-              type="email"
-              value={emailData.address}
-              onChange={(e) => {
-                const newData = { ...emailData, address: e.target.value };
-                setEmailData(newData);
-                onContentChange({ ...content, data: newData });
-              }}
-              placeholder="recipient@example.com"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-              type="text"
-              value={emailData.subject}
-              onChange={(e) => {
-                const newData = { ...emailData, subject: e.target.value };
-                setEmailData(newData);
-                onContentChange({ ...content, data: newData });
-              }}
-              placeholder="Subject (optional)"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-            <textarea
-              value={emailData.body}
-              onChange={(e) => {
-                const newData = { ...emailData, body: e.target.value };
-                setEmailData(newData);
-                onContentChange({ ...content, data: newData });
-              }}
-              placeholder="Email body (optional)"
-              rows={2}
-              className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        );
-      
-      case 'phone':
-        return (
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaPhone className="text-gray-400" />
-            </div>
-            <input
-              type="tel"
-              value={content.data as string}
-              onChange={(e) => onContentChange({ ...content, data: e.target.value })}
-              placeholder="+1234567890"
-              className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        );
-      
-      case 'wifi':
-        return (
-          <div className="space-y-3">
-            <input
-              type="text"
-              value={wifiConfig.ssid}
-              onChange={(e) => {
-                const newConfig = { ...wifiConfig, ssid: e.target.value };
-                setWifiConfig(newConfig);
-                onContentChange({ ...content, data: newConfig });
-              }}
-              placeholder="Network name (SSID)"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-              type="password"
-              value={wifiConfig.password}
-              onChange={(e) => {
-                const newConfig = { ...wifiConfig, password: e.target.value };
-                setWifiConfig(newConfig);
-                onContentChange({ ...content, data: newConfig });
-              }}
-              placeholder="Password"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-            <select
-              value={wifiConfig.encryption}
-              onChange={(e) => {
-                const newConfig = { ...wifiConfig, encryption: e.target.value as any };
-                setWifiConfig(newConfig);
-                onContentChange({ ...content, data: newConfig });
-              }}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="WPA">WPA/WPA2</option>
-              <option value="WEP">WEP</option>
-              <option value="nopass">No Encryption</option>
-            </select>
-          </div>
-        );
-      
-      case 'vcard':
-        return (
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <input
-                type="text"
-                placeholder="First Name"
-                value={vcardData.firstName}
-                onChange={(e) => {
-                  const newData = { ...vcardData, firstName: e.target.value };
-                  setVcardData(newData);
-                  onContentChange({ ...content, data: newData });
-                }}
-                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                value={vcardData.lastName}
-                onChange={(e) => {
-                  const newData = { ...vcardData, lastName: e.target.value };
-                  setVcardData(newData);
-                  onContentChange({ ...content, data: newData });
-                }}
-                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={vcardData.email}
-              onChange={(e) => {
-                const newData = { ...vcardData, email: e.target.value };
-                setVcardData(newData);
-                onContentChange({ ...content, data: newData });
-              }}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-              type="tel"
-              placeholder="Phone"
-              value={vcardData.phone}
-              onChange={(e) => {
-                const newData = { ...vcardData, phone: e.target.value };
-                setVcardData(newData);
-                onContentChange({ ...content, data: newData });
-              }}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        );
-      
-      case 'event':
-        return (
-          <div className="space-y-3">
-            <input
-              type="text"
-              placeholder="Event Title"
-              value={eventData.title}
-              onChange={(e) => {
-                const newData = { ...eventData, title: e.target.value };
-                setEventData(newData);
-                onContentChange({ ...content, data: newData });
-              }}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-            <textarea
-              placeholder="Description (optional)"
-              value={eventData.description}
-              onChange={(e) => {
-                const newData = { ...eventData, description: e.target.value };
-                setEventData(newData);
-                onContentChange({ ...content, data: newData });
-              }}
-              rows={2}
-              className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500"
-            />
-            <div className="grid grid-cols-2 gap-3">
-              <input
-                type="datetime-local"
-                value={eventData.startTime}
-                onChange={(e) => {
-                  const newData = { ...eventData, startTime: e.target.value };
-                  setEventData(newData);
-                  onContentChange({ ...content, data: newData });
-                }}
-                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="datetime-local"
-                value={eventData.endTime}
-                onChange={(e) => {
-                  const newData = { ...eventData, endTime: e.target.value };
-                  setEventData(newData);
-                  onContentChange({ ...content, data: newData });
-                }}
-                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-        );
-      
-      default:
-        return <div className="text-center py-6 text-gray-500">Select a content type to begin</div>;
+      case 'text': return <div className="space-y-3"><Field label="Plain text or message"><textarea value={content.data as string} onChange={(e) => onContentChange({ ...content, data: e.target.value })} placeholder="Example: Scan this code to view our menu or save this note." className={`${inputClass} h-28 resize-none`} /></Field><p className="text-xs text-slate-500">Characters: {(content.data as string)?.length || 0}</p></div>;
+      case 'url': return <Field label="Website URL"><div className="relative"><FaGlobe className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" /><input type="url" value={content.data as string} onChange={(e) => onContentChange({ ...content, data: e.target.value })} placeholder="https://example.com" className={`${inputClass} pl-10`} /></div></Field>;
+      case 'email': return <div className="space-y-3"><Field label="Recipient email address"><input type="email" value={emailData.address} onChange={(e) => { const data = { ...emailData, address: e.target.value }; setEmailData(data); onContentChange({ ...content, data }); }} placeholder="name@example.com" className={inputClass} /></Field><Field label="Email subject"><input value={emailData.subject} onChange={(e) => { const data = { ...emailData, subject: e.target.value }; setEmailData(data); onContentChange({ ...content, data }); }} placeholder="Project inquiry" className={inputClass} /></Field><Field label="Email message"><textarea value={emailData.body} onChange={(e) => { const data = { ...emailData, body: e.target.value }; setEmailData(data); onContentChange({ ...content, data }); }} placeholder="Hello, I would like to learn more about your services." rows={3} className={`${inputClass} resize-none`} /></Field></div>;
+      case 'phone': return <Field label="Phone number"><div className="relative"><FaPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" /><input type="tel" value={content.data as string} onChange={(e) => onContentChange({ ...content, data: e.target.value })} placeholder="+123456789" className={`${inputClass} pl-10`} /></div></Field>;
+      case 'wifi': return <div className="space-y-3"><Field label="Network name (SSID)"><input value={wifiConfig.ssid} onChange={(e) => { const data = { ...wifiConfig, ssid: e.target.value }; setWifiConfig(data); onContentChange({ ...content, data }); }} placeholder="Office WiFi" className={inputClass} /></Field><Field label="WiFi password"><input type="password" value={wifiConfig.password} onChange={(e) => { const data = { ...wifiConfig, password: e.target.value }; setWifiConfig(data); onContentChange({ ...content, data }); }} placeholder="Example: SecurePass123" className={inputClass} /></Field><Field label="Security type"><select value={wifiConfig.encryption} onChange={(e) => { const data = { ...wifiConfig, encryption: e.target.value as WiFiConfig['encryption'] }; setWifiConfig(data); onContentChange({ ...content, data }); }} className={inputClass}><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">No password</option></select></Field></div>;
+      case 'vcard': return <div className="space-y-3"><div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><Field label="First name"><input placeholder="John" value={vcardData.firstName} onChange={(e) => { const data = { ...vcardData, firstName: e.target.value }; setVcardData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field><Field label="Last name"><input placeholder="Smith" value={vcardData.lastName} onChange={(e) => { const data = { ...vcardData, lastName: e.target.value }; setVcardData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field></div><Field label="Email address"><input type="email" placeholder="name@example.com" value={vcardData.email} onChange={(e) => { const data = { ...vcardData, email: e.target.value }; setVcardData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field><Field label="Phone number"><input type="tel" placeholder="+123456789" value={vcardData.phone} onChange={(e) => { const data = { ...vcardData, phone: e.target.value }; setVcardData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field><Field label="Company and title"><input placeholder="Acme Inc. — Marketing Manager" value={`${vcardData.company}${vcardData.title ? ` — ${vcardData.title}` : ''}`} onChange={(e) => { const [company, title = ''] = e.target.value.split(' — '); const data = { ...vcardData, company, title }; setVcardData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field><Field label="Website"><input placeholder="https://example.com" value={vcardData.website} onChange={(e) => { const data = { ...vcardData, website: e.target.value }; setVcardData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field><Field label="Address"><input placeholder="123 Main Street, New York, NY" value={vcardData.address} onChange={(e) => { const data = { ...vcardData, address: e.target.value }; setVcardData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field></div>;
+      case 'event': return <div className="space-y-3"><Field label="Event title"><input placeholder="Product launch webinar" value={eventData.title} onChange={(e) => { const data = { ...eventData, title: e.target.value }; setEventData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field><Field label="Event description"><textarea placeholder="Join us for a 30-minute live demo and Q&A." value={eventData.description} onChange={(e) => { const data = { ...eventData, description: e.target.value }; setEventData(data); onContentChange({ ...content, data }); }} rows={2} className={`${inputClass} resize-none`} /></Field><Field label="Location"><input placeholder="Online or 123 Conference Ave" value={eventData.location} onChange={(e) => { const data = { ...eventData, location: e.target.value }; setEventData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field><div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><Field label="Start date and time"><input type="datetime-local" value={eventData.startTime} onChange={(e) => { const data = { ...eventData, startTime: e.target.value }; setEventData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field><Field label="End date and time"><input type="datetime-local" value={eventData.endTime} onChange={(e) => { const data = { ...eventData, endTime: e.target.value }; setEventData(data); onContentChange({ ...content, data }); }} className={inputClass} /></Field></div></div>;
+      default: return <div className="text-center py-6 text-slate-500">Select a content type to begin</div>;
     }
   };
 
-  return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4">
-      <div className="space-y-4">
-        {/* Content Type Selection */}
-        <div>
-          <label className="text-sm font-medium mb-3 block">Content Type</label>
-          <div className="grid grid-cols-4 gap-2">
-            {contentTypes.map((type) => (
-              <button
-                key={type.value}
-                onClick={() => handleContentTypeChange(type.value)}
-                className={`p-2 rounded border text-xs flex flex-col items-center gap-1 transition-colors ${
-                  content.type === type.value
-                    ? 'border-blue-500 bg-blue-50 text-blue-600'
-                    : 'border-gray-300 text-gray-600 hover:border-gray-400'
-                }`}
-              >
-                <span className="text-base">{type.icon}</span>
-                {type.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Content Form */}
-        <div className="pt-4 border-t">{renderContentForm()}</div>
-      </div>
-    </div>
-  );
+  return <div className="bg-white rounded-2xl border border-slate-200 p-4"><div className="space-y-4"><div><label className="text-sm font-semibold mb-3 block text-slate-700">QR content type</label><div className="grid grid-cols-2 sm:grid-cols-4 gap-2">{contentTypes.map((type) => <button type="button" key={type.value} onClick={() => handleContentTypeChange(type.value)} className={`p-3 rounded-xl border text-xs flex flex-col items-center gap-1 transition-colors ${content.type === type.value ? 'border-teal-500 bg-teal-50 text-teal-700' : 'border-slate-300 text-slate-600 hover:border-teal-300'}`}><span className="text-base">{type.icon}</span>{type.label}</button>)}</div></div><div className="pt-4 border-t border-slate-200">{renderContentForm()}</div></div></div>;
 };

@@ -6,12 +6,19 @@ import { useStorage } from './useStorage';
 export const useQRGenerator = () => {
   const [content, setContent] = useState<QRContent>({ type: 'text', data: '' });
   const [styling, setStyling] = useState<QRStyling>({
-    foreground: '#000000',
+    foreground: '#0f172a',
     background: '#ffffff',
     transparent: false,
     errorCorrection: 'M',
     size: 256,
-    margin: 4
+    margin: 4,
+    colorMode: 'solid',
+    gradientStart: '#0f766e',
+    gradientEnd: '#2563eb',
+    moduleStyle: 'square',
+    eyeStyle: 'square',
+    previewStyle: 'card',
+    template: 'minimal'
   });
   
   const [qrCode, setQrCode] = useState<string>('');

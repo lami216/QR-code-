@@ -1,17 +1,18 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { registerServiceWorker } from '../lib/utils/pwa'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata: Metadata = {
-  title: 'QR Code Generator - Free & Customizable',
+  title: 'QR Studio - Free Custom QR Code Generator',
   description:
     'Create custom QR codes for free. No signup required. Generate QR codes for URLs, text, WiFi, contacts, and more.',
   manifest: '/manifest.json',
-  themeColor: '#3b82f6',
-  viewport: 'width=device-width, initial-scale=1.0',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#0f766e',
 }
 
 export default function RootLayout({
@@ -35,11 +36,11 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/qr-code.png" />
         <link rel="manifest" href="/manifest.json" />
 
-        <meta name="theme-color" content="#3b82f6" />
+        <meta name="theme-color" content="#0f766e" />
       </head>
 
       <body
-        className={`${inter.className} h-full bg-gray-50 dark:bg-gray-900`}
+        className="h-full bg-slate-50 font-sans text-slate-950 antialiased dark:bg-slate-950 dark:text-slate-50"
       >
         {children}
         {/* Removed <PWAPrompt /> to prevent "Download the App" nag */}

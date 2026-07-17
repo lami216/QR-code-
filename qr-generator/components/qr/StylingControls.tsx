@@ -23,10 +23,25 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
     { value: 'H' as const, label: 'High (30%)', description: 'Most durable, largest size' }
   ];
 
-  const handleColorChange = (colorType: 'foreground' | 'background', value: string) => {
+  const templates = [
+    { id: 'minimal', name: 'Minimal', foreground: '#111827', background: '#ffffff', colorMode: 'solid' as const, moduleStyle: 'square' as const, eyeStyle: 'square' as const },
+    { id: 'modern', name: 'Modern', foreground: '#0f766e', background: '#f8fafc', colorMode: 'solid' as const, moduleStyle: 'rounded' as const, eyeStyle: 'rounded' as const },
+    { id: 'business', name: 'Business', foreground: '#1e3a8a', background: '#eff6ff', colorMode: 'solid' as const, moduleStyle: 'square' as const, eyeStyle: 'rounded' as const },
+    { id: 'elegant', name: 'Elegant', foreground: '#312e81', background: '#faf5ff', colorMode: 'solid' as const, moduleStyle: 'rounded' as const, eyeStyle: 'square' as const },
+    { id: 'colorful', name: 'Colorful', foreground: '#be123c', background: '#fff7ed', colorMode: 'gradient' as const, gradientStart: '#f97316', gradientEnd: '#db2777', moduleStyle: 'dots' as const, eyeStyle: 'rounded' as const },
+    { id: 'dark', name: 'Dark mode', foreground: '#f8fafc', background: '#0f172a', colorMode: 'solid' as const, moduleStyle: 'rounded' as const, eyeStyle: 'rounded' as const },
+    { id: 'gradient', name: 'Gradient', foreground: '#0f766e', background: '#ecfeff', colorMode: 'gradient' as const, gradientStart: '#0f766e', gradientEnd: '#2563eb', moduleStyle: 'rounded' as const, eyeStyle: 'dots' as const },
+  ];
+
+  const handleTemplateSelect = (templateId: string) => {
+    const template = templates.find((item) => item.id === templateId);
+    if (template) onChange({ ...styling, ...template, template: template.id });
+  };
+
+  const handleColorChange = (colorType: 'foreground' | 'background' | 'gradientStart' | 'gradientEnd', value: string) => {
     // Basic hex color validation
     if (/^#[0-9A-F]{6}$/i.test(value)) {
-      onChange({ ...styling, [colorType]: value });
+      onChange({ ...styling, [colorType]: value, template: 'custom' });
     }
   };
 
@@ -38,10 +53,33 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
     <div className="space-y-8 p-1">
       {/* Header */}
       <div className="flex items-center space-x-3">
-        <span className="text-xl text-blue-600 dark:text-blue-400">
+        <span className="text-xl text-teal-600 dark:text-teal-400">
           <FaPalette />
         </span>
         <h3 className="text-xl font-bold text-gray-900 dark:text-white">QR Code Styling</h3>
+      </div>
+
+
+      {/* Design Templates */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Design templates</label>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          {templates.map((template) => (
+            <button
+              key={template.id}
+              type="button"
+              onClick={() => handleTemplateSelect(template.id)}
+              className={`rounded-xl border p-3 text-left transition-all ${
+                styling.template === template.id
+                  ? 'border-teal-500 bg-teal-50 text-teal-800 dark:bg-teal-900/30 dark:text-teal-100'
+                  : 'border-gray-200 hover:border-teal-300 dark:border-gray-700 dark:hover:border-teal-500'
+              }`}
+            >
+              <span className="mb-2 block h-6 rounded-lg" style={{ background: template.colorMode === 'gradient' ? `linear-gradient(135deg, ${template.gradientStart}, ${template.gradientEnd})` : template.foreground }} />
+              <span className="text-xs font-semibold">{template.name}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Size Controls */}
@@ -53,7 +91,7 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
             </span>
             <span>Size</span>
           </label>
-          <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-md dark:bg-blue-900 dark:text-blue-200">
+          <span className="px-2 py-1 bg-teal-100 text-teal-800 text-sm font-medium rounded-md dark:bg-teal-900 dark:text-teal-200">
             {styling.size}px
           </span>
         </div>
@@ -64,7 +102,7 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           step={8}
           value={styling.size}
           onChange={(e) => onChange({ ...styling, size: parseInt(e.target.value, 10) })}
-          className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-blue-600"
+          className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-teal-600"
         />
         <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
           <span>Small</span>
@@ -81,7 +119,7 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
             </span>
             <span>Margin</span>
           </label>
-          <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-md dark:bg-blue-900 dark:text-blue-200">
+          <span className="px-2 py-1 bg-teal-100 text-teal-800 text-sm font-medium rounded-md dark:bg-teal-900 dark:text-teal-200">
             {styling.margin}px
           </span>
         </div>
@@ -91,7 +129,7 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           max={20}
           value={styling.margin}
           onChange={(e) => onChange({ ...styling, margin: parseInt(e.target.value, 10) })}
-          className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-blue-600"
+          className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-teal-600"
         />
         <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
           <span>None</span>
@@ -166,6 +204,43 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           </div>
         </div>
 
+
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Color style
+            <select value={styling.colorMode ?? 'solid'} onChange={(e) => onChange({ ...styling, colorMode: e.target.value as QRStyling['colorMode'], template: 'custom' })} className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600">
+              <option value="solid">Solid color</option>
+              <option value="gradient">Gradient</option>
+            </select>
+          </label>
+          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Preview style
+            <select value={styling.previewStyle ?? 'card'} onChange={(e) => onChange({ ...styling, previewStyle: e.target.value as QRStyling['previewStyle'] })} className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600">
+              <option value="card">Clean card</option>
+              <option value="phone">Mobile mockup</option>
+              <option value="poster">Marketing poster</option>
+            </select>
+          </label>
+          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Module shape
+            <select value={styling.moduleStyle ?? 'square'} onChange={(e) => onChange({ ...styling, moduleStyle: e.target.value as QRStyling['moduleStyle'], template: 'custom' })} className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600">
+              <option value="square">Square</option>
+              <option value="rounded">Rounded</option>
+              <option value="dots">Dots</option>
+            </select>
+          </label>
+          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Eye/frame style
+            <select value={styling.eyeStyle ?? 'square'} onChange={(e) => onChange({ ...styling, eyeStyle: e.target.value as QRStyling['eyeStyle'], template: 'custom' })} className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600">
+              <option value="square">Square</option>
+              <option value="rounded">Rounded</option>
+              <option value="dots">Dots</option>
+            </select>
+          </label>
+        </div>
+        {styling.colorMode === 'gradient' && (
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            <input type="color" value={styling.gradientStart ?? styling.foreground} onChange={(e) => handleColorChange('gradientStart', e.target.value)} className="h-10 w-full rounded-lg" aria-label="Gradient start color" />
+            <input type="color" value={styling.gradientEnd ?? styling.foreground} onChange={(e) => handleColorChange('gradientEnd', e.target.value)} className="h-10 w-full rounded-lg" aria-label="Gradient end color" />
+          </div>
+        )}
+
         {/* Transparency Toggle */}
         <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
           <div>
@@ -179,8 +254,8 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           <button
             onClick={() => onChange({ ...styling, transparent: !styling.transparent })}
             aria-pressed={styling.transparent}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-              styling.transparent ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
+              styling.transparent ? 'bg-teal-600' : 'bg-gray-200 dark:bg-gray-700'
             }`}
           >
             <span
@@ -206,7 +281,7 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           onChange={(e) =>
             onChange({ ...styling, errorCorrection: e.target.value as QRStyling['errorCorrection'] })
           }
-          className="w-full p-3 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 focus:border-teal-500 focus:ring-2 focus:ring-teal-500"
         >
           {errorCorrectionLevels.map(level => (
             <option key={level.value} value={level.value}>
@@ -235,7 +310,7 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
         </div>
 
         {!styling.logo ? (
-          <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+          <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-teal-400 transition-colors">
             <input
               type="file"
               accept="image/*"

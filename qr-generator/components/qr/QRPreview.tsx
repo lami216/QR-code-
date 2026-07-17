@@ -8,6 +8,7 @@ interface QRPreviewProps {
   size?: number;
   isLoading?: boolean;
   className?: string;
+  previewStyle?: 'card' | 'phone' | 'poster';
 }
 
 export const QRPreview: React.FC<QRPreviewProps> = ({
@@ -15,6 +16,7 @@ export const QRPreview: React.FC<QRPreviewProps> = ({
   size = 280,
   isLoading = false,
   className = "",
+  previewStyle = "card",
 }) => {
   // Loading state
   if (isLoading) {
@@ -22,7 +24,7 @@ export const QRPreview: React.FC<QRPreviewProps> = ({
       <div className={`flex flex-col items-center justify-center p-6 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl border-2 border-dashed border-gray-200 dark:border-gray-700 min-h-[300px] transition-all duration-300 ${className}`}>
         <div className="relative mb-4">
           <div className="relative w-16 h-16">
-            <FaSpinner className="w-full h-full text-blue-600 dark:text-blue-400 animate-spin" />
+            <FaSpinner className="w-full h-full text-teal-600 dark:text-teal-400 animate-spin" />
             <FaQrcode className="w-6 h-6 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
           </div>
         </div>
@@ -72,7 +74,7 @@ export const QRPreview: React.FC<QRPreviewProps> = ({
         </p>
       </div>
 
-      <div className="relative p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 group">
+      <div className={`relative p-4 bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 group ${previewStyle === 'phone' ? 'rounded-[2rem] border-8 border-slate-900' : previewStyle === 'poster' ? 'rounded-3xl bg-gradient-to-br from-teal-50 to-cyan-50 p-8' : 'rounded-xl'}`}>
         <img
           src={qrCode}
           alt="Generated QR Code"
@@ -90,7 +92,7 @@ export const QRPreview: React.FC<QRPreviewProps> = ({
         />
 
         {/* Scan indicator */}
-        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg transition-all duration-300">
+        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-teal-500 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg transition-all duration-300">
           Scan Ready
         </div>
       </div>
@@ -98,7 +100,7 @@ export const QRPreview: React.FC<QRPreviewProps> = ({
       {/* Size indicator */}
       <div className="mt-3 text-center">
         <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
-          {size} × {size}px
+          {size} × {size}px • {previewStyle === 'phone' ? 'Mobile mockup' : previewStyle === 'poster' ? 'Poster preview' : 'Clean card'}
         </span>
       </div>
     </div>

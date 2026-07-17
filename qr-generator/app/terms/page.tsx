@@ -12,22 +12,22 @@ export default function TermsOfService() {
     {
       icon: FaUserCheck,
       title: "Acceptance of Terms",
-      content: "By accessing and using QRMagic, you accept and agree to be bound by the terms and provision of this agreement."
+      content: "By accessing and using QR Studio, you accept and agree to be bound by the terms and provision of this agreement."
     },
     {
       icon: FaGavel,
       title: "Use License",
-      content: "Permission is granted to temporarily use QRMagic for personal and commercial purposes. This is the grant of a license, not a transfer of title."
+      content: "Permission is granted to temporarily use QR Studio for personal and commercial purposes. This is the grant of a license, not a transfer of title."
     },
     {
       icon: FaExclamationTriangle,
       title: "Disclaimer",
-      content: "The materials on QRMagic are provided on an 'as is' basis. QRMagic makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights."
+      content: "The materials on QR Studio are provided on an 'as is' basis. QR Studio makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights."
     },
     {
       icon: FaBalanceScale,
       title: "Limitations",
-      content: "In no event shall QRMagic or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on QRMagic's platform."
+      content: "In no event shall QR Studio or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on QR Studio's platform."
     }
   ];
 
@@ -40,17 +40,17 @@ export default function TermsOfService() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-950 dark:to-indigo-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-100 dark:from-gray-900 dark:via-teal-950 dark:to-cyan-950">
       {/* Header */}
       <header className="border-b border-gray-200/50 dark:border-gray-700/50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-3 group cursor-pointer">
-              <FiArrowLeft className="text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300" />
+              <FiArrowLeft className="text-gray-600 dark:text-gray-400 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300" />
               <div className="flex items-center space-x-2">
-                <FaMagic className="text-2xl text-blue-600 dark:text-blue-400" />
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  QRMagic
+                <FaMagic className="text-2xl text-teal-600 dark:text-teal-400" />
+                <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                  QR Studio
                 </span>
               </div>
             </Link>
@@ -66,7 +66,7 @@ export default function TermsOfService() {
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 dark:border-gray-700/50 shadow-2xl">
           {/* Header */}
           <div className="text-center mb-10">
-            <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+            <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center">
               <FaGavel className="text-2xl text-white" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
@@ -79,9 +79,9 @@ export default function TermsOfService() {
 
           {/* Introduction */}
           <section className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Welcome to QRMagic</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Welcome to QR Studio</h2>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              These Terms of Service govern your use of QRMagic's website and services. 
+              These Terms of Service govern your use of QR Studio's website and services. 
               By accessing or using our service, you agree to be bound by these terms.
             </p>
           </section>
@@ -104,11 +104,11 @@ export default function TermsOfService() {
             {sections.map((section, index) => (
               <section key={index} className="group cursor-pointer">
                 <div className="flex items-start space-x-4">
-                  <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                  <div className="p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl group-hover:scale-110 transition-transform duration-300">
                     <section.icon className="text-white text-xl" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
                       {section.title}
                     </h3>
                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -144,16 +144,16 @@ export default function TermsOfService() {
       <footer className="border-t border-gray-200/50 dark:border-gray-700/50 mt-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg">
         <div className="container mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-            <Link href="/" className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 cursor-pointer">
+            <Link href="/" className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-300 cursor-pointer">
               <FaHome />
               <span>Back to Home</span>
             </Link>
             <div className="flex items-center space-x-6 text-sm">
-              <Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 cursor-pointer">
+              <Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-300 cursor-pointer">
                 Privacy Policy
               </Link>
               <span className="text-gray-400">•</span>
-              <Link href="/contact" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 cursor-pointer">
+              <Link href="/contact" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-300 cursor-pointer">
                 Contact
               </Link>
             </div>
