@@ -42,6 +42,21 @@ export default function RootLayout({
       </head>
 
       <body className="h-full bg-slate-50 font-sans text-slate-950 antialiased dark:bg-slate-950 dark:text-slate-50">
+        <Script
+          id="monetag-in-page-push"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(s){
+                s.dataset.zone='11345296';
+                s.src='https://nap5k.com/tag.min.js';
+              })([document.documentElement, document.body]
+                .filter(Boolean)
+                .pop()
+                .appendChild(document.createElement('script')));
+            `,
+          }}
+        />
         {children}
       </body>
     </html>
