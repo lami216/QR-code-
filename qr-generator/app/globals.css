@@ -23,6 +23,25 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+button,
+a,
+summary {
+  touch-action: manipulation;
+}
+:focus-visible {
+  outline: 3px solid #14b8a6;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Custom scrollbar for dark mode */
 .dark ::-webkit-scrollbar {
   width: 8px;

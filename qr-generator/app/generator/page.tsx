@@ -1,13 +1,21 @@
-'use client';
+"use client";
 
-import React, { useCallback, useEffect } from 'react';
-import { QRConfigurator } from '../../components/qr/ContentForm';
-import { QRPreview } from '../../components/qr/QRPreview';
-import { DownloadControls } from '../../components/qr/DownloadControls';
-import { StylingControls } from '../../components/qr/StylingControls';
-import { useQRGenerator } from '../../hooks/useQRGenerator';
-import { FaBolt, FaDownload, FaMagic, FaArrowLeft, FaCog } from 'react-icons/fa';
-import Link from 'next/link';
+import React, { useCallback, useEffect } from "react";
+import { QRConfigurator } from "../../components/qr/ContentForm";
+import { QRPreview } from "../../components/qr/QRPreview";
+import { DownloadControls } from "../../components/qr/DownloadControls";
+import { StylingControls } from "../../components/qr/StylingControls";
+import { useQRGenerator } from "../../hooks/useQRGenerator";
+import {
+  FaBolt,
+  FaDownload,
+  FaMagic,
+  FaArrowLeft,
+  FaCog,
+} from "react-icons/fa";
+import Link from "next/link";
+import { AdSlot } from "../../components/ads/AdSlot";
+import { SidebarAd } from "../../components/ads/SidebarAd";
 
 export default function GeneratorPage() {
   const {
@@ -31,22 +39,22 @@ export default function GeneratorPage() {
       const hasValidContent = () => {
         if (!content.data) return false;
 
-        if (typeof content.data === 'string') {
+        if (typeof content.data === "string") {
           return content.data.trim().length > 0;
         }
 
         switch (content.type) {
-          case 'wifi':
+          case "wifi":
             return (content.data as any).ssid?.trim().length > 0;
-          case 'email':
+          case "email":
             return (content.data as any).address?.trim().length > 0;
-          case 'vcard':
+          case "vcard":
             const vcard = content.data as any;
             return (
               vcard.firstName?.trim().length > 0 ||
               vcard.lastName?.trim().length > 0
             );
-          case 'event':
+          case "event":
             return (content.data as any).title?.trim().length > 0;
           default:
             return true;
@@ -55,7 +63,7 @@ export default function GeneratorPage() {
 
       if (!hasValidContent()) return;
 
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise((resolve) => setTimeout(resolve, 800));
       if (mounted) {
         await generateQRAuto();
       }
@@ -142,7 +150,10 @@ export default function GeneratorPage() {
                     </p>
                   </div>
                 </div>
-                <QRConfigurator content={content} onContentChange={setContent} />
+                <QRConfigurator
+                  content={content}
+                  onContentChange={setContent}
+                />
               </div>
             </section>
 
@@ -159,8 +170,8 @@ export default function GeneratorPage() {
                 disabled={isLoading || !content.data}
                 className="bg-teal-600 hover:bg-teal-700 disabled:bg-teal-400 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:scale-100 flex items-center gap-2 shadow-lg disabled:cursor-not-allowed"
               >
-                <FaBolt className={isLoading ? 'animate-spin' : ''} />
-                {isLoading ? 'Generating...' : 'Refresh Preview'}
+                <FaBolt className={isLoading ? "animate-spin" : ""} />
+                {isLoading ? "Generating..." : "Refresh Preview"}
               </button>
             </div>
           </div>
@@ -188,7 +199,7 @@ export default function GeneratorPage() {
                     qrCode={qrCode}
                     size={Math.min(styling.size, 280)}
                     isLoading={isLoading}
-                    previewStyle={styling.previewStyle ?? 'card'}
+                    previewStyle={styling.previewStyle ?? "card"}
                     className="w-full"
                   />
                 </div>
@@ -202,6 +213,32 @@ export default function GeneratorPage() {
             </section>
           </div>
         </div>
+        <AdSlot
+          slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+          format="banner"
+          className="my-10"
+        />
+        <section className="grid gap-8 rounded-2xl border border-gray-200 bg-white p-6 lg:grid-cols-[1fr_280px] dark:border-gray-700 dark:bg-gray-800">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              Create, test and publish with confidence
+            </h2>
+            <p className="mt-3 leading-7 text-gray-600 dark:text-gray-300">
+              QR Studio creates static QR codes directly in your browser, so no
+              content upload is required. Choose the content type, adjust the
+              design and scan the preview before downloading. For print, use
+              strong contrast, preserve the clear margin around the code and
+              test a physical proof at its intended size.
+            </p>
+            <p className="mt-3 leading-7 text-gray-600 dark:text-gray-300">
+              PNG is convenient for digital use, while SVG offers scalable
+              artwork and PDF supports common document workflows. Static QR
+              codes do not expire, but their encoded content cannot be changed
+              after download.
+            </p>
+          </div>
+          <SidebarAd className="hidden lg:flex" />
+        </section>
       </div>
     </div>
   );
