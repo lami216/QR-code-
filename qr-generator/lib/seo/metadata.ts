@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+
 export const siteConfig = {
   name: "QR Studio",
   description:
-    "A free, privacy-friendly custom QR code generator for URLs, WiFi, text, contacts and more.",
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-    "https://qr-studio.app",
+    "Create free custom QR codes for URLs, WiFi, text, contacts and more. Customize the design and download PNG, SVG or PDF without signing up.",
+  url: configuredSiteUrl || "https://drqr.vercel.app",
 };
+
+export function absoluteUrl(path = "/") {
+  return `${siteConfig.url}${path === "/" ? "" : path}`;
+}
 
 export function pageMetadata({
   title,
@@ -18,7 +22,8 @@ export function pageMetadata({
   description: string;
   path: string;
 }): Metadata {
-  const url = `${siteConfig.url}${path === "/" ? "" : path}`;
+  const url = absoluteUrl(path);
+
   return {
     title,
     description,
@@ -31,6 +36,7 @@ export function pageMetadata({
         follow: true,
         "max-image-preview": "large",
         "max-snippet": -1,
+        "max-video-preview": -1,
       },
     },
     openGraph: {
@@ -44,7 +50,7 @@ export function pageMetadata({
           url: "/qr-code.png",
           width: 512,
           height: 512,
-          alt: "QR Studio QR code generator",
+          alt: "QR Studio custom QR code generator",
         },
       ],
     },
@@ -57,18 +63,47 @@ export function pageMetadata({
   };
 }
 
+export function serializeJsonLd(value: unknown) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
 export const jsonLd = {
+  organization: {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${siteConfig.url}/#organization`,
+    name: siteConfig.name,
+    url: siteConfig.url,
+    logo: absoluteUrl("/qr-code.png"),
+  },
+  website: {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteConfig.url}/#website`,
+    name: siteConfig.name,
+    url: siteConfig.url,
+    description: siteConfig.description,
+    publisher: { "@id": `${siteConfig.url}/#organization` },
+    inLanguage: "en",
+  },
   webApplication: {
     "@context": "https://schema.org",
     "@type": "WebApplication",
+    "@id": `${siteConfig.url}/#webapp`,
     name: siteConfig.name,
     url: siteConfig.url,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Any",
+    browserRequirements: "Requires JavaScript and a modern web browser",
     description: siteConfig.description,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-    featureList:
-      "Generate QR codes for URLs, text, WiFi, email, phone, contacts and events; customize colors and logos; export PNG, SVG and PDF",
+    featureList: [
+      "Generate QR codes for URLs, text, WiFi, email, phone, contacts and events",
+      "Customize colors, patterns and logos",
+      "Download PNG, SVG and PDF files",
+      "Generate QR codes in the browser without an account",
+    ],
+    publisher: { "@id": `${siteConfig.url}/#organization` },
   },
   faq: (items: readonly { question: string; answer: string }[]) => ({
     "@context": "https://schema.org",
