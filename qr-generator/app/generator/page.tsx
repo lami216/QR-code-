@@ -1,21 +1,15 @@
 "use client";
 
-import React, { useCallback, useEffect } from "react";
-import { QRConfigurator } from "../../components/qr/ContentForm";
-import { QRPreview } from "../../components/qr/QRPreview";
-import { DownloadControls } from "../../components/qr/DownloadControls";
-import { StylingControls } from "../../components/qr/StylingControls";
-import { useQRGenerator } from "../../hooks/useQRGenerator";
-import {
-  FaBolt,
-  FaDownload,
-  FaMagic,
-  FaArrowLeft,
-  FaCog,
-} from "react-icons/fa";
 import Link from "next/link";
+import { useCallback, useEffect } from "react";
+import { FaArrowLeft, FaBolt, FaDownload, FaMagic } from "react-icons/fa";
 import { AdSlot } from "../../components/ads/AdSlot";
 import { SidebarAd } from "../../components/ads/SidebarAd";
+import { QRConfigurator } from "../../components/qr/ContentForm";
+import { DownloadControls } from "../../components/qr/DownloadControls";
+import { QRPreview } from "../../components/qr/QRPreview";
+import { StylingControls } from "../../components/qr/StylingControls";
+import { useQRGenerator } from "../../hooks/useQRGenerator";
 import { displayAdSlots, hasSidebarAd } from "../../lib/ads/config";
 
 export default function GeneratorPage() {
@@ -49,12 +43,13 @@ export default function GeneratorPage() {
             return (content.data as any).ssid?.trim().length > 0;
           case "email":
             return (content.data as any).address?.trim().length > 0;
-          case "vcard":
+          case "vcard": {
             const vcard = content.data as any;
             return (
               vcard.firstName?.trim().length > 0 ||
               vcard.lastName?.trim().length > 0
             );
+          }
           case "event":
             return (content.data as any).title?.trim().length > 0;
           default:
@@ -74,7 +69,7 @@ export default function GeneratorPage() {
     return () => {
       mounted = false;
     };
-  }, [content, styling, generateQRAuto]);
+  }, [content, generateQRAuto]);
 
   const handleManualGenerate = useCallback(async () => {
     await generateQR();
@@ -113,6 +108,7 @@ export default function GeneratorPage() {
               <span className="text-sm sm:text-base">{error}</span>
             </span>
             <button
+              type="button"
               onClick={clearError}
               className="text-red-700 hover:text-red-900 font-bold text-lg ml-4 transition-colors"
               aria-label="Close error message"
@@ -167,6 +163,7 @@ export default function GeneratorPage() {
             {/* Manual Generate Button */}
             <div className="flex justify-center">
               <button
+                type="button"
                 onClick={handleManualGenerate}
                 disabled={isLoading || !content.data}
                 className="bg-teal-600 hover:bg-teal-700 disabled:bg-teal-400 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:scale-100 flex items-center gap-2 shadow-lg disabled:cursor-not-allowed"
@@ -238,6 +235,37 @@ export default function GeneratorPage() {
               artwork and PDF supports common document workflows. Static QR
               codes do not expire, but their encoded content cannot be changed
               after download.
+            </p>
+            <h3 className="mt-6 text-xl font-bold">Before you publish</h3>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-gray-600 dark:text-gray-300">
+              <li>Scan the exported file with more than one phone.</li>
+              <li>
+                For print, test a physical proof at its final size and viewing
+                distance.
+              </li>
+              <li>
+                Keep a clear quiet zone and use dark modules on a light
+                background.
+              </li>
+              <li>
+                Use high error correction with a logo, then verify every
+                destination.
+              </li>
+            </ul>
+            <p className="mt-5">
+              <Link
+                className="font-semibold text-teal-700 underline dark:text-teal-300"
+                href="/guides/qr-code-not-scanning"
+              >
+                Troubleshoot a QR code that will not scan
+              </Link>
+              {" · "}
+              <Link
+                className="font-semibold text-teal-700 underline dark:text-teal-300"
+                href="/guides/best-qr-code-size-for-print"
+              >
+                Choose a print size
+              </Link>
             </p>
           </div>
           <SidebarAd className="hidden lg:flex" />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Guide } from "./guides";
 
 export const siteConfig = {
   name: "QR Studio",
@@ -80,3 +81,34 @@ export const jsonLd = {
     })),
   }),
 };
+
+export function safeJsonLd(value: object) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${siteConfig.url}${item.path === "/" ? "" : item.path}`,
+    })),
+  };
+}
+
+export function articleJsonLd(guide: Guide) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: guide.title,
+    description: guide.description,
+    datePublished: guide.updated,
+    dateModified: guide.updated,
+    author: { "@type": "Organization", name: "QR Studio maintainers" },
+    publisher: { "@type": "Organization", name: siteConfig.name },
+    mainEntityOfPage: `${siteConfig.url}/guides/${guide.slug}`,
+  };
+}

@@ -1,168 +1,86 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { FaMagic, FaShieldAlt, FaUserLock, FaDatabase, FaCode, FaHome } from 'react-icons/fa';
-import { FiArrowLeft, FiCheckCircle } from 'react-icons/fi';
+import Link from "next/link";
+import { SiteFooter } from "@/components/marketing/SiteFooter";
+import { SiteHeader } from "@/components/marketing/SiteHeader";
 
 export default function PrivacyPolicy() {
-  const [lastUpdated, setLastUpdated] = useState("September 1, 2025");
-  const [currentYear, setCurrentYear] = useState("2025");
-
-  useEffect(() => {
-    // Auto-fetch current year
-    const year = new Date().getFullYear().toString();
-    setCurrentYear(year);
-    
-    // Auto-update last updated date to current year while keeping month/day
-    const now = new Date();
-    const month = now.toLocaleString('en-US', { month: 'long' });
-    const day = now.getDate();
-    setLastUpdated(`${month} ${day}, ${year}`);
-  }, []);
-
-  const sections = [
-    {
-      icon: FaShieldAlt,
-      title: "Information We Collect",
-      content: "QR Studio operates on a privacy-first principle. We do not collect, store, or process any personal data on our servers. All QR code generation happens locally in your browser."
-    },
-    {
-      icon: FaUserLock,
-      title: "Data Processing",
-      content: "Your QR code data (URLs, text, contact information) is processed entirely on your device. We never transmit this data to our servers or third-party services."
-    },
-    {
-      icon: FaDatabase,
-      title: "Data Storage",
-      content: "No user data is stored on our servers. Any temporary data required for QR code generation is kept in your browser's local storage and can be cleared at any time."
-    },
-    {
-      icon: FaCode,
-      title: "Third-Party Services",
-      content: "We use minimal, privacy-respecting analytics to understand usage patterns. These services collect anonymized data that cannot be traced back to individual users."
-    }
-  ];
-
-  const principles = [
-    "No data collection without explicit consent",
-    "Local processing of all QR code data",
-    "Transparent about what little data we collect",
-    "Regular security audits and updates",
-    "Compliance with global privacy regulations"
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-100 dark:from-gray-900 dark:via-teal-950 dark:to-cyan-950">
-      {/* Header */}
-      <header className="border-b border-gray-200/50 dark:border-gray-700/50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 sm:px-6 py-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <Link href="/" className="flex items-center space-x-3 group cursor-pointer w-full sm:w-auto">
-              <FiArrowLeft className="text-gray-600 dark:text-gray-400 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300" />
-              <div className="flex items-center space-x-2">
-                <FaMagic className="text-2xl text-teal-600 dark:text-teal-400" />
-                <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
-                  QR Studio
-                </span>
-              </div>
+    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
+      <SiteHeader />
+      <main className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+        <h1 className="text-4xl font-black">Privacy Policy</h1>
+        <p className="mt-3 text-sm text-slate-500">
+          Effective and last updated: July 19, 2026
+        </p>
+        <p className="mt-6 leading-8">
+          This policy separates the QR information you enter from data that
+          advertising providers may process. It describes the current codebase;
+          the site owner must review it against the final hosting and consent
+          configuration before launch.
+        </p>
+        <section className="mt-10">
+          <h2 className="text-2xl font-black">QR payload processing</h2>
+          <p className="mt-3 leading-8">
+            QR Studio creates QR images in your browser. The URL, text, WiFi
+            password, email, phone, contact or event information entered in the
+            generator is not sent to a QR-generation server by the application.
+            Information encoded in a downloaded static code can be read by
+            anyone who scans or obtains that code.
+          </p>
+        </section>
+        <section className="mt-10">
+          <h2 className="text-2xl font-black">Browser storage</h2>
+          <p className="mt-3 leading-8">
+            The generator can save QR generation history in local storage on
+            your device. This supports the history feature and remains until you
+            clear it using the interface or browser controls. Do not use a
+            shared device for sensitive payloads unless you clear its storage
+            afterward.
+          </p>
+        </section>
+        <section className="mt-10">
+          <h2 className="text-2xl font-black">
+            Advertising and third-party requests
+          </h2>
+          <p className="mt-3 leading-8">
+            The site includes Monetag advertising scripts, including an in-page
+            script and a service-worker integration. These load from third-party
+            domains and may process device, network, cookie or advertising
+            identifiers under the provider's policies. Google AdSense loads only
+            when the site owner configures its public client ID; configured ad
+            slots may then make requests to Google. Advertising is separate from
+            local QR payload generation. The site owner is responsible for any
+            consent mechanism, regional disclosures and vendor settings required
+            for the deployed market.
+          </p>
+        </section>
+        <section className="mt-10">
+          <h2 className="text-2xl font-black">Analytics and contact</h2>
+          <p className="mt-3 leading-8">
+            No dedicated analytics integration is present in this repository.
+            Hosting and advertising providers may still produce operational or
+            aggregate records. The public contact method is email; sending email
+            shares the information in your message with the relevant email
+            providers. See the{" "}
+            <Link
+              className="text-teal-700 underline dark:text-teal-300"
+              href="/contact"
+            >
+              contact page
             </Link>
-            <div className="text-sm text-gray-500 dark:text-gray-400 w-full sm:w-auto text-right sm:text-left">
-              Last updated: {lastUpdated}
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 py-8 sm:py-10 max-w-5xl">
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-gray-200/50 dark:border-gray-700/50 shadow-xl sm:shadow-2xl">
-          
-          {/* Header */}
-          <div className="text-center mb-8 sm:mb-10">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl sm:rounded-2xl flex items-center justify-center">
-              <FaShieldAlt className="text-xl sm:text-2xl text-white" />
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
-              Privacy Policy
-            </h1>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-              Your privacy is our top priority. Here's how we protect it.
-            </p>
-          </div>
-
-          {/* Introduction */}
-          <section className="mb-8 sm:mb-10">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">Our Commitment</h2>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
-              At QR Studio, we believe in building trust through transparency. We've designed our 
-              platform with privacy as a fundamental principle, not an afterthought.
-            </p>
-          </section>
-
-          {/* Privacy Principles */}
-          <section className="mb-8 sm:mb-10">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">Privacy Principles</h2>
-            <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
-              {principles.map((principle, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 bg-teal-50/50 dark:bg-teal-900/20 rounded-lg">
-                  <FiCheckCircle className="text-green-500 flex-shrink-0 text-sm sm:text-base" />
-                  <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{principle}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Detailed Sections in Grid */}
-          <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2">
-            {sections.map((section, index) => (
-              <section key={index} className="group cursor-pointer">
-                <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="p-2 sm:p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg sm:rounded-xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                    <section.icon className="text-white text-lg sm:text-xl" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
-                      {section.title}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
-                      {section.content}
-                    </p>
-                  </div>
-                </div>
-              </section>
-            ))}
-          </div>
-
-          {/* Contact */}
-          <section className="mt-10 sm:mt-12 pt-6 border-t border-gray-200/50 dark:border-gray-700/50">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">Questions?</h2>
-            <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-              If you have any questions about our privacy practices, contact us at{' '}
-              <Link href="mailto:privacy@qrmagic.app" className="text-teal-600 dark:text-teal-400 hover:underline cursor-pointer">
-                ab.zarinc@gmail.com
-              </Link>
-            </p>
-          </section>
-
-          {/* Copyright */}
-          <section className="mt-6 pt-4 border-t border-gray-200/30 dark:border-gray-700/30">
-            <p className="text-center text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
-              © {currentYear} QR Studio. All rights reserved.
-            </p>
-          </section>
-        </div>
+            .
+          </p>
+        </section>
+        <section className="mt-10">
+          <h2 className="text-2xl font-black">Your choices and changes</h2>
+          <p className="mt-3 leading-8">
+            You can clear local storage, use browser privacy controls, or avoid
+            entering sensitive data. Advertising controls depend on the
+            configured providers and region. Material policy changes should
+            receive a new effective date.
+          </p>
+        </section>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200/50 dark:border-gray-700/50 mt-6 sm:mt-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg">
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 text-center">
-          <Link href="/" className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-300 cursor-pointer text-sm sm:text-base">
-            <FaHome className="text-sm sm:text-base" />
-            <span>Back to Home</span>
-          </Link>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
