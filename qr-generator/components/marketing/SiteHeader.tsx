@@ -20,9 +20,7 @@ export function SiteHeader() {
           QR Studio
         </Link>
         <div className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex dark:text-slate-300">
-          <Link href="/qr-code-generator">Generator</Link>
-          <Link href="/create-qr-code">How it works</Link>
-          <Link href="/qr-code-maker">QR maker</Link>
+          <Link href="/generator">Generator</Link>
           <Link href="/blog">Guides</Link>
           <Link href="/about">About</Link>
         </div>

@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return ["/qr-code-generator", "/qr-code-maker", "/create-qr-code"].map(
+      (source) => ({ source, destination: "/generator", permanent: true }),
+    );
+  },
 };
 
 export default nextConfig;
