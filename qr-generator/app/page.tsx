@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { MarketingPage } from "@/components/marketing/MarketingPage";
 import { faqItems } from "@/lib/seo/content";
-import { jsonLd, pageMetadata } from "@/lib/seo/metadata";
+import { jsonLd, pageMetadata, serializeJsonLd } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = pageMetadata({
   title: "Free QR Code Generator — Create Custom QR Codes",
@@ -13,12 +13,22 @@ export const metadata: Metadata = pageMetadata({
 export default function HomePage() {
   return (
     <>
-      <script type="application/ld+json">
-        {JSON.stringify(jsonLd.webApplication)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(jsonLd.faq(faqItems))}
-      </script>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd([
+            jsonLd.organization,
+            jsonLd.website,
+            jsonLd.webApplication,
+          ]),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(jsonLd.faq(faqItems)),
+        }}
+      />
       <MarketingPage />
     </>
   );
