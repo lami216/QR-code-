@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { AdSlot } from "../../components/ads/AdSlot";
 import { SidebarAd } from "../../components/ads/SidebarAd";
+import { displayAdSlots, hasSidebarAd } from "../../lib/ads/config";
 
 export default function GeneratorPage() {
   const {
@@ -214,11 +215,13 @@ export default function GeneratorPage() {
           </div>
         </div>
         <AdSlot
-          slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+          slot={displayAdSlots.content}
           format="banner"
           className="my-10"
         />
-        <section className="grid gap-8 rounded-2xl border border-gray-200 bg-white p-6 lg:grid-cols-[1fr_280px] dark:border-gray-700 dark:bg-gray-800">
+        <section
+          className={`grid gap-8 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 ${hasSidebarAd ? "lg:grid-cols-[1fr_280px]" : ""}`}
+        >
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
               Create, test and publish with confidence

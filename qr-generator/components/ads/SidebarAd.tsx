@@ -1,8 +1,10 @@
+import { displayAdSlots } from "@/lib/ads/config";
 import { AdSlot } from "./AdSlot";
+
 export function SidebarAd({ className = "" }: { className?: string }) {
   return (
     <AdSlot
-      slot={process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT}
+      slot={displayAdSlots.sidebar}
       format="sidebar"
       className={className}
     />
