@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { adsenseClient } from "@/lib/ads/config";
 import { siteConfig } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = {
@@ -27,7 +28,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
   return (
     <html lang="en" className="h-full">
       <head>

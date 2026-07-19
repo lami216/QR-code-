@@ -1,8 +1,10 @@
+import { displayAdSlots } from "@/lib/ads/config";
 import { AdSlot } from "./AdSlot";
+
 export function BannerAd({ className = "" }: { className?: string }) {
   return (
     <AdSlot
-      slot={process.env.NEXT_PUBLIC_ADSENSE_BANNER_SLOT}
+      slot={displayAdSlots.banner}
       format="banner"
       className={className}
     />

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { BannerAd } from "@/components/ads/BannerAd";
 import { SidebarAd } from "@/components/ads/SidebarAd";
+import { displayAdSlots, hasSidebarAd } from "@/lib/ads/config";
 import { faqItems, qrTypes } from "@/lib/seo/content";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
@@ -98,7 +99,9 @@ export function MarketingPage() {
           id="how-it-works"
           className="bg-slate-50 py-20 dark:bg-slate-900/50"
         >
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1fr_300px] sm:px-6">
+          <div
+            className={`mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 ${hasSidebarAd ? "lg:grid-cols-[1fr_300px]" : ""}`}
+          >
             <div>
               <h2 className="text-3xl font-black sm:text-4xl">
                 How to create a QR code
@@ -182,10 +185,7 @@ export function MarketingPage() {
           </div>
         </section>
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <AdSlot
-            slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
-            format="rectangle"
-          />
+          <AdSlot slot={displayAdSlots.content} format="rectangle" />
         </div>
         <section className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
           <div className="text-center">
@@ -211,10 +211,7 @@ export function MarketingPage() {
               </details>
             ))}
           </div>
-          <AdSlot
-            slot={process.env.NEXT_PUBLIC_ADSENSE_FAQ_SLOT}
-            className="my-8"
-          />{" "}
+          <AdSlot slot={displayAdSlots.faq} className="my-8" />{" "}
           <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200 px-6 dark:divide-slate-800 dark:border-slate-800">
             {faqItems.slice(3).map((item) => (
               <details key={item.question} className="group py-5">
