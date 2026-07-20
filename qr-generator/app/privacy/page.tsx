@@ -32,9 +32,11 @@ export default function PrivacyPolicy() {
           <p className="mt-3 leading-8">
             The generator can save QR generation history in local storage on
             your device, except WiFi payloads, which are not added to history.
-            Saved history remains until you clear it using the interface or
-            browser controls. Do not use a shared device for sensitive payloads
-            unless you clear its storage afterward.
+            When the generator loads, it also removes any WiFi entries saved by
+            older versions while leaving other history entries intact. Saved
+            history remains until you clear it using the interface or browser
+            controls. Do not use a shared device for sensitive payloads unless
+            you clear its storage afterward.
           </p>
         </section>
         <section className="mt-10">

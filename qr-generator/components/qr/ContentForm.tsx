@@ -36,6 +36,8 @@ const Field = ({
   label: string;
   children: React.ReactNode;
 }) => (
+  // The interactive control is passed as a child, so the label wraps it at runtime.
+  // biome-ignore lint/a11y/noLabelWithoutControl: controls are supplied through children
   <label className="block space-y-1.5">
     <span className="text-sm font-semibold text-slate-700">{label}</span>
     {children}
@@ -101,7 +103,7 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
 
   const handleContentTypeChange = (type: QRContent["type"]) => {
     const nextContent = createInitialQRContent(type);
-    if (type === "event" && typeof nextContent.data === "object") {
+    if (nextContent.type === "event") {
       nextContent.data.timezone =
         Intl.DateTimeFormat().resolvedOptions().timeZone;
     }
@@ -427,16 +429,18 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
   return (
     <div className="bg-white rounded-2xl border border-slate-200 p-4">
       <div className="space-y-4">
-        <div>
-          <label className="text-sm font-semibold mb-3 block text-slate-700">
+        <fieldset>
+          <legend className="text-sm font-semibold mb-3 block text-slate-700">
             QR content type
-          </label>
+          </legend>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {contentTypes.map((type) => (
               <button
                 type="button"
                 key={type.value}
                 onClick={() => handleContentTypeChange(type.value)}
+                aria-pressed={content.type === type.value}
+                aria-label={`${type.label} QR code`}
                 className={`p-3 rounded-xl border text-xs flex flex-col items-center gap-1 transition-colors ${content.type === type.value ? "border-teal-500 bg-teal-50 text-teal-700" : "border-slate-300 text-slate-600 hover:border-teal-300"}`}
               >
                 <span className="text-base">{type.icon}</span>
@@ -444,7 +448,7 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
               </button>
             ))}
           </div>
-        </div>
+        </fieldset>
         <div className="pt-4 border-t border-slate-200">
           {renderContentForm()}
         </div>

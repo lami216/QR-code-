@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { historyWithSafeItem } from "../lib/qr/history";
+import { historyWithSafeItem, sanitizeHistory } from "../lib/qr/history";
 import {
   createInitialQRContent,
   QR_TYPE_KEYS,
   resolveQRType,
 } from "../lib/qr/modes";
 import { serializeQRContent } from "../lib/qr/serialize";
+import { generateQRSVG } from "../lib/qr/svg";
 import { siteUrl } from "../lib/seo/metadata";
 import { specializedTools, toolPath } from "../lib/seo/tools";
 import type { QRHistoryItem, QRStyling } from "../types";
@@ -74,8 +75,72 @@ test("serializes URL, text, WiFi and current vCard 3.0 output", () => {
         address: "London",
       },
     }),
-    "BEGIN:VCARD\nVERSION:3.0\nFN:Ada Lovelace\nEMAIL:ada@example.com\nTEL:+44123\nORG:Analytical\nTITLE:Programmer\nURL:https://example.com\nADR:London\nEND:VCARD",
+    "BEGIN:VCARD\r\nVERSION:3.0\r\nN:Lovelace;Ada;;;\r\nFN:Ada Lovelace\r\nEMAIL:ada@example.com\r\nTEL:+44123\r\nORG:Analytical\r\nTITLE:Programmer\r\nURL:https://example.com\r\nADR:;;London;;;;\r\nEND:VCARD",
   );
+});
+
+test("serialization safely preserves unicode and escapes structured formats", () => {
+  for (const text of ["English text", "مرحبا بالعالم", "QR 😀"]) {
+    assert.equal(serializeQRContent({ type: "text", data: text }), text);
+  }
+  assert.equal(
+    serializeQRContent({
+      type: "url",
+      data: "https://example.com/path?a=1&b=2",
+    }),
+    "https://example.com/path?a=1&b=2",
+  );
+  assert.equal(
+    serializeQRContent({
+      type: "wifi",
+      data: { ssid: "Office; 5G", password: 'p\\a:ss;"', encryption: "WPA" },
+    }),
+    'WIFI:S:Office\\; 5G;T:WPA;P:p\\\\a\\:ss\\;\\";;',
+  );
+  const event = serializeQRContent({
+    type: "event",
+    data: {
+      title: "Launch, Europe",
+      description: "Line one\nLine two; details",
+      location: "Café",
+      startTime: "2026-08-01T09:30",
+      endTime: "2026-08-01T10:30",
+      timezone: "Europe/Paris",
+    },
+  });
+  assert.match(event, /DTSTART:20260801T0930\r\n/);
+  assert.match(event, /DESCRIPTION:Line one\\nLine two\\; details/);
+});
+
+test("SVG export is valid vector structure without embedded raster data", () => {
+  const svg = generateQRSVG({ type: "text", data: "Vector test مرحبا" }, style);
+  assert.match(svg, /^<\?xml version="1\.0" encoding="UTF-8"\?>/);
+  assert.match(svg, /<svg[^>]+viewBox=/);
+  assert.match(svg, /<(rect|circle)\b/);
+  assert.doesNotMatch(svg, /<image\b|data:image\/png/i);
+  assert.equal((svg.match(/<svg\b/g) ?? []).length, 1);
+  assert.equal((svg.match(/<\/svg>/g) ?? []).length, 1);
+});
+
+test("legacy history migration removes only WiFi entries", () => {
+  const safe: QRHistoryItem = {
+    id: "text",
+    content: { type: "text", data: "keep me" },
+    styling: style,
+    timestamp: 2,
+  };
+  const legacyWifi: QRHistoryItem = {
+    id: "wifi",
+    content: {
+      type: "wifi",
+      data: { ssid: "Home", password: "old-secret", encryption: "WPA" },
+    },
+    styling: style,
+    timestamp: 1,
+  };
+  const migrated = sanitizeHistory([legacyWifi, safe]);
+  assert.deepEqual(migrated, [safe]);
+  assert.doesNotMatch(JSON.stringify(migrated), /old-secret/);
 });
 
 test("WiFi payloads are never added to local history data", () => {

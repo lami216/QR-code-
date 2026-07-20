@@ -1,9 +1,9 @@
-import type { QRType } from "../lib/qr/modes";
-
-export interface QRContent {
-  type: QRType;
-  data: string | Record<string, any>;
-}
+export type QRContent =
+  | { type: "text" | "url" | "phone"; data: string }
+  | { type: "email"; data: EmailData }
+  | { type: "wifi"; data: WiFiConfig }
+  | { type: "vcard"; data: VCardData }
+  | { type: "event"; data: EventData };
 
 export interface QRStyling {
   foreground: string;
