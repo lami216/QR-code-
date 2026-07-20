@@ -1,4 +1,8 @@
-export const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+const configuredClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID?.trim();
+
+export const adsenseClient = configuredClient?.startsWith("ca-pub-")
+  ? configuredClient
+  : undefined;
 
 export const displayAdSlots = {
   banner: process.env.NEXT_PUBLIC_ADSENSE_BANNER_SLOT,

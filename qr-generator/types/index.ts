@@ -1,5 +1,7 @@
+import type { QRType } from "../lib/qr/modes";
+
 export interface QRContent {
-  type: 'text' | 'url' | 'email' | 'phone' | 'wifi' | 'vcard' | 'event';
+  type: QRType;
   data: string | Record<string, any>;
 }
 
@@ -7,15 +9,15 @@ export interface QRStyling {
   foreground: string;
   background: string;
   transparent: boolean;
-  errorCorrection: 'L' | 'M' | 'Q' | 'H';
+  errorCorrection: "L" | "M" | "Q" | "H";
   size: number;
   margin: number;
-  colorMode?: 'solid' | 'gradient';
+  colorMode?: "solid" | "gradient";
   gradientStart?: string;
   gradientEnd?: string;
-  moduleStyle?: 'square' | 'rounded' | 'dots';
-  eyeStyle?: 'square' | 'rounded' | 'dots';
-  previewStyle?: 'card' | 'phone' | 'poster';
+  moduleStyle?: "square" | "rounded" | "dots";
+  eyeStyle?: "square" | "rounded" | "dots";
+  previewStyle?: "card" | "phone" | "poster";
   template?: string;
   logo?: File | null;
 }
@@ -31,7 +33,7 @@ export interface QRHistoryItem {
 export interface WiFiConfig {
   ssid: string;
   password: string;
-  encryption: 'WPA' | 'WEP' | 'nopass';
+  encryption: "WPA" | "WEP" | "nopass";
 }
 
 export interface VCardData {

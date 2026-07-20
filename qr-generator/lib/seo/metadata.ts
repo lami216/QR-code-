@@ -1,14 +1,29 @@
 import type { Metadata } from "next";
 import type { Guide } from "./guides";
 
+const productionOrigin = "https://studioqr.online";
+
 export const siteConfig = {
   name: "QR Studio",
   description:
     "A free, privacy-friendly custom QR code generator for URLs, WiFi, text, contacts and more.",
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-    "https://qr-studio.app",
+  url: normalizeSiteOrigin(process.env.NEXT_PUBLIC_SITE_URL),
 };
+
+function normalizeSiteOrigin(value?: string): string {
+  if (!value) return productionOrigin;
+
+  try {
+    const origin = new URL(value).origin;
+    return origin === "null" ? productionOrigin : origin;
+  } catch {
+    return productionOrigin;
+  }
+}
+
+export function siteUrl(path = "/"): string {
+  return new URL(path, `${siteConfig.url}/`).toString();
+}
 
 export function pageMetadata({
   title,
@@ -19,7 +34,7 @@ export function pageMetadata({
   description: string;
   path: string;
 }): Metadata {
-  const url = `${siteConfig.url}${path === "/" ? "" : path}`;
+  const url = siteUrl(path);
   return {
     title,
     description,
@@ -94,7 +109,7 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `${siteConfig.url}${item.path === "/" ? "" : item.path}`,
+      item: siteUrl(item.path),
     })),
   };
 }
@@ -109,6 +124,6 @@ export function articleJsonLd(guide: Guide) {
     dateModified: guide.updated,
     author: { "@type": "Organization", name: "QR Studio maintainers" },
     publisher: { "@type": "Organization", name: siteConfig.name },
-    mainEntityOfPage: `${siteConfig.url}/guides/${guide.slug}`,
+    mainEntityOfPage: siteUrl(`/guides/${guide.slug}`),
   };
 }

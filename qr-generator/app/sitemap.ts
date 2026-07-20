@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { siteConfig } from "@/lib/seo/metadata";
+import { siteUrl } from "@/lib/seo/metadata";
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "",
@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/guides/qr-code-quiet-zone",
   ];
   return routes.map((route) => ({
-    url: `${siteConfig.url}${route}`,
+    url: siteUrl(route || "/"),
     lastModified: new Date("2026-07-19"),
     changeFrequency: route === "" ? "weekly" : "monthly",
     priority: route === "" ? 1 : route.includes("generator") ? 0.9 : 0.7,
