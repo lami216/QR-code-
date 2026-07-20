@@ -41,3 +41,9 @@ import { QRGenerator } from "@/components/qr/QRGenerator";
 ```
 
 The prop type is `QRType`, derived from `QR_TYPE_KEYS`. Route/config values from untyped sources should pass through `isQRType` or `resolveQRType`; invalid values safely become `text`. Future route files should remain Server Components and place unique content around this client boundary rather than duplicating the generator.
+
+## Phase 2 architecture
+
+`lib/seo/tools.ts` is the typed source of truth for exactly five supported tool routes. Each route remains a Server Component, exports metadata and supplies readable route-specific content to `components/tools/ToolPage.tsx`. `ToolPage` renders one route H1 and passes a typed `initialType` with `showHeader={false}` to the unchanged shared interactive boundary. `/generator` retains the generator's default H1.
+
+Serialization is now exported as a pure helper for focused regression tests without copying encoding logic. Validation no longer relies on `any` casts. The storage layer refuses WiFi history items, so SSIDs and passwords are not newly written to local history. Other payload types retain existing local-history behavior.

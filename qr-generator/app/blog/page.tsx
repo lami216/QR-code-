@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
 import { SiteHeader } from "@/components/marketing/SiteHeader";
+import { ToolLinks } from "@/components/tools/ToolLinks";
 import { guides } from "@/lib/seo/guides";
 import { pageMetadata } from "@/lib/seo/metadata";
 export const metadata: Metadata = pageMetadata({
@@ -48,6 +49,7 @@ export default function Page() {
             </article>
           ))}
         </div>
+        <ToolLinks heading="Create the QR code you need" />
       </main>
       <SiteFooter />
     </div>

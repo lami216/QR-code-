@@ -1,9 +1,9 @@
 // hooks/useStorage.ts
-import { useState, useEffect, useCallback } from 'react';
-import { QRHistoryItem } from '../types';
+import { useCallback, useEffect, useState } from "react";
+import { historyWithSafeItem } from "../lib/qr/history";
+import type { QRHistoryItem } from "../types";
 
-const HISTORY_KEY = 'qrHistory';
-const MAX_HISTORY_ITEMS = 20;
+const HISTORY_KEY = "qrHistory";
 
 export const useStorage = () => {
   const [history, setHistory] = useState<QRHistoryItem[]>([]);
@@ -18,7 +18,7 @@ export const useStorage = () => {
           setHistory(Array.isArray(parsed) ? parsed : []);
         }
       } catch (error) {
-        console.error('Error loading history from localStorage:', error);
+        console.error("Error loading history from localStorage:", error);
         setHistory([]);
       }
     };
@@ -28,22 +28,22 @@ export const useStorage = () => {
 
   // Add to history with duplicate prevention
   const addToHistory = useCallback((item: QRHistoryItem) => {
-    setHistory(prevHistory => {
+    setHistory((prevHistory) => {
       // Remove duplicates based on content and styling
-      const uniqueHistory = prevHistory.filter(existingItem => 
-        !isDuplicateQR(existingItem, item)
+      const uniqueHistory = prevHistory.filter(
+        (existingItem) => !isDuplicateQR(existingItem, item),
       );
-      
+
       // Add new item to beginning and limit to max items
-      const newHistory = [item, ...uniqueHistory].slice(0, MAX_HISTORY_ITEMS);
-      
+      const newHistory = historyWithSafeItem(item, uniqueHistory);
+
       // Save to localStorage
       try {
         localStorage.setItem(HISTORY_KEY, JSON.stringify(newHistory));
       } catch (error) {
-        console.error('Error saving history to localStorage:', error);
+        console.error("Error saving history to localStorage:", error);
       }
-      
+
       return newHistory;
     });
   }, []);
@@ -54,18 +54,18 @@ export const useStorage = () => {
     try {
       localStorage.removeItem(HISTORY_KEY);
     } catch (error) {
-      console.error('Error clearing history from localStorage:', error);
+      console.error("Error clearing history from localStorage:", error);
     }
   }, []);
 
   // Remove single item from history
   const removeFromHistory = useCallback((id: string) => {
-    setHistory(prevHistory => {
-      const newHistory = prevHistory.filter(item => item.id !== id);
+    setHistory((prevHistory) => {
+      const newHistory = prevHistory.filter((item) => item.id !== id);
       try {
         localStorage.setItem(HISTORY_KEY, JSON.stringify(newHistory));
       } catch (error) {
-        console.error('Error updating history in localStorage:', error);
+        console.error("Error updating history in localStorage:", error);
       }
       return newHistory;
     });
@@ -75,7 +75,7 @@ export const useStorage = () => {
     history,
     addToHistory,
     clearHistory,
-    removeFromHistory
+    removeFromHistory,
   };
 };
 

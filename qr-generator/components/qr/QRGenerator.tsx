@@ -6,16 +6,21 @@ import { FaArrowLeft, FaBolt, FaDownload, FaMagic } from "react-icons/fa";
 import { useQRGenerator } from "../../hooks/useQRGenerator";
 import { displayAdSlots, hasSidebarAd } from "../../lib/ads/config";
 import type { QRType } from "../../lib/qr/modes";
+import { hasValidQRContent } from "../../lib/qr/validation";
 import { AdSlot } from "../ads/AdSlot";
 import { SidebarAd } from "../ads/SidebarAd";
+import { ToolLinks } from "../tools/ToolLinks";
 import { QRConfigurator } from "./ContentForm";
 import { DownloadControls } from "./DownloadControls";
 import { QRPreview } from "./QRPreview";
 import { StylingControls } from "./StylingControls";
 
-export type QRGeneratorProps = { initialType?: QRType };
+export type QRGeneratorProps = { initialType?: QRType; showHeader?: boolean };
 
-export function QRGenerator({ initialType }: QRGeneratorProps) {
+export function QRGenerator({
+  initialType,
+  showHeader = true,
+}: QRGeneratorProps) {
   const {
     content,
     setContent,
@@ -34,33 +39,7 @@ export function QRGenerator({ initialType }: QRGeneratorProps) {
     let mounted = true;
 
     const generateWithDelay = async () => {
-      const hasValidContent = () => {
-        if (!content.data) return false;
-
-        if (typeof content.data === "string") {
-          return content.data.trim().length > 0;
-        }
-
-        switch (content.type) {
-          case "wifi":
-            return (content.data as any).ssid?.trim().length > 0;
-          case "email":
-            return (content.data as any).address?.trim().length > 0;
-          case "vcard": {
-            const vcard = content.data as any;
-            return (
-              vcard.firstName?.trim().length > 0 ||
-              vcard.lastName?.trim().length > 0
-            );
-          }
-          case "event":
-            return (content.data as any).title?.trim().length > 0;
-          default:
-            return true;
-        }
-      };
-
-      if (!hasValidContent()) return;
+      if (!hasValidQRContent(content)) return;
 
       await new Promise((resolve) => setTimeout(resolve, 800));
       if (mounted) {
@@ -122,14 +101,17 @@ export function QRGenerator({ initialType }: QRGeneratorProps) {
         )}
 
         {/* Header */}
-        <header className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 dark:from-white dark:to-teal-400 bg-clip-text text-transparent mb-3">
-            QR Studio
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
-            Create and customize your QR code in real-time with instant preview
-          </p>
-        </header>
+        {showHeader && (
+          <header className="text-center mb-8">
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 dark:from-white dark:to-teal-400 bg-clip-text text-transparent mb-3">
+              QR Studio
+            </h1>
+            <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
+              Create and customize your QR code in real-time with instant
+              preview
+            </p>
+          </header>
+        )}
 
         {/* Main Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -214,6 +196,7 @@ export function QRGenerator({ initialType }: QRGeneratorProps) {
             </section>
           </div>
         </div>
+        {showHeader && <ToolLinks heading="Specialized QR generators" />}
         <AdSlot
           slot={displayAdSlots.content}
           format="banner"

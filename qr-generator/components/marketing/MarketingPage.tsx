@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { BannerAd } from "@/components/ads/BannerAd";
 import { SidebarAd } from "@/components/ads/SidebarAd";
+import { ToolLinks } from "@/components/tools/ToolLinks";
 import { displayAdSlots, hasSidebarAd } from "@/lib/ads/config";
 import { faqItems, qrTypes } from "@/lib/seo/content";
 import { SiteFooter } from "./SiteFooter";
@@ -228,6 +229,7 @@ export function MarketingPage() {
             ))}
           </div>
         </section>
+        <ToolLinks />
         <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
           <div className="rounded-3xl bg-gradient-to-r from-teal-700 to-cyan-700 px-6 py-14 text-center text-white sm:px-12">
             <p className="text-sm font-bold uppercase tracking-widest text-teal-100">

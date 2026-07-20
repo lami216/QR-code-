@@ -14,3 +14,12 @@
 | Build | Required | Run and record final production build |
 | Browser/accessibility/scanner tests | Manual | Test deployed mobile, keyboard, dark mode, downloads, logo and every payload |
 | Search Console and sitemap submission | Owner action | Complete only after production validation |
+
+## Phase 2 checks
+
+- [x] Exactly five specialized canonical routes configured and built.
+- [x] Unique title, description, canonical, Open Graph and Twitter values derive from typed configuration.
+- [x] Visible FAQ matches FAQPage JSON-LD; visible breadcrumbs match BreadcrumbList JSON-LD.
+- [x] Homepage, generator, guide hub and specialized pages provide crawlable paths into the tool cluster.
+- [x] Sitemap includes the five canonical routes and no specialized aliases or query URLs.
+- [ ] Validate production-rendered metadata and structured data after deployment.
