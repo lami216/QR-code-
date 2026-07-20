@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo/metadata";
 export const metadata: Metadata = pageMetadata({
-  title: "Create and Download a Custom QR Code",
+  title: "Free QR Code Generator — Create a QR Code Online",
   description:
-    "Generate and customize a QR code for URLs, text, WiFi, contacts, email, phone or events. Download PNG, SVG or PDF free.",
+    "Create a free static QR code for a URL, text, WiFi, contact, email, phone or event. Customize it and download PNG, SVG or PDF without signup.",
   path: "/generator",
 });
 export default function Layout({ children }: { children: React.ReactNode }) {

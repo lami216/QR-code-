@@ -16,6 +16,7 @@
     "lib/qr/serialize.ts",
     "lib/qr/svg.ts",
     "lib/seo/metadata.ts",
+    "lib/seo/guides.ts",
     "lib/seo/tools.ts",
     "types/**/*.ts"
   ]

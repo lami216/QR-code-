@@ -2,9 +2,11 @@ import Link from "next/link";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { BannerAd } from "@/components/ads/BannerAd";
 import { SidebarAd } from "@/components/ads/SidebarAd";
+import { GuideCard } from "@/components/seo/GuideCard";
 import { ToolLinks } from "@/components/tools/ToolLinks";
 import { displayAdSlots, hasSidebarAd } from "@/lib/ads/config";
 import { faqItems, qrTypes } from "@/lib/seo/content";
+import { guides } from "@/lib/seo/guides";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
@@ -39,12 +41,12 @@ export function MarketingPage() {
               Free • No signup • Browser-based
             </p>
             <h1 className="text-balance text-4xl font-black tracking-tight sm:text-6xl lg:text-7xl">
-              Free QR code generator for polished, custom codes
+              QR tools for creating codes that work in the real world
             </h1>
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl dark:text-slate-300">
-              Create a QR code online for a link, WiFi network, contact, email
-              or event. Customize the design, preview it instantly and download
-              a production-ready file.
+              Use the all-purpose generator or a focused tool for links, WiFi,
+              contacts, text and logos. Customize the result, export it and use
+              practical guidance to test it before publishing.
             </p>
             <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
@@ -96,6 +98,7 @@ export function MarketingPage() {
             ))}
           </div>
         </section>
+        <ToolLinks heading="Popular QR tools" />
         <section
           id="how-it-works"
           className="bg-slate-50 py-20 dark:bg-slate-900/50"
@@ -188,6 +191,30 @@ export function MarketingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <AdSlot slot={displayAdSlots.content} format="rectangle" />
         </div>
+        <section className="bg-slate-50 py-20 dark:bg-slate-900/50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="max-w-3xl">
+              <h2 className="text-3xl font-black sm:text-4xl">
+                Guides for reliable QR codes
+              </h2>
+              <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">
+                Learn how to choose a print size, diagnose scan failures and
+                understand what a static QR code can—and cannot—do.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-5 md:grid-cols-3">
+              {guides.slice(0, 3).map((guide) => (
+                <GuideCard key={guide.slug} guide={guide} />
+              ))}
+            </div>
+            <Link
+              className="mt-7 inline-flex font-bold text-teal-700 underline dark:text-teal-300"
+              href="/guides"
+            >
+              Browse all QR code guides
+            </Link>
+          </div>
+        </section>
         <section className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
           <div className="text-center">
             <h2 className="text-3xl font-black sm:text-4xl">
@@ -229,7 +256,6 @@ export function MarketingPage() {
             ))}
           </div>
         </section>
-        <ToolLinks />
         <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
           <div className="rounded-3xl bg-gradient-to-r from-teal-700 to-cyan-700 px-6 py-14 text-center text-white sm:px-12">
             <p className="text-sm font-bold uppercase tracking-widest text-teal-100">
