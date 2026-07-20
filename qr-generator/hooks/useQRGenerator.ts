@@ -4,6 +4,29 @@ import { createInitialQRContent, type QRType } from "../lib/qr/modes";
 import type { QRContent, QRHistoryItem, QRStyling } from "../types";
 import { useStorage } from "./useStorage";
 
+const generateTitle = (qrContent: QRContent): string => {
+  switch (qrContent.type) {
+    case "text":
+      return `Text: ${qrContent.data.slice(0, 30)}${qrContent.data.length > 30 ? "..." : ""}`;
+    case "url":
+      try {
+        return `URL: ${new URL(qrContent.data).hostname}`;
+      } catch {
+        return `URL: ${qrContent.data.slice(0, 30)}...`;
+      }
+    case "email":
+      return `Email: ${qrContent.data.address}`;
+    case "phone":
+      return `Phone: ${qrContent.data}`;
+    case "wifi":
+      return `WiFi: ${qrContent.data.ssid}`;
+    case "vcard":
+      return `Contact: ${qrContent.data.firstName} ${qrContent.data.lastName || ""}`.trim();
+    case "event":
+      return `Event: ${qrContent.data.title}`;
+  }
+};
+
 export const useQRGenerator = (initialType?: QRType) => {
   const [content, setContent] = useState<QRContent>(() =>
     createInitialQRContent(initialType),
@@ -182,31 +205,6 @@ export const useQRGenerator = (initialType?: QRType) => {
     },
     [content, styling, addToHistory],
   );
-
-  const generateTitle = (qrContent: QRContent): string => {
-    switch (qrContent.type) {
-      case "text":
-        return `Text: ${(qrContent.data as string).slice(0, 30)}${(qrContent.data as string).length > 30 ? "..." : ""}`;
-      case "url":
-        try {
-          return `URL: ${new URL(qrContent.data as string).hostname}`;
-        } catch {
-          return `URL: ${(qrContent.data as string).slice(0, 30)}...`;
-        }
-      case "email":
-        return `Email: ${(qrContent.data as any).address}`;
-      case "phone":
-        return `Phone: ${qrContent.data as string}`;
-      case "wifi":
-        return `WiFi: ${(qrContent.data as any).ssid}`;
-      case "vcard":
-        return `Contact: ${(qrContent.data as any).firstName} ${(qrContent.data as any).lastName || ""}`.trim();
-      case "event":
-        return `Event: ${(qrContent.data as any).title}`;
-      default:
-        return "QR Code";
-    }
-  };
 
   // Clear error manually
   const clearError = useCallback(() => {

@@ -84,7 +84,11 @@ export function QRGenerator({
       <div className="container mx-auto px-4 py-6">
         {/* Error Alert */}
         {error && (
-          <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-xl flex justify-between items-center shadow-lg animate-fade-in">
+          <div
+            role="alert"
+            aria-live="assertive"
+            className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-xl flex justify-between items-center shadow-lg animate-fade-in"
+          >
             <span className="flex items-center space-x-2">
               <FaBolt className="w-4 h-4 flex-shrink-0" />
               <span className="text-sm sm:text-base">{error}</span>
@@ -189,6 +193,7 @@ export function QRGenerator({
 
                 <DownloadControls
                   qrCode={qrCode}
+                  content={content}
                   styling={styling}
                   isLoading={isLoading}
                 />

@@ -20,3 +20,15 @@ The planned WiFi, URL, vCard, logo and text specialized routes do not exist yet.
 - Added unique metadata plus matching FAQPage and BreadcrumbList data for each route.
 - Linked the tool cluster from home, `/generator` and the guide hub, and added all five routes to the sitemap.
 - Added Node test coverage for modes, route configuration, serialization, WiFi history privacy and production URLs.
+
+## Completed in Phase 3
+
+- Replaced PNG-wrapped SVG downloads with matrix-derived vector SVG output.
+- Hardened WiFi, vCard, event, URL and Unicode text serialization tests.
+- Migrated legacy local history to remove WiFi entries without deleting safe history.
+- Improved generator semantics, typed content handling and download controls.
+- Audited performance, privacy, accessibility, browser compatibility and remaining technical debt.
+
+Playwright installation was blocked by the environment's package-registry policy,
+so automated cross-browser claims are intentionally deferred. No new SEO route or
+ranking claim was added in this phase.

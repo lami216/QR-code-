@@ -1,106 +1,91 @@
-import React from 'react';
-import { QRStyling } from '../../types';
-import { downloadQRCode } from '../../lib/utils/download';
-import { FaFileImage, FaDrawPolygon, FaFilePdf, FaShareAlt, FaDownload } from 'react-icons/fa';
+import type React from "react";
+import {
+  FaDownload,
+  FaDrawPolygon,
+  FaFileImage,
+  FaFilePdf,
+  FaShareAlt,
+} from "react-icons/fa";
+import { downloadQRCode } from "../../lib/utils/download";
+import type { QRContent, QRStyling } from "../../types";
 
 interface DownloadControlsProps {
   qrCode: string;
   styling: QRStyling;
+  content: QRContent;
   isLoading?: boolean;
 }
 
 export const DownloadControls: React.FC<DownloadControlsProps> = ({
   qrCode,
   styling,
+  content,
   isLoading = false,
 }) => {
-  const handleDownload = async (format: 'PNG' | 'SVG' | 'PDF') => {
+  const handleDownload = async (format: "PNG" | "SVG" | "PDF") => {
     if (!qrCode) {
-      alert('Please generate a QR code first');
+      alert("Please generate a QR code first");
       return;
     }
 
     try {
-      await downloadQRCode(qrCode, format, styling);
+      await downloadQRCode(qrCode, format, styling, content);
     } catch (error) {
-      console.error('Download failed:', error);
-      
+      console.error("Download failed:", error);
+
       // Fallback to alternative download if main function fails
       await handleAlternativeDownload(format);
     }
   };
 
   // Alternative download implementation
-  const handleAlternativeDownload = async (format: 'PNG' | 'SVG' | 'PDF') => {
+  const handleAlternativeDownload = async (format: "PNG" | "SVG" | "PDF") => {
     if (!qrCode) return;
 
     try {
-      if (format === 'PNG') {
+      if (format === "PNG") {
         // PNG download
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = qrCode;
         link.download = `qrcode-${Date.now()}.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-      } else if (format === 'SVG') {
-        // Simple SVG download using the PNG image
-        const svgContent = generateSimpleSVG(qrCode);
-        downloadSVG(svgContent, `qrcode-${Date.now()}.svg`);
-      } else if (format === 'PDF') {
+      } else if (format === "SVG") {
+        throw new Error("Vector SVG export failed");
+      } else if (format === "PDF") {
         // PDF generation
         await generatePDF(qrCode);
       }
     } catch (error) {
-      console.error('Alternative download failed:', error);
-      alert('Download failed. Please try again.');
+      console.error("Alternative download failed:", error);
+      alert("Download failed. Please try again.");
     }
-  };
-
-  const generateSimpleSVG = (qrCodeUrl: string): string => {
-    // Create a simple SVG wrapper around the PNG image
-    return `
-      <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-        <image href="${qrCodeUrl}" width="200" height="200" />
-      </svg>
-    `.trim();
-  };
-
-  const downloadSVG = (svgContent: string, filename: string) => {
-    const blob = new Blob([svgContent], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
   };
 
   const generatePDF = async (qrCodeUrl: string) => {
     try {
       // Dynamically import jsPDF
-      const { default: jsPDF } = await import('jspdf');
-      
+      const { default: jsPDF } = await import("jspdf");
+
       const pdf = new jsPDF();
       const pageWidth = pdf.internal.pageSize.getWidth();
-      
+
       // Add title
       pdf.setFontSize(16);
-      pdf.text('QR Code', pageWidth / 2, 20, { align: 'center' });
+      pdf.text("QR Code", pageWidth / 2, 20, { align: "center" });
 
       // Convert QR code to image data
       const imgData = await urlToImageData(qrCodeUrl);
-      
+
       // Add QR code image (max width 150px, centered)
       const imgWidth = 150;
       const x = (pageWidth - imgWidth) / 2;
-      pdf.addImage(imgData, 'PNG', x, 30, imgWidth, imgWidth);
+      pdf.addImage(imgData, "PNG", x, 30, imgWidth, imgWidth);
 
       pdf.save(`qrcode-${Date.now()}.pdf`);
     } catch (error) {
-      console.error('PDF generation failed:', error);
+      console.error("PDF generation failed:", error);
       throw error;
     }
   };
@@ -108,17 +93,17 @@ export const DownloadControls: React.FC<DownloadControlsProps> = ({
   const urlToImageData = (url: string): Promise<string> => {
     return new Promise((resolve, reject) => {
       const img = new Image();
-      img.crossOrigin = 'anonymous';
+      img.crossOrigin = "anonymous";
       img.onload = () => {
-        const canvas = document.createElement('canvas');
+        const canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
         if (ctx) {
           ctx.drawImage(img, 0, 0);
-          resolve(canvas.toDataURL('image/png'));
+          resolve(canvas.toDataURL("image/png"));
         } else {
-          reject(new Error('Could not get canvas context'));
+          reject(new Error("Could not get canvas context"));
         }
       };
       img.onerror = reject;
@@ -133,49 +118,49 @@ export const DownloadControls: React.FC<DownloadControlsProps> = ({
       if (navigator.share) {
         const response = await fetch(qrCode);
         const blob = await response.blob();
-        const file = new File([blob], 'qrcode.png', { type: 'image/png' });
+        const file = new File([blob], "qrcode.png", { type: "image/png" });
 
         await navigator.share({
-          title: 'QR Code',
-          text: 'Check out this QR code I generated',
+          title: "QR Code",
+          text: "Check out this QR code I generated",
           files: [file],
         });
       } else {
-        handleDownload('PNG');
+        handleDownload("PNG");
       }
     } catch (error) {
-      console.error('Share failed:', error);
-      handleDownload('PNG');
+      console.error("Share failed:", error);
+      handleDownload("PNG");
     }
   };
 
   const downloadOptions: {
-    format: 'PNG' | 'SVG' | 'PDF';
+    format: "PNG" | "SVG" | "PDF";
     label: string;
     description: string;
     icon: React.ReactNode;
     color: string;
   }[] = [
     {
-      format: 'PNG',
-      label: 'PNG',
-      description: 'High quality image',
+      format: "PNG",
+      label: "PNG",
+      description: "High quality image",
       icon: <FaFileImage className="w-5 h-5" />,
-      color: 'from-blue-500 to-blue-600',
+      color: "from-blue-500 to-blue-600",
     },
     {
-      format: 'SVG',
-      label: 'SVG',
-      description: 'Scalable vector',
+      format: "SVG",
+      label: "SVG",
+      description: "Scalable vector",
       icon: <FaDrawPolygon className="w-5 h-5" />,
-      color: 'from-purple-500 to-purple-600',
+      color: "from-purple-500 to-purple-600",
     },
     {
-      format: 'PDF',
-      label: 'PDF',
-      description: 'Document ready',
+      format: "PDF",
+      label: "PDF",
+      description: "Document ready",
       icon: <FaFilePdf className="w-5 h-5" />,
-      color: 'from-red-500 to-red-600',
+      color: "from-red-500 to-red-600",
     },
   ];
 
@@ -197,6 +182,7 @@ export const DownloadControls: React.FC<DownloadControlsProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {downloadOptions.map((option) => (
           <button
+            type="button"
             key={option.format}
             onClick={() => handleDownload(option.format)}
             disabled={isDisabled}
@@ -223,6 +209,7 @@ export const DownloadControls: React.FC<DownloadControlsProps> = ({
       {/* Share Button */}
       <div className="text-center pt-4 border-t border-gray-200 dark:border-gray-700">
         <button
+          type="button"
           onClick={handleShare}
           disabled={isDisabled}
           className={`
@@ -240,7 +227,9 @@ export const DownloadControls: React.FC<DownloadControlsProps> = ({
 
         {isDisabled && (
           <p className="text-gray-500 dark:text-gray-400 text-sm mt-3">
-            {isLoading ? 'Generating QR code...' : 'Generate a QR code to enable downloads'}
+            {isLoading
+              ? "Generating QR code..."
+              : "Generate a QR code to enable downloads"}
           </p>
         )}
       </div>

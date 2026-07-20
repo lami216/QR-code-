@@ -1,6 +1,6 @@
 // hooks/useStorage.ts
 import { useCallback, useEffect, useState } from "react";
-import { historyWithSafeItem } from "../lib/qr/history";
+import { historyWithSafeItem, sanitizeHistory } from "../lib/qr/history";
 import type { QRHistoryItem } from "../types";
 
 const HISTORY_KEY = "qrHistory";
@@ -14,8 +14,10 @@ export const useStorage = () => {
       try {
         const stored = localStorage.getItem(HISTORY_KEY);
         if (stored) {
-          const parsed = JSON.parse(stored);
-          setHistory(Array.isArray(parsed) ? parsed : []);
+          const safeHistory = sanitizeHistory(JSON.parse(stored));
+          setHistory(safeHistory);
+          // Persist the migration immediately so legacy WiFi passwords do not remain.
+          localStorage.setItem(HISTORY_KEY, JSON.stringify(safeHistory));
         }
       } catch (error) {
         console.error("Error loading history from localStorage:", error);
