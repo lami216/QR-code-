@@ -16,3 +16,7 @@ npm run dev
 Set `NEXT_PUBLIC_SITE_URL=https://studioqr.online`. Optional fixed-position AdSense uses `NEXT_PUBLIC_ADSENSE_CLIENT_ID` and the `NEXT_PUBLIC_ADSENSE_{BANNER,CONTENT,SIDEBAR,FAQ}_SLOT` variables. The AdSense script is omitted without a valid client ID, and individual slots are omitted without a slot ID. Do not add publisher IDs to source control.
 
 See the repository README and `docs/` for the architecture audit, Phase 1 report, SEO decisions and manual validation requirements.
+
+## Phase 2 tools and tests
+
+The first focused routes are `/wifi-qr-code-generator`, `/url-qr-code-generator`, `/vcard-qr-code-generator`, `/qr-code-with-logo` and `/text-qr-code-generator`. They share the same client generator and use server-rendered route metadata and guidance. `npm test` compiles and runs the Node test suite. WiFi payloads are never added to local QR history.

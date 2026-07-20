@@ -31,10 +31,10 @@ export default function PrivacyPolicy() {
           <h2 className="text-2xl font-black">Browser storage</h2>
           <p className="mt-3 leading-8">
             The generator can save QR generation history in local storage on
-            your device. This supports the history feature and remains until you
-            clear it using the interface or browser controls. Do not use a
-            shared device for sensitive payloads unless you clear its storage
-            afterward.
+            your device, except WiFi payloads, which are not added to history.
+            Saved history remains until you clear it using the interface or
+            browser controls. Do not use a shared device for sensitive payloads
+            unless you clear its storage afterward.
           </p>
         </section>
         <section className="mt-10">

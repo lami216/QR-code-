@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "incremental": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": ".test-dist",
+    "rootDir": ".",
+    "isolatedModules": false
+  },
+  "include": [
+    "tests/**/*.ts",
+    "lib/qr/history.ts",
+    "lib/qr/modes.ts",
+    "lib/qr/serialize.ts",
+    "lib/seo/metadata.ts",
+    "lib/seo/tools.ts",
+    "types/**/*.ts"
+  ]
+}

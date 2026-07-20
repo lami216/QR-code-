@@ -38,3 +38,7 @@ npm run build
 ```
 
 There is currently no automated unit or browser-test suite. See `docs/GENERATOR_ARCHITECTURE_AUDIT.md`, `docs/PHASE_1_REPORT.md` and the SEO documents for validation limitations and owner actions. No specialized tool routes are included in Phase 1.
+
+## Specialized tools (Phase 2)
+
+QR Studio provides exactly five focused Server Component routes: WiFi, URL, vCard, logo and text generators. Each uses the shared `QRGenerator` with a typed initial mode. Run `npm test` for the lightweight Node/TypeScript regression suite. WiFi payloads are intentionally excluded from browser history.
