@@ -1,6 +1,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { SiteFooter } from "@/components/marketing/SiteFooter";
+import { SiteHeader } from "@/components/marketing/SiteHeader";
 import { QRGenerator } from "@/components/qr/QRGenerator";
+import { guides } from "@/lib/seo/guides";
 import { breadcrumbJsonLd, jsonLd, safeJsonLd } from "@/lib/seo/metadata";
 import { type ToolConfig, toolPath, tools } from "@/lib/seo/tools";
 
@@ -18,6 +21,7 @@ export function ToolPage({
   ];
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
+      <SiteHeader />
       <script type="application/ld+json">
         {safeJsonLd(breadcrumbJsonLd(crumbs))}
       </script>
@@ -97,6 +101,19 @@ export function ToolPage({
                   Open the all-purpose QR generator
                 </Link>
               </li>
+              {guides
+                .filter((guide) => guide.relatedTools.includes(tool.slug))
+                .slice(0, 2)
+                .map((guide) => (
+                  <li key={guide.slug}>
+                    <Link
+                      className="block rounded-xl border border-slate-200 p-4 font-bold text-teal-700 dark:border-slate-700 dark:text-teal-300"
+                      href={`/guides/${guide.slug}`}
+                    >
+                      {guide.title}
+                    </Link>
+                  </li>
+                ))}
               <li>
                 <Link
                   className="block rounded-xl border border-slate-200 p-4 font-bold text-teal-700 dark:border-slate-700 dark:text-teal-300"
@@ -109,6 +126,7 @@ export function ToolPage({
           </section>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

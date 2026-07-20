@@ -21,7 +21,8 @@ export function SiteHeader() {
         </Link>
         <div className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex dark:text-slate-300">
           <Link href="/generator">Generator</Link>
-          <Link href="/blog">Guides</Link>
+          <Link href="/generator#qr-tools-heading">QR tools</Link>
+          <Link href="/guides">Guides</Link>
           <Link href="/about">About</Link>
         </div>
         <Link

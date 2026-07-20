@@ -14,7 +14,9 @@ export function SiteFooter() {
           <p className="font-semibold text-white">Tools & resources</p>
           <div className="mt-3 grid gap-2 text-sm">
             <Link href="/generator">QR generator</Link>
-            <Link href="/blog">QR code guides</Link>
+            <Link href="/wifi-qr-code-generator">WiFi QR tool</Link>
+            <Link href="/url-qr-code-generator">URL QR tool</Link>
+            <Link href="/guides">QR code guides</Link>
           </div>
         </div>
         <div>

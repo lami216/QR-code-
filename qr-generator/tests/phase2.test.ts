@@ -8,6 +8,7 @@ import {
 } from "../lib/qr/modes";
 import { serializeQRContent } from "../lib/qr/serialize";
 import { generateQRSVG } from "../lib/qr/svg";
+import { guides } from "../lib/seo/guides";
 import { siteUrl } from "../lib/seo/metadata";
 import { specializedTools, toolPath } from "../lib/seo/tools";
 import type { QRHistoryItem, QRStyling } from "../types";
@@ -166,4 +167,22 @@ test("site helpers keep canonical tool URLs on production origin", () => {
     assert.ok(
       siteUrl(toolPath(tool.slug)).startsWith("https://studioqr.online/"),
     );
+});
+
+test("Phase 4 guides are unique, substantial, and connected to tools", () => {
+  assert.equal(guides.length, 5);
+  assert.equal(new Set(guides.map((guide) => guide.slug)).size, guides.length);
+  for (const guide of guides) {
+    assert.ok(guide.description.length > 60);
+    assert.ok(guide.sections.length >= 4);
+    assert.ok(guide.related.length >= 2);
+    assert.ok(guide.relatedTools.length >= 1);
+  }
+});
+
+test("all related guide slugs resolve inside the guide registry", () => {
+  const slugs = new Set(guides.map((guide) => guide.slug));
+  for (const guide of guides) {
+    for (const related of guide.related) assert.ok(slugs.has(related));
+  }
 });

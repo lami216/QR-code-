@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
 import { SiteHeader } from "@/components/marketing/SiteHeader";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { guideBySlug, guides } from "@/lib/seo/guides";
 import {
   articleJsonLd,
@@ -10,6 +11,7 @@ import {
   pageMetadata,
   safeJsonLd,
 } from "@/lib/seo/metadata";
+import { toolPath, tools } from "@/lib/seo/tools";
 
 export function generateStaticParams() {
   return guides.map(({ slug }) => ({ slug }));
@@ -39,13 +41,13 @@ export default async function GuidePage({
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
       <SiteHeader />
       <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-        <nav
-          aria-label="Breadcrumb"
-          className="text-sm text-slate-600 dark:text-slate-400"
-        >
-          <Link href="/">Home</Link> / <Link href="/blog">Guides</Link> /{" "}
-          <span aria-current="page">{guide.title}</span>
-        </nav>
+        <Breadcrumbs
+          items={[
+            { name: "Home", path: "/" },
+            { name: "Guides", path: "/guides" },
+            { name: guide.title, path },
+          ]}
+        />
         <article>
           <header className="py-10">
             <p className="font-bold text-teal-700 dark:text-teal-400">
@@ -77,28 +79,37 @@ export default async function GuidePage({
                 </p>
               ))}
               {section.steps && (
-                <ul className="mt-4 list-disc space-y-2 pl-6 text-slate-700 dark:text-slate-300">
+                <ol className="mt-4 list-decimal space-y-2 pl-6 text-slate-700 dark:text-slate-300">
                   {section.steps.map((step) => (
                     <li key={step}>{step}</li>
                   ))}
-                </ul>
+                </ol>
               )}
             </section>
           ))}
           <aside className="my-10 rounded-2xl bg-teal-50 p-6 dark:bg-teal-950/40">
-            <h2 className="text-xl font-black">
-              Put the guidance into practice
-            </h2>
+            <h2 className="text-xl font-black">Use the relevant QR tools</h2>
             <p className="mt-2">
-              Create the final code, export it and test it in its intended
+              Apply this guidance, then test the exact export in its intended
               setting.
             </p>
-            <Link
-              className="mt-4 inline-flex rounded-xl bg-teal-700 px-5 py-3 font-bold text-white"
-              href="/generator"
-            >
-              Open the free QR generator
-            </Link>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {guide.relatedTools.map((slug) => (
+                <Link
+                  key={slug}
+                  className="rounded-xl bg-teal-700 px-5 py-3 font-bold text-white"
+                  href={toolPath(slug)}
+                >
+                  {tools[slug].heading}
+                </Link>
+              ))}
+              <Link
+                className="rounded-xl border border-teal-700 px-5 py-3 font-bold text-teal-800 dark:text-teal-200"
+                href="/generator"
+              >
+                All-purpose generator
+              </Link>
+            </div>
           </aside>
           <section>
             <h2 className="text-2xl font-black">Related guides</h2>
@@ -128,7 +139,7 @@ export default async function GuidePage({
           {safeJsonLd(
             breadcrumbJsonLd([
               { name: "Home", path: "/" },
-              { name: "Guides", path: "/blog" },
+              { name: "Guides", path: "/guides" },
               { name: guide.title, path },
             ]),
           )}

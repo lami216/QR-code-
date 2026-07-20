@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { guides } from "@/lib/seo/guides";
 import { siteUrl } from "@/lib/seo/metadata";
 import { specializedTools, toolPath } from "@/lib/seo/tools";
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -6,13 +7,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/generator",
     "/about",
-    "/blog",
+    "/guides",
     "/privacy",
     "/terms",
     "/contact",
-    "/guides/qr-code-not-scanning",
-    "/guides/best-qr-code-size-for-print",
-    "/guides/qr-code-quiet-zone",
+    ...guides.map((guide) => `/guides/${guide.slug}`),
     ...specializedTools.map((tool) => toolPath(tool.slug)),
   ];
   return routes.map((route) => ({
