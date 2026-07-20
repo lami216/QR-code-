@@ -1,12 +1,11 @@
-# External owner actions
-All are **NEEDS OWNER ACTION** until evidence exists.
+# SEO and owner actions
 
-1. Set and verify the final HTTPS domain/preferred hostname and `NEXT_PUBLIC_SITE_URL`.
-2. Add/verify Google Search Console; submit sitemap; inspect primary URLs; monitor crawl/index/canonical issues.
-3. Add/verify Bing Webmaster Tools.
-4. Configure privacy-compliant analytics only if desired, then update disclosures.
-5. Collect real query, impression, CTR and position data; collect Core Web Vitals field data.
-6. Earn legitimate links through relevant directories/resources and useful reference assets; never buy spam links.
-7. Review AdSense, Monetag, consent, cookie, privacy and regional legal obligations.
-8. Confirm truthful maintainer name, support email, jurisdiction and policy owner; fix Contact/Terms.
-9. Reassess content using sufficient Search Console data without promising rankings.
+1. Set `NEXT_PUBLIC_SITE_URL=https://studioqr.online` in production and do not substitute a preview URL.
+2. Deploy the committed build, fetch rendered HTML, and verify canonical, Open Graph, JSON-LD, robots and sitemap URLs.
+3. Test redirects from all three legacy generator aliases.
+4. Decide whether to configure AdSense. If enabled, supply only owner-controlled environment IDs and implement the consent behavior required for served regions.
+5. Have qualified counsel review privacy, advertising, contact and retention disclosures; repository text is not a compliance certification.
+6. Manually test every payload type, scanner behavior, PNG/SVG/PDF downloads, logo output, local-history clearing, keyboard navigation, dark mode and responsive layout.
+7. Measure Lighthouse and real-user Core Web Vitals; do not infer performance from build success.
+8. Verify the canonical domain in Google Search Console and submit `/sitemap.xml` after production checks pass.
+9. Monitor crawl, indexing and canonical reports before expanding content from real search data.

@@ -10,13 +10,31 @@ npm install
 npm run dev
 ```
 
-Set `NEXT_PUBLIC_SITE_URL` to the canonical HTTPS production origin. AdSense is optional and requires `NEXT_PUBLIC_ADSENSE_CLIENT_ID` plus the relevant slot variables. The repository also contains the project's existing Monetag integration; review advertising, consent and privacy obligations before deployment.
+The only production origin is `https://studioqr.online`. Production must set:
 
-## Validation
+```dotenv
+NEXT_PUBLIC_SITE_URL=https://studioqr.online
+```
+
+The value is normalized to an origin without a trailing slash. Do not set preview deployments to their preview hostname because that would intentionally change their metadata origin.
+
+## Optional display advertising
+
+Only fixed, owner-selected Google AdSense slots are supported. No popup, push, redirect or interstitial advertising code is present. The script and each slot stay hidden unless their required values exist; IDs are never supplied by this repository.
+
+```dotenv
+NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-<owner-id>
+NEXT_PUBLIC_ADSENSE_BANNER_SLOT=<owner-slot>
+NEXT_PUBLIC_ADSENSE_CONTENT_SLOT=<owner-slot>
+NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT=<owner-slot>
+NEXT_PUBLIC_ADSENSE_FAQ_SLOT=<owner-slot>
+```
+
+## Validation and architecture
 
 ```bash
 npm run lint
 npm run build
 ```
 
-There is currently no automated unit or browser-test suite. Do not infer test coverage from these two checks. See `docs/` for the SEO audit, implementation status and owner actions.
+There is currently no automated unit or browser-test suite. See `docs/GENERATOR_ARCHITECTURE_AUDIT.md`, `docs/PHASE_1_REPORT.md` and the SEO documents for validation limitations and owner actions. No specialized tool routes are included in Phase 1.
