@@ -179,7 +179,7 @@ export const DownloadControls: React.FC<DownloadControlsProps> = ({
       </div>
 
       {/* Download Buttons Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4">
         {downloadOptions.map((option) => (
           <button
             type="button"
@@ -187,13 +187,13 @@ export const DownloadControls: React.FC<DownloadControlsProps> = ({
             onClick={() => handleDownload(option.format)}
             disabled={isDisabled}
             className={`
-              group relative flex flex-col items-center justify-center p-4 rounded-2xl
+              group relative flex min-w-0 flex-col items-center justify-center rounded-2xl p-2 sm:p-4
               bg-gradient-to-br ${option.color} text-white font-medium
               shadow-lg hover:shadow-xl transform hover:scale-105
               disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed
               disabled:transform-none disabled:shadow-md
               transition-all duration-300 ease-out
-              min-h-[100px]
+              min-h-24 sm:min-h-[100px]
             `}
           >
             <div className="mb-3 p-3 bg-white/20 rounded-2xl group-hover:bg-white/30 transition-colors">

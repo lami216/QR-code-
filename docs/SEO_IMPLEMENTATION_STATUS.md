@@ -32,3 +32,17 @@ The planned WiFi, URL, vCard, logo and text specialized routes do not exist yet.
 Playwright installation was blocked by the environment's package-registry policy,
 so automated cross-browser claims are intentionally deferred. No new SEO route or
 ranking claim was added in this phase.
+
+## Mobile readiness in Phase 5
+
+- Kept one responsive component system and preserved the existing SEO routes,
+  metadata, structured data, sitemap and internal-link architecture.
+- Made Generator, QR tools and Guides discoverable through accessible navigation
+  at mobile widths.
+- Corrected narrow-screen QR preview containment, generator card spacing, touch
+  targets, form sizing, download layout and dark-mode form consistency.
+- Added source-level responsive regression checks. Playwright, screenshots and
+  Lighthouse measurements remain deferred because the environment denied the
+  browser-test package with HTTP 403 and contains no browser executable.
+- No ranking improvement is claimed; production field data and real-device
+  validation remain external follow-up work.

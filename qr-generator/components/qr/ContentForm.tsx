@@ -28,7 +28,7 @@ interface QRConfiguratorProps {
   onContentChange: (content: QRContent) => void;
 }
 const inputClass =
-  "w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white text-slate-900 placeholder:text-slate-400";
+  "min-w-0 w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white text-slate-900 placeholder:text-slate-400 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500";
 const Field = ({
   label,
   children,
@@ -39,7 +39,9 @@ const Field = ({
   // The interactive control is passed as a child, so the label wraps it at runtime.
   // biome-ignore lint/a11y/noLabelWithoutControl: controls are supplied through children
   <label className="block space-y-1.5">
-    <span className="text-sm font-semibold text-slate-700">{label}</span>
+    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+      {label}
+    </span>
     {children}
   </label>
 );
@@ -427,10 +429,10 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-4">
+    <div className="rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 dark:border-slate-700 dark:bg-slate-800">
       <div className="space-y-4">
         <fieldset>
-          <legend className="text-sm font-semibold mb-3 block text-slate-700">
+          <legend className="mb-3 block text-sm font-semibold text-slate-700 dark:text-slate-200">
             QR content type
           </legend>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -441,7 +443,7 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
                 onClick={() => handleContentTypeChange(type.value)}
                 aria-pressed={content.type === type.value}
                 aria-label={`${type.label} QR code`}
-                className={`p-3 rounded-xl border text-xs flex flex-col items-center gap-1 transition-colors ${content.type === type.value ? "border-teal-500 bg-teal-50 text-teal-700" : "border-slate-300 text-slate-600 hover:border-teal-300"}`}
+                className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl border p-2 text-xs transition-colors sm:p-3 ${content.type === type.value ? "border-teal-500 bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-200" : "border-slate-300 text-slate-600 hover:border-teal-300 dark:border-slate-600 dark:text-slate-300"}`}
               >
                 <span className="text-base">{type.icon}</span>
                 {type.label}
