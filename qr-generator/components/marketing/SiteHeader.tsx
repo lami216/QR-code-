@@ -25,9 +25,41 @@ export function SiteHeader() {
           <Link href="/guides">Guides</Link>
           <Link href="/about">About</Link>
         </div>
+        <details className="group relative ml-auto md:hidden">
+          <summary className="flex min-h-11 cursor-pointer list-none items-center rounded-xl border border-slate-300 px-3 text-sm font-bold text-slate-800 marker:content-none dark:border-slate-700 dark:text-white">
+            <span className="sr-only">Open main navigation</span>
+            <span aria-hidden="true">Menu</span>
+          </summary>
+          <div className="absolute right-0 top-13 z-50 grid min-w-48 gap-1 rounded-xl border border-slate-200 bg-white p-2 text-sm font-semibold text-slate-800 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+            <Link
+              className="rounded-lg px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800"
+              href="/generator"
+            >
+              Generator
+            </Link>
+            <Link
+              className="rounded-lg px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800"
+              href="/generator#qr-tools-heading"
+            >
+              QR tools
+            </Link>
+            <Link
+              className="rounded-lg px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800"
+              href="/guides"
+            >
+              Guides
+            </Link>
+            <Link
+              className="rounded-lg px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800"
+              href="/about"
+            >
+              About
+            </Link>
+          </div>
+        </details>
         <Link
           href="/generator"
-          className="rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-teal-700"
+          className="ml-2 hidden min-h-11 items-center rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-teal-700 sm:flex"
         >
           Create QR code
         </Link>

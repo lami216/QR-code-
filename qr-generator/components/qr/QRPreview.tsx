@@ -22,7 +22,7 @@ export const QRPreview: React.FC<QRPreviewProps> = ({
   if (isLoading) {
     return (
       <div
-        className={`flex flex-col items-center justify-center p-6 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl border-2 border-dashed border-gray-200 dark:border-gray-700 min-h-[300px] transition-all duration-300 ${className}`}
+        className={`flex min-h-60 flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 p-4 transition-all duration-300 sm:min-h-[300px] sm:p-6 dark:border-gray-700 dark:from-gray-800 dark:to-gray-900 ${className}`}
       >
         <div className="relative mb-4">
           <div className="relative w-16 h-16">
@@ -44,7 +44,7 @@ export const QRPreview: React.FC<QRPreviewProps> = ({
   if (!qrCode || qrCode === "data:") {
     return (
       <div
-        className={`flex flex-col items-center justify-center p-6 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 min-h-[300px] transition-all duration-300 ${className}`}
+        className={`flex min-h-60 flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gradient-to-br from-gray-50 to-gray-100 p-4 transition-all duration-300 sm:min-h-[300px] sm:p-6 dark:border-gray-600 dark:from-gray-800 dark:to-gray-900 ${className}`}
       >
         <FaQrcode className="w-16 h-16 text-gray-400 dark:text-gray-500 mb-4" />
         <h3 className="font-semibold text-gray-900 dark:text-white mb-2 text-center">
@@ -87,12 +87,12 @@ export const QRPreview: React.FC<QRPreviewProps> = ({
         <img
           src={qrCode}
           alt="Generated QR code preview"
-          className="transition-all duration-300 ease-out group-hover:scale-105 mx-auto"
+          width={size}
+          height={size}
+          className="mx-auto h-auto max-w-full transition-transform duration-300 ease-out group-hover:scale-[1.02]"
           style={{
             width: size,
-            height: size,
-            minWidth: size,
-            minHeight: size,
+            aspectRatio: "1 / 1",
           }}
           onError={(e) => {
             console.error("Failed to load QR code image");

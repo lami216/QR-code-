@@ -81,7 +81,7 @@ export function QRGenerator({
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto overflow-x-clip px-3 py-5 sm:px-4 sm:py-6">
         {/* Error Alert */}
         {error && (
           <div
@@ -122,7 +122,7 @@ export function QRGenerator({
           {/* Left Column - Configuration */}
           <div className="space-y-6">
             <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-xl">
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-teal-100 dark:bg-teal-900 rounded-xl">
                     <FaBolt className="text-teal-600 dark:text-teal-400 text-lg" />
@@ -144,7 +144,7 @@ export function QRGenerator({
             </section>
 
             <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-xl">
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <StylingControls styling={styling} onChange={setStyling} />
               </div>
             </section>
@@ -155,7 +155,7 @@ export function QRGenerator({
                 type="button"
                 onClick={handleManualGenerate}
                 disabled={isLoading || !content.data}
-                className="bg-teal-600 hover:bg-teal-700 disabled:bg-teal-400 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:scale-100 flex items-center gap-2 shadow-lg disabled:cursor-not-allowed"
+                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal-600 px-8 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-teal-700 disabled:cursor-not-allowed disabled:bg-teal-400 sm:w-auto"
               >
                 <FaBolt className={isLoading ? "animate-spin" : ""} />
                 {isLoading ? "Generating..." : "Refresh Preview"}
@@ -166,7 +166,7 @@ export function QRGenerator({
           {/* Right Column - Preview & Download */}
           <div className="space-y-6 lg:sticky lg:top-24 h-fit">
             <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-xl">
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-green-100 dark:bg-green-900 rounded-xl">
                     <FaDownload className="text-green-600 dark:text-green-400 text-lg" />
