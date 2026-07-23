@@ -40,11 +40,6 @@ export function MarketingPage() {
             <h1 className="text-balance text-3xl font-black tracking-tight sm:text-6xl lg:text-7xl">
               QR tools for creating codes that work in the real world
             </h1>
-            <p className="mx-auto mt-4 max-w-3xl text-base leading-6 text-slate-600 sm:mt-6 sm:text-xl sm:leading-8 dark:text-slate-300">
-              Use the all-purpose generator or a focused tool for links, WiFi,
-              contacts, text and logos. Customize the result, export it and use
-              practical guidance to test it before publishing.
-            </p>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:mt-9 sm:flex-row">
               <Link
                 href="/generator"
@@ -78,6 +73,11 @@ export function MarketingPage() {
             <h2 className="mt-3 text-3xl font-black sm:text-5xl">
               A custom QR code maker without the friction
             </h2>
+            <p className="mx-auto mt-4 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
+              Use the all-purpose generator or a focused tool for links, WiFi,
+              contacts, text and logos. Choose a ready-made design, export it,
+              and follow practical guidance to test it before publishing.
+            </p>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {benefits.map(([title, text]) => (
