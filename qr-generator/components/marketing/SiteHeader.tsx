@@ -5,7 +5,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/90">
       <nav
         aria-label="Main navigation"
-        className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6"
+        className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4"
       >
         <Link
           href="/"
@@ -21,7 +21,7 @@ export function SiteHeader() {
         </Link>
         <div className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex dark:text-slate-300">
           <Link href="/generator">Generator</Link>
-          <Link href="/#qr-tools-heading">QR tools</Link>
+          <Link href="/generator#qr-tools-heading">QR tools</Link>
           <Link href="/guides">Guides</Link>
           <Link href="/about">About</Link>
         </div>
@@ -39,7 +39,7 @@ export function SiteHeader() {
             </Link>
             <Link
               className="rounded-lg px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800"
-              href="/#qr-tools-heading"
+              href="/generator#qr-tools-heading"
             >
               QR tools
             </Link>

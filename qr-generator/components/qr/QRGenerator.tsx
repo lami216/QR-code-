@@ -59,7 +59,7 @@ export function QRGenerator({
 
   return (
     <div className="bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto overflow-x-clip px-3 py-5 sm:px-4 sm:py-6">
+      <div className="container mx-auto overflow-x-clip px-3 py-4 sm:px-4 sm:py-6">
         {/* Error Alert */}
         {error && (
           <div
@@ -96,12 +96,12 @@ export function QRGenerator({
         )}
 
         {/* Main Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
           {/* Left Column - Configuration */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-xl">
-              <div className="p-4 sm:p-6">
-                <div className="flex items-center gap-3 mb-4">
+              <div className="p-3 sm:p-6">
+                <div className="mb-3 flex items-center gap-3 sm:mb-4">
                   <div className="p-2 bg-teal-100 dark:bg-teal-900 rounded-xl">
                     <FaBolt className="text-teal-600 dark:text-teal-400 text-lg" />
                   </div>
@@ -122,7 +122,7 @@ export function QRGenerator({
             </section>
 
             <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-xl">
-              <div className="p-4 sm:p-6">
+              <div className="p-3 sm:p-6">
                 <StylingControls styling={styling} onChange={setStyling} />
               </div>
             </section>
@@ -142,9 +142,9 @@ export function QRGenerator({
           </div>
 
           {/* Right Column - Preview & Download */}
-          <div className="space-y-6 lg:sticky lg:top-24 h-fit">
+          <div className="h-fit space-y-4 sm:space-y-6 lg:sticky lg:top-24">
             <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-xl">
-              <div className="p-4 sm:p-6">
+              <div className="p-3 sm:p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-green-100 dark:bg-green-900 rounded-xl">
                     <FaDownload className="text-green-600 dark:text-green-400 text-lg" />
@@ -159,7 +159,7 @@ export function QRGenerator({
                   </div>
                 </div>
 
-                <div className="flex justify-center mb-6">
+                <div className="mb-4 flex justify-center sm:mb-6">
                   <QRPreview
                     qrCode={qrCode}
                     size={Math.min(styling.size, 280)}
@@ -183,10 +183,10 @@ export function QRGenerator({
         <AdSlot
           slot={displayAdSlots.content}
           format="banner"
-          className="my-10"
+          className="my-6 sm:my-10"
         />
         <section
-          className={`grid gap-8 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 ${hasSidebarAd ? "lg:grid-cols-[1fr_280px]" : ""}`}
+          className={`grid gap-6 rounded-2xl border border-gray-200 bg-white p-4 sm:gap-8 sm:p-6 dark:border-gray-700 dark:bg-gray-800 ${hasSidebarAd ? "lg:grid-cols-[1fr_280px]" : ""}`}
         >
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">

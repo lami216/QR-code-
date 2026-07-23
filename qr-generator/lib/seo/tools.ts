@@ -342,6 +342,18 @@ export const tools = {
 } as const satisfies Record<ToolSlug, ToolConfig>;
 
 export const specializedTools = TOOL_SLUGS.map((slug) => tools[slug]);
+/** Tools shown in the generator's type picker. This deliberately lives beside
+ * the complete registry so navigation surfaces cannot drift into local lists. */
+export const generatorTools = [
+  tools["url-qr-code-generator"],
+  tools["text-qr-code-generator"],
+  tools["email-qr-code-generator"],
+  tools["phone-qr-code-generator"],
+  tools["wifi-qr-code-generator"],
+  tools["vcard-qr-code-generator"],
+  tools["calendar-qr-code-generator"],
+  tools["qr-code-with-logo"],
+] as const;
 /** Canonical route for each selector mode. Specialized URL variants remain
  * available in the registry, while the selector uses the primary URL tool. */
 export function toolForType(type: QRType): ToolConfig {
