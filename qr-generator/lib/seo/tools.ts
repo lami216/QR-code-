@@ -16,6 +16,7 @@ export type ToolSlug = (typeof TOOL_SLUGS)[number];
 export type FAQItem = { question: string; answer: string };
 export type ToolConfig = {
   slug: ToolSlug;
+  route: `/${ToolSlug}`;
   initialType: QRType;
   title: string;
   description: string;
@@ -30,6 +31,7 @@ export type ToolConfig = {
 export const tools = {
   "wifi-qr-code-generator": {
     slug: "wifi-qr-code-generator",
+    route: "/wifi-qr-code-generator",
     initialType: "wifi",
     supported: true,
     title: "WiFi QR Code Generator — Share Network Access",
@@ -60,6 +62,7 @@ export const tools = {
   },
   "url-qr-code-generator": {
     slug: "url-qr-code-generator",
+    route: "/url-qr-code-generator",
     initialType: "url",
     supported: true,
     title: "URL QR Code Generator — Create a Website QR",
@@ -90,6 +93,7 @@ export const tools = {
   },
   "vcard-qr-code-generator": {
     slug: "vcard-qr-code-generator",
+    route: "/vcard-qr-code-generator",
     initialType: "vcard",
     supported: true,
     title: "vCard QR Code Generator — Share Contact Details",
@@ -120,6 +124,7 @@ export const tools = {
   },
   "qr-code-with-logo": {
     slug: "qr-code-with-logo",
+    route: "/qr-code-with-logo",
     initialType: "url",
     supported: true,
     title: "QR Code With Logo — Customize and Export",
@@ -150,6 +155,7 @@ export const tools = {
   },
   "text-qr-code-generator": {
     slug: "text-qr-code-generator",
+    route: "/text-qr-code-generator",
     initialType: "text",
     supported: true,
     title: "Text QR Code Generator — Encode Plain Text",
@@ -180,6 +186,7 @@ export const tools = {
   },
   "email-qr-code-generator": {
     slug: "email-qr-code-generator",
+    route: "/email-qr-code-generator",
     initialType: "email",
     supported: true,
     title: "Email QR Code Generator — Create a Mailto Code",
@@ -210,6 +217,7 @@ export const tools = {
   },
   "phone-qr-code-generator": {
     slug: "phone-qr-code-generator",
+    route: "/phone-qr-code-generator",
     initialType: "phone",
     supported: true,
     title: "Phone QR Code Generator — Create a Call Link",
@@ -240,6 +248,7 @@ export const tools = {
   },
   "calendar-qr-code-generator": {
     slug: "calendar-qr-code-generator",
+    route: "/calendar-qr-code-generator",
     initialType: "event",
     supported: true,
     title: "Calendar QR Code Generator — Create an Event Code",
@@ -270,6 +279,7 @@ export const tools = {
   },
   "menu-qr-code-generator": {
     slug: "menu-qr-code-generator",
+    route: "/menu-qr-code-generator",
     initialType: "url",
     supported: true,
     title: "Menu QR Code Generator — Link to a Restaurant Menu",
@@ -300,6 +310,7 @@ export const tools = {
   },
   "social-media-qr-code-generator": {
     slug: "social-media-qr-code-generator",
+    route: "/social-media-qr-code-generator",
     initialType: "url",
     supported: true,
     title: "Social Media QR Code Generator — Share One Profile",
@@ -331,6 +342,14 @@ export const tools = {
 } as const satisfies Record<ToolSlug, ToolConfig>;
 
 export const specializedTools = TOOL_SLUGS.map((slug) => tools[slug]);
+/** Canonical route for each selector mode. Specialized URL variants remain
+ * available in the registry, while the selector uses the primary URL tool. */
+export function toolForType(type: QRType): ToolConfig {
+  return (
+    specializedTools.find((tool) => tool.initialType === type) ??
+    tools["url-qr-code-generator"]
+  );
+}
 export function toolPath(slug: ToolSlug) {
-  return `/${slug}` as const;
+  return tools[slug].route;
 }

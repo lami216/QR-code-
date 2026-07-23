@@ -1,11 +1,8 @@
 import Link from "next/link";
-import { SiteFooter } from "@/components/marketing/SiteFooter";
-import { SiteHeader } from "@/components/marketing/SiteHeader";
 
 export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
-      <SiteHeader />
       <main className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
         <h1 className="text-4xl font-black">Privacy Policy</h1>
         <p className="mt-3 text-sm text-slate-500">
@@ -82,7 +79,6 @@ export default function PrivacyPolicy() {
           </p>
         </section>
       </main>
-      <SiteFooter />
     </div>
   );
 }

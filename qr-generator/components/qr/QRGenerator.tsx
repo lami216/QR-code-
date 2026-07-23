@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect } from "react";
-import { FaArrowLeft, FaBolt, FaDownload, FaMagic } from "react-icons/fa";
+import { FaBolt, FaDownload } from "react-icons/fa";
 import { useQRGenerator } from "../../hooks/useQRGenerator";
 import { displayAdSlots, hasSidebarAd } from "../../lib/ads/config";
 import type { QRType } from "../../lib/qr/modes";
@@ -58,29 +58,7 @@ export function QRGenerator({
   }, [generateQR]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800">
-      {/* Navigation */}
-      <nav className="border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 sm:px-6 py-3">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/"
-              className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <FaArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Back to Home</span>
-            </Link>
-
-            <div className="flex items-center space-x-2">
-              <FaMagic className="text-2xl text-teal-600 dark:text-teal-400" />
-              <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
-                QR Studio
-              </span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <div className="bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto overflow-x-clip px-3 py-5 sm:px-4 sm:py-6">
         {/* Error Alert */}
         {error && (

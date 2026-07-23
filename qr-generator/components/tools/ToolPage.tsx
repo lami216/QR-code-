@@ -1,7 +1,5 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { SiteFooter } from "@/components/marketing/SiteFooter";
-import { SiteHeader } from "@/components/marketing/SiteHeader";
 import { QRGenerator } from "@/components/qr/QRGenerator";
 import { guides } from "@/lib/seo/guides";
 import {
@@ -26,7 +24,6 @@ export function ToolPage({
   ];
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
-      <SiteHeader />
       <script type="application/ld+json">
         {safeJsonLd(breadcrumbJsonLd(crumbs))}
       </script>
@@ -68,7 +65,11 @@ export function ToolPage({
             {tool.introduction}
           </p>
         </header>
-        <QRGenerator initialType={tool.initialType} showHeader={false} />
+        <QRGenerator
+          key={tool.slug}
+          initialType={tool.initialType}
+          showHeader={false}
+        />
         <div className="mx-auto max-w-5xl space-y-10 px-4 py-12 sm:px-6">
           {children}
           <section aria-labelledby="faq-heading">
@@ -139,7 +140,6 @@ export function ToolPage({
           </section>
         </div>
       </main>
-      <SiteFooter />
     </div>
   );
 }

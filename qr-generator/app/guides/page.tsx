@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/marketing/SiteFooter";
-import { SiteHeader } from "@/components/marketing/SiteHeader";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { GuideCard } from "@/components/seo/GuideCard";
 import { ToolLinks } from "@/components/tools/ToolLinks";
@@ -17,7 +15,6 @@ export const metadata: Metadata = pageMetadata({
 export default function GuidesPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
-      <SiteHeader />
       <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <Breadcrumbs
           items={[
@@ -53,7 +50,6 @@ export default function GuidesPage() {
           )}
         </script>
       </main>
-      <SiteFooter />
     </div>
   );
 }

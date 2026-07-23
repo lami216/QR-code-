@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SiteFooter } from "@/components/marketing/SiteFooter";
-import { SiteHeader } from "@/components/marketing/SiteHeader";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { guideBySlug, guides } from "@/lib/seo/guides";
 import {
@@ -39,7 +37,6 @@ export default async function GuidePage({
   const path = `/guides/${guide.slug}`;
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
-      <SiteHeader />
       <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
         <Breadcrumbs
           items={[
@@ -145,7 +142,6 @@ export default async function GuidePage({
           )}
         </script>
       </main>
-      <SiteFooter />
     </div>
   );
 }
