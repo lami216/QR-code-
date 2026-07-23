@@ -51,6 +51,26 @@ export const qrTemplates: readonly QRTemplate[] = [
       frameStyle: "none",
       labelStyle: "none",
       logoSupport: false,
+      logoSize: 12,
+    },
+  ),
+  common(
+    "logo-ready",
+    "Logo Ready",
+    "A protected logo area with maximum error correction.",
+    {
+      foreground: "#111827",
+      background: "#ffffff",
+      colorMode: "solid",
+      moduleStyle: "square",
+      eyeStyle: "rounded",
+      eyeColor: "#0f766e",
+      errorCorrection: "H",
+      margin: 5,
+      logoSupport: true,
+      logoSize: 18,
+      frameStyle: "none",
+      labelStyle: "none",
     },
   ),
   common(
@@ -255,14 +275,22 @@ export function applyQRTemplate(
   templateId: string,
 ): QRStyling {
   const template = qrTemplates.find(({ id }) => id === templateId);
-  return template
+  if (!template) return styling;
+  const result: QRStyling = {
+    ...styling,
+    ...template.settings,
+    transparent: false,
+    template: template.id,
+  };
+  // An uploaded image always opts the design into conservative scan settings.
+  return styling.logoDataUrl
     ? {
-        ...styling,
-        ...template.settings,
-        transparent: false,
-        template: template.id,
+        ...result,
+        logoSupport: true,
+        errorCorrection: "H",
+        margin: Math.max(4, result.margin),
       }
-    : styling;
+    : result;
 }
 
 export function getQRTemplate(templateId?: string): QRTemplate | undefined {

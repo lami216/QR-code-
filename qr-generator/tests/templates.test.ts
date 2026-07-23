@@ -60,3 +60,19 @@ test("frame and label are part of canonical SVG used by previews and export", ()
   assert.match(svg, /SCAN ME/);
   assert.match(svg, /stroke-width/);
 });
+
+test("uploaded images are embedded and templates preserve scan-safe settings", () => {
+  const withLogo: QRStyling = {
+    ...baseStyling,
+    logoDataUrl: "data:image/webp;base64,dGVzdA==",
+    logoSize: 18,
+    margin: 1,
+  };
+  const minimal = applyQRTemplate(withLogo, "minimal-classic");
+  assert.equal(minimal.errorCorrection, "H");
+  assert.ok(minimal.margin >= 4);
+  assert.equal(minimal.logoSupport, true);
+  const svg = generateQRSVG(url, minimal);
+  assert.match(svg, /<image href="data:image\/webp;base64,dGVzdA=="/);
+  assert.match(svg, /fill="#ffffff"/);
+});
