@@ -382,80 +382,102 @@ export const StylingControls: React.FC<StylingControlsProps> = ({
         </div>
       </div>
 
-      {/* Logo Upload */}
+      {/* Advanced logo controls (upload lives in the primary flow) */}
       <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
         <div className="flex items-center space-x-2 mb-3">
           <span className="text-gray-500">
             <FaImage />
           </span>
           <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-            Logo
+            Image / Logo
           </span>
         </div>
 
-        {!styling.logo ? (
-          <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-teal-400 transition-colors">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  if (file.size > 50000) {
-                    alert("Logo must be smaller than 50KB");
-                    return;
-                  }
-                  const reader = new FileReader();
-                  reader.onload = () =>
+        {!styling.logoDataUrl ? (
+          <p className="text-sm text-gray-500">
+            Upload an image in the Add Image / Logo section above to unlock
+            these controls.
+          </p>
+        ) : (
+          <div className="space-y-4">
+            <label className="block text-sm font-medium">
+              Image size: {styling.logoSize ?? 18}%
+              <input
+                className="mt-2 w-full accent-teal-600"
+                type="range"
+                min="10"
+                max="22"
+                value={styling.logoSize ?? 18}
+                onChange={(e) =>
+                  onChange({
+                    ...styling,
+                    logoSize: Number(e.target.value),
+                    errorCorrection: "H",
+                  })
+                }
+              />
+            </label>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <label className="text-sm">
+                Position
+                <select
+                  className="mt-1 w-full rounded border p-2 dark:bg-gray-700"
+                  value={styling.logoPosition ?? "center"}
+                  onChange={(e) =>
                     onChange({
                       ...styling,
-                      logo: file,
-                      logoDataUrl: String(reader.result),
-                      errorCorrection: "H",
-                    });
-                  reader.readAsDataURL(file);
-                }
-              }}
-              className="hidden"
-              id="logo-upload"
-            />
-            <label htmlFor="logo-upload" className="cursor-pointer">
-              <span className="mx-auto text-2xl text-gray-400 mb-2 block">
-                <FaImage />
-              </span>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Click to upload logo
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                PNG, JPG up to 50KB
-              </p>
-            </label>
-          </div>
-        ) : (
-          <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-            <div className="flex items-center space-x-3">
-              <span className="text-green-600">
-                <FaImage />
-              </span>
-              <div>
-                <p className="text-sm font-medium text-green-800 dark:text-green-200">
-                  {(styling.logo as File).name}
-                </p>
-                <p className="text-xs text-green-600 dark:text-green-400">
-                  {Math.round((styling.logo as File).size / 1024)}KB
-                </p>
-              </div>
+                      logoPosition: e.target.value as QRStyling["logoPosition"],
+                    })
+                  }
+                >
+                  <option value="center">Center</option>
+                  <option value="top">Upper center</option>
+                  <option value="bottom">Lower center</option>
+                </select>
+              </label>
+              <label className="text-sm">
+                Padding
+                <select
+                  className="mt-1 w-full rounded border p-2 dark:bg-gray-700"
+                  value={styling.logoPadding ?? 2}
+                  onChange={(e) =>
+                    onChange({
+                      ...styling,
+                      logoPadding: Number(e.target.value),
+                    })
+                  }
+                >
+                  <option value="1">Small</option>
+                  <option value="2">Medium</option>
+                  <option value="3">Large</option>
+                </select>
+              </label>
+              <label className="text-sm">
+                Background
+                <select
+                  className="mt-1 w-full rounded border p-2 dark:bg-gray-700"
+                  value={styling.logoBackground ?? "white"}
+                  onChange={(e) =>
+                    onChange({
+                      ...styling,
+                      logoBackground: e.target
+                        .value as QRStyling["logoBackground"],
+                    })
+                  }
+                >
+                  <option value="white">White</option>
+                  <option value="transparent">Transparent</option>
+                </select>
+              </label>
             </div>
             <button
               type="button"
               onClick={removeLogo}
-              className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
               title="Remove logo"
               aria-label="Remove logo"
             >
-              <span>
-                <FaTimes />
-              </span>
+              <FaTimes /> Remove image
             </button>
           </div>
         )}

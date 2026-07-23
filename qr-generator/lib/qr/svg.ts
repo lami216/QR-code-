@@ -85,11 +85,24 @@ export function generateQRSVG(content: QRContent, styling: QRStyling): string {
   const label = labelled
     ? `<text x="${width / 2}" y="${height - 1.5}" text-anchor="middle" font-family="Arial,sans-serif" font-size="2.4" font-weight="700" fill="${eyeColor}">${labelText[styling.labelStyle ?? "none"]}</text>`
     : "";
-  const logoSpace = styling.logoSupport
-    ? `<rect x="${inset + quiet + count / 2 - 3}" y="${inset + quiet + count / 2 - 3}" width="6" height="6" rx="1" fill="${xml(styling.background)}"/>`
-    : "";
+  // Keep logos modest and in the safe central band, away from finder patterns.
+  const logoSize =
+    Math.min(0.22, Math.max(0.1, (styling.logoSize ?? 18) / 100)) * count;
+  const logoCenterY =
+    styling.logoPosition === "top"
+      ? count * 0.38
+      : styling.logoPosition === "bottom"
+        ? count * 0.62
+        : count / 2;
+  const logoX = inset + quiet + count / 2 - logoSize / 2;
+  const logoY = inset + quiet + logoCenterY - logoSize / 2;
+  const padding = Math.min(3, Math.max(1, styling.logoPadding ?? 2)) * 0.5;
+  const logoSpace =
+    styling.logoDataUrl && styling.logoBackground !== "transparent"
+      ? `<rect x="${logoX - padding}" y="${logoY - padding}" width="${logoSize + padding * 2}" height="${logoSize + padding * 2}" rx="1" fill="#ffffff"/>`
+      : "";
   const logo = styling.logoDataUrl
-    ? `<image href="${xml(styling.logoDataUrl)}" x="${inset + quiet + count / 2 - 2.5}" y="${inset + quiet + count / 2 - 2.5}" width="5" height="5" preserveAspectRatio="xMidYMid meet"/>`
+    ? `<image href="${xml(styling.logoDataUrl)}" x="${logoX}" y="${logoY}" width="${logoSize}" height="${logoSize}" preserveAspectRatio="xMidYMid meet"/>`
     : "";
   return `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="${styling.size}" height="${Math.round((styling.size * height) / width)}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Generated QR code">${defs}${bg}${frame}<g fill="${fill}">${modules.join("")}</g><g fill="${eyeColor}">${eyes.join("")}</g>${logoSpace}${logo}${label}</svg>`;
 }

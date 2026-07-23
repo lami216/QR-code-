@@ -13,6 +13,7 @@ import { SidebarAd } from "../ads/SidebarAd";
 import { ToolLinks } from "../tools/ToolLinks";
 import { QRConfigurator } from "./ContentForm";
 import { DownloadControls } from "./DownloadControls";
+import { ImageUpload } from "./ImageUpload";
 import { QRPreview } from "./QRPreview";
 import { StylingControls } from "./StylingControls";
 import { TemplatePicker } from "./TemplatePicker";
@@ -122,6 +123,8 @@ export function QRGenerator({
                 />
               </div>
             </section>
+
+            <ImageUpload styling={styling} onChange={setStyling} />
 
             <TemplatePicker
               content={content}

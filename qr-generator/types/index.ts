@@ -25,6 +25,10 @@ export interface QRStyling {
   template?: string;
   logo?: File | null;
   logoDataUrl?: string;
+  logoSize?: number;
+  logoPosition?: "center" | "top" | "bottom";
+  logoPadding?: number;
+  logoBackground?: "white" | "transparent";
 }
 
 export interface QRHistoryItem {
