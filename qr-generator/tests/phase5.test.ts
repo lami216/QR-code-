@@ -27,3 +27,16 @@ test("generator preview and controls include narrow viewport constraints", () =>
   assert.match(preview, /max-w-full/);
   assert.match(form, /min-w-0 w-full/);
 });
+
+test("generator and tool pages share route-aware breadcrumbs and registry navigation", () => {
+  const generatorPage = source("app/generator/page.tsx");
+  const toolPage = source("components/tools/ToolPage.tsx");
+  const form = source("components/qr/ContentForm.tsx");
+  const registry = source("lib/seo/tools.ts");
+  assert.match(generatorPage, /<Breadcrumbs/);
+  assert.match(toolPage, /<Breadcrumbs/);
+  assert.match(form, /generatorTools\.map/);
+  assert.match(form, /router\.push\(route\)/);
+  assert.match(registry, /export const generatorTools/);
+  assert.match(registry, /tools\["qr-code-with-logo"\]/);
+});

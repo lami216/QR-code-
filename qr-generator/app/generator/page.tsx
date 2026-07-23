@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { QRGenerator } from "@/components/qr/QRGenerator";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { FAQSection } from "@/components/seo/FAQSection";
 import { ToolLinks } from "@/components/tools/ToolLinks";
 import { faqItems, qrTypes } from "@/lib/seo/content";
@@ -27,24 +28,30 @@ const uses = [
 export default function GeneratorPage() {
   return (
     <div className="bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
-      <header className="mx-auto max-w-5xl px-4 pb-2 pt-10 text-center sm:px-6">
+      <Breadcrumbs
+        items={[
+          { name: "Home", path: "/" },
+          { name: "QR Generator", path: "/generator" },
+        ]}
+      />
+      <header className="mx-auto max-w-5xl px-4 pb-2 pt-2 text-center sm:px-6 sm:pt-6">
         <p className="font-bold text-teal-700 dark:text-teal-400">
           No signup · Browser-based generation
         </p>
-        <h1 className="mt-3 text-4xl font-black tracking-tight sm:text-6xl">
+        <h1 className="mt-2 text-3xl font-black tracking-tight sm:mt-3 sm:text-6xl">
           Free QR code generator for custom, static codes
         </h1>
-        <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">
+        <p className="mx-auto mt-3 max-w-3xl text-base leading-6 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8 dark:text-slate-300">
           Choose your content, adjust the design and download a QR code for
           screen or print. Your entered content is processed in this browser
           rather than sent to a QR generation API.
         </p>
       </header>
       <QRGenerator initialType="url" showHeader={false} />
-      <main className="mx-auto max-w-6xl space-y-20 px-4 py-16 sm:px-6">
-        <section className="grid gap-10 lg:grid-cols-2">
+      <main className="mx-auto max-w-6xl space-y-10 px-4 py-10 sm:space-y-20 sm:px-6 sm:py-16">
+        <section className="grid gap-7 sm:gap-10 lg:grid-cols-2">
           <div>
-            <h2 className="text-3xl font-black">
+            <h2 className="text-2xl font-black sm:text-3xl">
               What is a QR code generator?
             </h2>
             <p className="mt-4 leading-8 text-slate-600 dark:text-slate-300">

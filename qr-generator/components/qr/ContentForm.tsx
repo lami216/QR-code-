@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -11,8 +11,8 @@ import {
   FaTextWidth,
   FaWifi,
 } from "react-icons/fa";
-import { QR_MODES, QR_TYPE_KEYS } from "../../lib/qr/modes";
-import { toolForType, toolPath } from "../../lib/seo/tools";
+import { QR_MODES } from "../../lib/qr/modes";
+import { generatorTools } from "../../lib/seo/tools";
 import type {
   EmailData,
   EventData,
@@ -49,6 +49,7 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
   onContentChange,
 }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const [wifiConfig, setWifiConfig] = useState<WiFiConfig>({
     ssid: "",
     password: "",
@@ -96,14 +97,17 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
     vcard: <FaAddressCard />,
     event: <FaCalendarAlt />,
   };
-  const contentTypes = QR_TYPE_KEYS.map((value) => ({
-    value,
-    label: QR_MODES[value].label,
-    icon: icons[value],
+  const contentTypes = generatorTools.map((tool) => ({
+    tool,
+    label:
+      tool.slug === "qr-code-with-logo"
+        ? "Logo"
+        : QR_MODES[tool.initialType].label,
+    icon: icons[tool.initialType],
   }));
 
-  const handleContentTypeChange = (type: QRContent["type"]) => {
-    router.push(toolPath(toolForType(type).slug));
+  const handleContentTypeChange = (route: string) => {
+    router.push(route);
   };
 
   const renderContentForm = () => {
@@ -429,15 +433,20 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
           <legend className="mb-3 block text-sm font-semibold text-slate-700 dark:text-slate-200">
             QR content type
           </legend>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className="grid grid-cols-4 gap-2">
             {contentTypes.map((type) => (
               <button
                 type="button"
-                key={type.value}
-                onClick={() => handleContentTypeChange(type.value)}
-                aria-pressed={content.type === type.value}
+                key={type.tool.slug}
+                onClick={() => handleContentTypeChange(type.tool.route)}
+                aria-pressed={
+                  pathname === type.tool.route ||
+                  (pathname === "/generator" &&
+                    type.tool.initialType === "url" &&
+                    type.tool.slug === "url-qr-code-generator")
+                }
                 aria-label={`${type.label} QR code`}
-                className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl border p-2 text-xs transition-colors sm:p-3 ${content.type === type.value ? "border-teal-500 bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-200" : "border-slate-300 text-slate-600 hover:border-teal-300 dark:border-slate-600 dark:text-slate-300"}`}
+                className={`flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl border p-1.5 text-[11px] transition-colors sm:min-h-14 sm:p-3 sm:text-xs ${pathname === type.tool.route || (pathname === "/generator" && type.tool.slug === "url-qr-code-generator") ? "border-teal-500 bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-200" : "border-slate-300 text-slate-600 hover:border-teal-300 dark:border-slate-600 dark:text-slate-300"}`}
               >
                 <span className="text-base">{type.icon}</span>
                 {type.label}

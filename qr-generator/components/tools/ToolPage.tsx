@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { QRGenerator } from "@/components/qr/QRGenerator";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { guides } from "@/lib/seo/guides";
 import {
   breadcrumbJsonLd,
@@ -20,7 +21,7 @@ export function ToolPage({
   const crumbs = [
     { name: "Home", path: "/" },
     { name: "QR tools", path: "/generator" },
-    { name: tool.breadcrumbLabel, path: toolPath(tool.slug) },
+    { name: tool.heading, path: toolPath(tool.slug) },
   ];
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
@@ -38,30 +39,13 @@ export function ToolPage({
           description: tool.description,
         })}
       </script>
-      <nav
-        aria-label="Breadcrumb"
-        className="mx-auto max-w-7xl px-4 pt-6 text-sm text-slate-600 sm:px-6 dark:text-slate-300"
-      >
-        <ol className="flex flex-wrap gap-2">
-          {crumbs.map((item, index) => (
-            <li key={item.path}>
-              {index > 0 && <span aria-hidden="true">/ </span>}
-              <Link
-                className="underline focus-visible:outline-2 focus-visible:outline-offset-2"
-                href={item.path}
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ol>
-      </nav>
+      <Breadcrumbs items={crumbs} />
       <main>
-        <header className="mx-auto max-w-4xl px-4 pb-4 pt-8 sm:px-6">
-          <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+        <header className="mx-auto max-w-4xl px-4 pb-3 pt-3 sm:px-6 sm:pb-4 sm:pt-6">
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
             {tool.heading}
           </h1>
-          <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-300">
+          <p className="mt-3 text-base leading-6 text-slate-600 sm:mt-4 sm:text-lg sm:leading-8 dark:text-slate-300">
             {tool.introduction}
           </p>
         </header>
@@ -70,17 +54,17 @@ export function ToolPage({
           initialType={tool.initialType}
           showHeader={false}
         />
-        <div className="mx-auto max-w-5xl space-y-10 px-4 py-12 sm:px-6">
+        <div className="mx-auto max-w-5xl space-y-7 px-4 py-8 sm:space-y-10 sm:px-6 sm:py-12">
           {children}
           <section aria-labelledby="faq-heading">
-            <h2 id="faq-heading" className="text-3xl font-black">
+            <h2 id="faq-heading" className="text-2xl font-black sm:text-3xl">
               Frequently asked questions
             </h2>
             <div className="mt-5 space-y-3">
               {tool.faq.map((item) => (
                 <details
                   key={item.question}
-                  className="rounded-xl border border-slate-200 p-5 dark:border-slate-700"
+                  className="rounded-xl border border-slate-200 p-4 sm:p-5 dark:border-slate-700"
                 >
                   <summary className="cursor-pointer font-bold">
                     {item.question}

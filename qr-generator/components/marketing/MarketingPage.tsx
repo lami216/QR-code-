@@ -31,24 +31,24 @@ export function MarketingPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-50">
       <main>
-        <section className="relative overflow-hidden px-4 py-20 text-center sm:px-6 sm:py-28">
+        <section className="relative overflow-hidden px-4 py-10 text-center sm:px-6 sm:py-28">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,#ccfbf1,transparent_55%)] dark:bg-[radial-gradient(circle_at_top,#134e4a,transparent_50%)]" />
           <div className="mx-auto max-w-5xl">
-            <p className="mb-5 inline-flex rounded-full border border-teal-200 bg-white/80 px-4 py-2 text-sm font-semibold text-teal-800 dark:border-teal-800 dark:bg-slate-900 dark:text-teal-300">
+            <p className="mb-3 inline-flex rounded-full border border-teal-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-teal-800 sm:mb-5 sm:px-4 sm:py-2 sm:text-sm dark:border-teal-800 dark:bg-slate-900 dark:text-teal-300">
               Free • No signup • Browser-based
             </p>
-            <h1 className="text-balance text-4xl font-black tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="text-balance text-3xl font-black tracking-tight sm:text-6xl lg:text-7xl">
               QR tools for creating codes that work in the real world
             </h1>
-            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl dark:text-slate-300">
+            <p className="mx-auto mt-4 max-w-3xl text-base leading-6 text-slate-600 sm:mt-6 sm:text-xl sm:leading-8 dark:text-slate-300">
               Use the all-purpose generator or a focused tool for links, WiFi,
               contacts, text and logos. Customize the result, export it and use
               practical guidance to test it before publishing.
             </p>
-            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col justify-center gap-3 sm:mt-9 sm:flex-row">
               <Link
                 href="/generator"
-                className="rounded-xl bg-teal-600 px-7 py-4 font-bold text-white shadow-xl shadow-teal-600/20 hover:bg-teal-700"
+                className="rounded-xl bg-teal-600 px-6 py-3 font-bold text-white shadow-xl shadow-teal-600/20 hover:bg-teal-700 sm:px-7 sm:py-4"
               >
                 Generate a QR code free →
               </Link>
@@ -59,7 +59,7 @@ export function MarketingPage() {
                 See how it works
               </Link>
             </div>
-            <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-600 dark:text-slate-400">
+            <div className="mt-5 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-slate-600 sm:mt-8 sm:gap-x-6 sm:gap-y-2 sm:text-sm dark:text-slate-400">
               <span>✓ No watermark</span>
               <span>✓ No content upload</span>
               <span>✓ PNG, SVG & PDF</span>
@@ -70,7 +70,7 @@ export function MarketingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <BannerAd />
         </div>
-        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+        <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-20">
           <div className="text-center">
             <p className="font-bold uppercase tracking-widest text-teal-700 dark:text-teal-400">
               Built for useful results
@@ -98,7 +98,7 @@ export function MarketingPage() {
         </section>
         <section
           id="how-it-works"
-          className="bg-slate-50 py-20 dark:bg-slate-900/50"
+          className="bg-slate-50 py-12 sm:py-20 dark:bg-slate-900/50"
         >
           <div
             className={`mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 ${hasSidebarAd ? "lg:grid-cols-[1fr_300px]" : ""}`}
@@ -146,7 +146,7 @@ export function MarketingPage() {
             <SidebarAd className="hidden lg:flex" />
           </div>
         </section>
-        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+        <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-20">
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
               <h2 className="text-3xl font-black">Supported QR code types</h2>
@@ -188,7 +188,7 @@ export function MarketingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <AdSlot slot={displayAdSlots.content} format="rectangle" />
         </div>
-        <section className="bg-slate-50 py-20 dark:bg-slate-900/50">
+        <section className="bg-slate-50 py-12 sm:py-20 dark:bg-slate-900/50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="max-w-3xl">
               <h2 className="text-3xl font-black sm:text-4xl">
@@ -212,7 +212,7 @@ export function MarketingPage() {
             </Link>
           </div>
         </section>
-        <section className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
+        <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-20">
           <div className="text-center">
             <h2 className="text-3xl font-black sm:text-4xl">
               Frequently asked questions
