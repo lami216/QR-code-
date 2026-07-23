@@ -17,9 +17,14 @@ export interface QRStyling {
   gradientEnd?: string;
   moduleStyle?: "square" | "rounded" | "dots";
   eyeStyle?: "square" | "rounded" | "dots";
+  eyeColor?: string;
+  logoSupport?: boolean;
+  frameStyle?: "none" | "border" | "ticket" | "card";
+  labelStyle?: "none" | "scan-me" | "connect" | "contact" | "event";
   previewStyle?: "card" | "phone" | "poster";
   template?: string;
   logo?: File | null;
+  logoDataUrl?: string;
 }
 
 export interface QRHistoryItem {

@@ -49,7 +49,7 @@ export const StylingControls: React.FC<StylingControlsProps> = ({
   };
 
   const removeLogo = () => {
-    onChange({ ...styling, logo: undefined });
+    onChange({ ...styling, logo: undefined, logoDataUrl: undefined });
   };
 
   return (
@@ -405,7 +405,15 @@ export const StylingControls: React.FC<StylingControlsProps> = ({
                     alert("Logo must be smaller than 50KB");
                     return;
                   }
-                  onChange({ ...styling, logo: file });
+                  const reader = new FileReader();
+                  reader.onload = () =>
+                    onChange({
+                      ...styling,
+                      logo: file,
+                      logoDataUrl: String(reader.result),
+                      errorCorrection: "H",
+                    });
+                  reader.readAsDataURL(file);
                 }
               }}
               className="hidden"

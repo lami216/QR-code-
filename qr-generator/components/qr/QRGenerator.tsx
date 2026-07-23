@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { FaBolt, FaDownload } from "react-icons/fa";
 import { useQRGenerator } from "../../hooks/useQRGenerator";
 import { displayAdSlots, hasSidebarAd } from "../../lib/ads/config";
@@ -29,7 +29,6 @@ export function QRGenerator({
     styling,
     setStyling,
     qrCode,
-    generateQR,
     generateQRAuto,
     isLoading,
     error,
@@ -55,9 +54,10 @@ export function QRGenerator({
     };
   }, [content, generateQRAuto]);
 
-  const handleManualGenerate = useCallback(async () => {
-    await generateQR();
-  }, [generateQR]);
+  useEffect(() => {
+    if (styling.template)
+      localStorage.setItem("qr-studio-template", styling.template);
+  }, [styling.template]);
 
   return (
     <div className="bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800">
@@ -123,7 +123,11 @@ export function QRGenerator({
               </div>
             </section>
 
-            <TemplatePicker styling={styling} onChange={setStyling} />
+            <TemplatePicker
+              content={content}
+              styling={styling}
+              onChange={setStyling}
+            />
 
             <details className="group rounded-xl border border-gray-100 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
               <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between p-4 font-semibold text-gray-900 marker:hidden dark:text-white">
@@ -139,19 +143,6 @@ export function QRGenerator({
                 <StylingControls styling={styling} onChange={setStyling} />
               </div>
             </details>
-
-            {/* Manual Generate Button */}
-            <div className="flex justify-center">
-              <button
-                type="button"
-                onClick={handleManualGenerate}
-                disabled={isLoading || !content.data}
-                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal-600 px-8 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-teal-700 disabled:cursor-not-allowed disabled:bg-teal-400 sm:w-auto"
-              >
-                <FaBolt className={isLoading ? "animate-spin" : ""} />
-                {isLoading ? "Generating..." : "Refresh Preview"}
-              </button>
-            </div>
           </div>
 
           {/* Right Column - Preview & Download */}
