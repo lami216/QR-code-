@@ -1,11 +1,8 @@
 import Link from "next/link";
-import { SiteFooter } from "@/components/marketing/SiteFooter";
-import { SiteHeader } from "@/components/marketing/SiteHeader";
 
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
-      <SiteHeader />
       <main className="mx-auto max-w-3xl px-4 py-14 sm:px-6">
         <p className="font-bold text-teal-700 dark:text-teal-300">
           Contact QR Studio
@@ -39,7 +36,6 @@ export default function ContactPage() {
           </p>
         </section>
       </main>
-      <SiteFooter />
     </div>
   );
 }

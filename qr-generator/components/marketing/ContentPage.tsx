@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { BannerAd } from "@/components/ads/BannerAd";
-import { SiteFooter } from "./SiteFooter";
-import { SiteHeader } from "./SiteHeader";
 
 export type Section = { title: string; body: string };
 export function ContentPage({
@@ -19,7 +17,6 @@ export function ContentPage({
 }) {
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
-      <SiteHeader />
       <main>
         <header className="border-b border-slate-200 bg-slate-50 px-4 py-20 text-center dark:border-slate-800 dark:bg-slate-900/50">
           <p className="font-bold uppercase tracking-widest text-teal-700 dark:text-teal-400">
@@ -74,7 +71,6 @@ export function ContentPage({
           )}
         </div>
       </main>
-      <SiteFooter />
     </div>
   );
 }

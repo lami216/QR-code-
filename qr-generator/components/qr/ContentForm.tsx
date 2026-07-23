@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -10,11 +11,8 @@ import {
   FaTextWidth,
   FaWifi,
 } from "react-icons/fa";
-import {
-  createInitialQRContent,
-  QR_MODES,
-  QR_TYPE_KEYS,
-} from "../../lib/qr/modes";
+import { QR_MODES, QR_TYPE_KEYS } from "../../lib/qr/modes";
+import { toolForType, toolPath } from "../../lib/seo/tools";
 import type {
   EmailData,
   EventData,
@@ -50,6 +48,7 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
   content,
   onContentChange,
 }) => {
+  const router = useRouter();
   const [wifiConfig, setWifiConfig] = useState<WiFiConfig>({
     ssid: "",
     password: "",
@@ -104,12 +103,7 @@ export const QRConfigurator: React.FC<QRConfiguratorProps> = ({
   }));
 
   const handleContentTypeChange = (type: QRContent["type"]) => {
-    const nextContent = createInitialQRContent(type);
-    if (nextContent.type === "event") {
-      nextContent.data.timezone =
-        Intl.DateTimeFormat().resolvedOptions().timeZone;
-    }
-    onContentChange(nextContent);
+    router.push(toolPath(toolForType(type).slug));
   };
 
   const renderContentForm = () => {

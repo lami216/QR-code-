@@ -7,8 +7,6 @@ import { ToolLinks } from "@/components/tools/ToolLinks";
 import { displayAdSlots, hasSidebarAd } from "@/lib/ads/config";
 import { faqItems, qrTypes } from "@/lib/seo/content";
 import { guides } from "@/lib/seo/guides";
-import { SiteFooter } from "./SiteFooter";
-import { SiteHeader } from "./SiteHeader";
 
 const benefits = [
   [
@@ -32,7 +30,6 @@ const benefits = [
 export function MarketingPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-50">
-      <SiteHeader />
       <main>
         <section className="relative overflow-hidden px-4 py-20 text-center sm:px-6 sm:py-28">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,#ccfbf1,transparent_55%)] dark:bg-[radial-gradient(circle_at_top,#134e4a,transparent_50%)]" />
@@ -69,6 +66,7 @@ export function MarketingPage() {
             </div>
           </div>
         </section>
+        <ToolLinks heading="Popular QR tools" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <BannerAd />
         </div>
@@ -98,7 +96,6 @@ export function MarketingPage() {
             ))}
           </div>
         </section>
-        <ToolLinks heading="Popular QR tools" />
         <section
           id="how-it-works"
           className="bg-slate-50 py-20 dark:bg-slate-900/50"
@@ -278,7 +275,6 @@ export function MarketingPage() {
           <BannerAd className="mt-10" />
         </section>
       </main>
-      <SiteFooter />
     </div>
   );
 }
