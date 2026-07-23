@@ -6,6 +6,11 @@ export const TOOL_SLUGS = [
   "vcard-qr-code-generator",
   "qr-code-with-logo",
   "text-qr-code-generator",
+  "email-qr-code-generator",
+  "phone-qr-code-generator",
+  "calendar-qr-code-generator",
+  "menu-qr-code-generator",
+  "social-media-qr-code-generator",
 ] as const;
 export type ToolSlug = (typeof TOOL_SLUGS)[number];
 export type FAQItem = { question: string; answer: string };
@@ -170,6 +175,156 @@ export const tools = {
         question: "Should I put passwords or secrets in it?",
         answer:
           "No. Anyone who scans or photographs the code may read its text, so do not use it for secrets.",
+      },
+    ],
+  },
+  "email-qr-code-generator": {
+    slug: "email-qr-code-generator",
+    initialType: "email",
+    supported: true,
+    title: "Email QR Code Generator — Create a Mailto Code",
+    description:
+      "Create a mailto QR code with a recipient, subject and message. Preview and export it locally without QR Studio storing your email details on a server.",
+    heading: "Email QR code generator",
+    introduction:
+      "Create a QR code that asks a compatible device to open its email app with a recipient and optional draft text. It prepares a draft; it never sends the message.",
+    breadcrumbLabel: "Email QR generator",
+    related: ["phone-qr-code-generator", "vcard-qr-code-generator"],
+    faq: [
+      {
+        question: "Does scanning send the email?",
+        answer:
+          "No. A mailto QR asks a compatible device to open an email app with draft fields. The person must review and send it.",
+      },
+      {
+        question: "Are email details uploaded?",
+        answer:
+          "QR Studio generates the payload in your browser and does not send it to a QR-generation service. Non-WiFi codes may remain in local browser history.",
+      },
+      {
+        question: "Will every email app open?",
+        answer:
+          "No. Behavior depends on the scanner, device and whether an email app is configured. Test on likely recipient devices.",
+      },
+    ],
+  },
+  "phone-qr-code-generator": {
+    slug: "phone-qr-code-generator",
+    initialType: "phone",
+    supported: true,
+    title: "Phone QR Code Generator — Create a Call Link",
+    description:
+      "Turn a phone number into a tel QR code for compatible phones, with guidance for international formatting, testing and safe use.",
+    heading: "Phone QR code generator",
+    introduction:
+      "Encode a phone number as a tel link so compatible phones can offer to dial it. Use an international number and verify the prompt before publishing.",
+    breadcrumbLabel: "Phone QR generator",
+    related: ["email-qr-code-generator", "vcard-qr-code-generator"],
+    faq: [
+      {
+        question: "Does scanning place a call automatically?",
+        answer:
+          "Normally the device shows a call action or dialer first, but behavior varies. QR Studio does not place calls.",
+      },
+      {
+        question: "What number format should I use?",
+        answer:
+          "Use the plus sign, country code and number where possible, such as +12025550123, and test it in the destination region.",
+      },
+      {
+        question: "Can I use this for emergency access?",
+        answer:
+          "Do not rely on a QR code as an emergency calling method. Devices, scanners, connectivity and accessibility can fail.",
+      },
+    ],
+  },
+  "calendar-qr-code-generator": {
+    slug: "calendar-qr-code-generator",
+    initialType: "event",
+    supported: true,
+    title: "Calendar QR Code Generator — Create an Event Code",
+    description:
+      "Create an iCalendar event QR with a title, start and end time, location and description, then test imports and timezone interpretation.",
+    heading: "Calendar event QR code generator",
+    introduction:
+      "Package event details into an iCalendar payload that compatible scanner and calendar apps can offer to import. Test dates and times carefully before distribution.",
+    breadcrumbLabel: "Calendar QR generator",
+    related: ["url-qr-code-generator", "email-qr-code-generator"],
+    faq: [
+      {
+        question: "Is the event added automatically?",
+        answer:
+          "No. A compatible scanner may offer an import, and the user must confirm it. App behavior varies.",
+      },
+      {
+        question: "How are timezones handled?",
+        answer:
+          "The current payload encodes local date-time values without a TZID or UTC conversion. The timezone field is informational, so test in every relevant timezone.",
+      },
+      {
+        question: "Can the event be updated later?",
+        answer:
+          "No. This static code contains the exported details. Create a new code when the schedule changes.",
+      },
+    ],
+  },
+  "menu-qr-code-generator": {
+    slug: "menu-qr-code-generator",
+    initialType: "url",
+    supported: true,
+    title: "Menu QR Code Generator — Link to a Restaurant Menu",
+    description:
+      "Create a URL-based restaurant menu QR code that links to your existing mobile-friendly menu, with practical placement and update guidance.",
+    heading: "Restaurant menu QR code generator",
+    introduction:
+      "Link diners to an existing HTTPS menu page. QR Studio encodes the URL—it does not host, upload or build the menu—so you retain control of the page behind the code.",
+    breadcrumbLabel: "Menu QR generator",
+    related: ["url-qr-code-generator", "qr-code-with-logo"],
+    faq: [
+      {
+        question: "Does QR Studio host my menu?",
+        answer:
+          "No. This tool creates a static QR code for an existing menu URL. Your website or menu provider hosts the content.",
+      },
+      {
+        question: "Can I change menu items without reprinting?",
+        answer:
+          "Yes, if the same encoded URL continues to work and you edit the page at that URL. Changing the URL requires a new code.",
+      },
+      {
+        question: "Should a QR code be the only menu option?",
+        answer:
+          "No. Provide an accessible alternative for guests who cannot or prefer not to scan, and keep pricing and allergen information accurate.",
+      },
+    ],
+  },
+  "social-media-qr-code-generator": {
+    slug: "social-media-qr-code-generator",
+    initialType: "url",
+    supported: true,
+    title: "Social Media QR Code Generator — Share One Profile",
+    description:
+      "Create a static QR code for one public social profile URL. Verify the destination and share it without a fake multi-link or redirect service.",
+    heading: "Social media profile QR code generator",
+    introduction:
+      "Turn one public social profile URL into a QR code. This is a direct URL tool—not a hosted profile page, multi-link service or follower-tracking system.",
+    breadcrumbLabel: "Social profile QR generator",
+    related: ["url-qr-code-generator", "qr-code-with-logo"],
+    faq: [
+      {
+        question: "Can one code contain several social profiles?",
+        answer:
+          "Not with this tool. It encodes one profile URL and does not create or host a multi-link page.",
+      },
+      {
+        question: "Does it track scans or followers?",
+        answer:
+          "No. QR Studio creates a static direct link and provides no scan analytics or platform follower data.",
+      },
+      {
+        question: "What if my username changes?",
+        answer:
+          "If the profile URL changes, generate and distribute a new code. Confirm the public destination before printing.",
       },
     ],
   },

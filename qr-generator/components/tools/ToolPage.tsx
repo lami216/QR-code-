@@ -4,7 +4,12 @@ import { SiteFooter } from "@/components/marketing/SiteFooter";
 import { SiteHeader } from "@/components/marketing/SiteHeader";
 import { QRGenerator } from "@/components/qr/QRGenerator";
 import { guides } from "@/lib/seo/guides";
-import { breadcrumbJsonLd, jsonLd, safeJsonLd } from "@/lib/seo/metadata";
+import {
+  breadcrumbJsonLd,
+  jsonLd,
+  safeJsonLd,
+  siteUrl,
+} from "@/lib/seo/metadata";
 import { type ToolConfig, toolPath, tools } from "@/lib/seo/tools";
 
 export function ToolPage({
@@ -27,6 +32,14 @@ export function ToolPage({
       </script>
       <script type="application/ld+json">
         {safeJsonLd(jsonLd.faq(tool.faq))}
+      </script>
+      <script type="application/ld+json">
+        {safeJsonLd({
+          ...jsonLd.webApplication,
+          name: tool.heading,
+          url: siteUrl(toolPath(tool.slug)),
+          description: tool.description,
+        })}
       </script>
       <nav
         aria-label="Breadcrumb"
