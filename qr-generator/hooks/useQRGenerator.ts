@@ -44,7 +44,11 @@ export const useQRGenerator = (initialType?: QRType) => {
     moduleStyle: "square",
     eyeStyle: "square",
     previewStyle: "card",
-    template: "minimal",
+    eyeColor: "#000000",
+    logoSupport: false,
+    frameStyle: "none",
+    labelStyle: "none",
+    template: "minimal-classic",
   });
 
   const [qrCode, setQrCode] = useState<string>("");

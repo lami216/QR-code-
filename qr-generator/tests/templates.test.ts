@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { applyQRTemplate, qrTemplates } from "../lib/qr/templates";
-import type { QRStyling } from "../types";
+import { generateQRSVG } from "../lib/qr/svg";
+import {
+  applyQRTemplate,
+  getTemplatesForType,
+  qrTemplates,
+} from "../lib/qr/templates";
+import type { QRContent, QRStyling } from "../types";
 
 const baseStyling: QRStyling = {
   foreground: "#000000",
@@ -11,26 +16,47 @@ const baseStyling: QRStyling = {
   size: 320,
   margin: 4,
 };
+const url: QRContent = { type: "url", data: "https://example.com" };
 
-test("template registry contains the eight requested unique designs", () => {
-  assert.deepEqual(
-    qrTemplates.map(({ name }) => name),
-    ["Minimal", "Modern", "Business", "Gradient", "Elegant", "Colorful", "Logo Ready", "Print Safe"],
+test("registry contains complete, uniquely identified design presets", () => {
+  assert.equal(
+    new Set(qrTemplates.map(({ id }) => id)).size,
+    qrTemplates.length,
   );
-  assert.equal(new Set(qrTemplates.map(({ id }) => id)).size, 8);
   for (const template of qrTemplates) {
-    assert.ok(template.description);
+    assert.ok(template.category);
+    assert.ok(template.compatibleTypes.length);
     assert.ok(template.settings.foreground);
     assert.ok(template.settings.background);
     assert.ok(template.settings.moduleStyle);
     assert.ok(template.settings.eyeStyle);
+    assert.ok(template.settings.eyeColor);
+    assert.ok(template.settings.frameStyle);
+    assert.ok(template.settings.labelStyle);
+    assert.ok(template.settings.errorCorrection);
   }
 });
 
-test("applying a template preserves output size and updates all shared styling", () => {
-  const selected = applyQRTemplate(baseStyling, "logo-ready");
-  assert.equal(selected.template, "logo-ready");
-  assert.equal(selected.errorCorrection, "H");
-  assert.equal(selected.margin, 8);
-  assert.equal(selected.size, 320);
+test("selection changes the canonical rendered design while preserving export size", () => {
+  const minimal = applyQRTemplate(baseStyling, "minimal-classic");
+  const modern = applyQRTemplate(baseStyling, "rounded-modern");
+  assert.equal(modern.size, 320);
+  assert.notEqual(generateQRSVG(url, minimal), generateQRSVG(url, modern));
+  assert.match(generateQRSVG(url, modern), /linearGradient/);
+});
+
+test("type-specific registries only expose relevant specialized templates", () => {
+  const urlIds = getTemplatesForType("url").map(({ id }) => id);
+  const vcardIds = getTemplatesForType("vcard").map(({ id }) => id);
+  assert.ok(urlIds.includes("website-launch"));
+  assert.ok(!urlIds.includes("business-card"));
+  assert.ok(vcardIds.includes("business-card"));
+  assert.ok(!vcardIds.includes("website-launch"));
+});
+
+test("frame and label are part of canonical SVG used by previews and export", () => {
+  const styling = applyQRTemplate(baseStyling, "scan-me-frame");
+  const svg = generateQRSVG(url, styling);
+  assert.match(svg, /SCAN ME/);
+  assert.match(svg, /stroke-width/);
 });
