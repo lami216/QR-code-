@@ -1,47 +1,50 @@
-import React from 'react';
-import { QRStyling } from '../../types';
+import type React from "react";
 import {
-  FaPalette,
-  FaExpandAlt,
   FaBorderNone,
-  FaShieldAlt,
-  FaImage,
+  FaExpandAlt,
   FaEyeDropper,
-  FaTimes
-} from 'react-icons/fa';
+  FaImage,
+  FaPalette,
+  FaShieldAlt,
+  FaTimes,
+} from "react-icons/fa";
+import type { QRStyling } from "../../types";
 
 interface StylingControlsProps {
   styling: QRStyling;
   onChange: (styling: QRStyling) => void;
 }
 
-export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onChange }) => {
+export const StylingControls: React.FC<StylingControlsProps> = ({
+  styling,
+  onChange,
+}) => {
   const errorCorrectionLevels = [
-    { value: 'L' as const, label: 'Low (7%)', description: 'Smallest size, less durable' },
-    { value: 'M' as const, label: 'Medium (15%)', description: 'Good balance' },
-    { value: 'Q' as const, label: 'Quartile (25%)', description: 'Better durability' },
-    { value: 'H' as const, label: 'High (30%)', description: 'Most durable, largest size' }
+    {
+      value: "L" as const,
+      label: "Low (7%)",
+      description: "Smallest size, less durable",
+    },
+    { value: "M" as const, label: "Medium (15%)", description: "Good balance" },
+    {
+      value: "Q" as const,
+      label: "Quartile (25%)",
+      description: "Better durability",
+    },
+    {
+      value: "H" as const,
+      label: "High (30%)",
+      description: "Most durable, largest size",
+    },
   ];
 
-  const templates = [
-    { id: 'minimal', name: 'Minimal', foreground: '#111827', background: '#ffffff', colorMode: 'solid' as const, moduleStyle: 'square' as const, eyeStyle: 'square' as const },
-    { id: 'modern', name: 'Modern', foreground: '#0f766e', background: '#f8fafc', colorMode: 'solid' as const, moduleStyle: 'rounded' as const, eyeStyle: 'rounded' as const },
-    { id: 'business', name: 'Business', foreground: '#1e3a8a', background: '#eff6ff', colorMode: 'solid' as const, moduleStyle: 'square' as const, eyeStyle: 'rounded' as const },
-    { id: 'elegant', name: 'Elegant', foreground: '#312e81', background: '#faf5ff', colorMode: 'solid' as const, moduleStyle: 'rounded' as const, eyeStyle: 'square' as const },
-    { id: 'colorful', name: 'Colorful', foreground: '#be123c', background: '#fff7ed', colorMode: 'gradient' as const, gradientStart: '#f97316', gradientEnd: '#db2777', moduleStyle: 'dots' as const, eyeStyle: 'rounded' as const },
-    { id: 'dark', name: 'Dark mode', foreground: '#f8fafc', background: '#0f172a', colorMode: 'solid' as const, moduleStyle: 'rounded' as const, eyeStyle: 'rounded' as const },
-    { id: 'gradient', name: 'Gradient', foreground: '#0f766e', background: '#ecfeff', colorMode: 'gradient' as const, gradientStart: '#0f766e', gradientEnd: '#2563eb', moduleStyle: 'rounded' as const, eyeStyle: 'dots' as const },
-  ];
-
-  const handleTemplateSelect = (templateId: string) => {
-    const template = templates.find((item) => item.id === templateId);
-    if (template) onChange({ ...styling, ...template, template: template.id });
-  };
-
-  const handleColorChange = (colorType: 'foreground' | 'background' | 'gradientStart' | 'gradientEnd', value: string) => {
+  const handleColorChange = (
+    colorType: "foreground" | "background" | "gradientStart" | "gradientEnd",
+    value: string,
+  ) => {
     // Basic hex color validation
     if (/^#[0-9A-F]{6}$/i.test(value)) {
-      onChange({ ...styling, [colorType]: value, template: 'custom' });
+      onChange({ ...styling, [colorType]: value, template: "custom" });
     }
   };
 
@@ -56,36 +59,18 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
         <span className="text-xl text-teal-600 dark:text-teal-400">
           <FaPalette />
         </span>
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white">QR Code Styling</h3>
-      </div>
-
-
-      {/* Design Templates */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
-        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Design templates</label>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          {templates.map((template) => (
-            <button
-              key={template.id}
-              type="button"
-              onClick={() => handleTemplateSelect(template.id)}
-              className={`rounded-xl border p-3 text-left transition-all ${
-                styling.template === template.id
-                  ? 'border-teal-500 bg-teal-50 text-teal-800 dark:bg-teal-900/30 dark:text-teal-100'
-                  : 'border-gray-200 hover:border-teal-300 dark:border-gray-700 dark:hover:border-teal-500'
-              }`}
-            >
-              <span className="mb-2 block h-6 rounded-lg" style={{ background: template.colorMode === 'gradient' ? `linear-gradient(135deg, ${template.gradientStart}, ${template.gradientEnd})` : template.foreground }} />
-              <span className="text-xs font-semibold">{template.name}</span>
-            </button>
-          ))}
-        </div>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+          More customization
+        </h3>
       </div>
 
       {/* Size Controls */}
       <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between mb-3">
-          <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+          <label
+            htmlFor="qr-size"
+            className="flex items-center space-x-2 text-sm font-semibold text-gray-700 dark:text-gray-300"
+          >
             <span className="text-gray-500">
               <FaExpandAlt />
             </span>
@@ -96,12 +81,15 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           </span>
         </div>
         <input
+          id="qr-size"
           type="range"
           min={128}
           max={512}
           step={8}
           value={styling.size}
-          onChange={(e) => onChange({ ...styling, size: parseInt(e.target.value, 10) })}
+          onChange={(e) =>
+            onChange({ ...styling, size: parseInt(e.target.value, 10) })
+          }
           className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-teal-600"
         />
         <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -113,7 +101,10 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
       {/* Margin Controls */}
       <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between mb-3">
-          <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+          <label
+            htmlFor="qr-margin"
+            className="flex items-center space-x-2 text-sm font-semibold text-gray-700 dark:text-gray-300"
+          >
             <span className="text-gray-500">
               <FaBorderNone />
             </span>
@@ -124,11 +115,14 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           </span>
         </div>
         <input
+          id="qr-margin"
           type="range"
           min={0}
           max={20}
           value={styling.margin}
-          onChange={(e) => onChange({ ...styling, margin: parseInt(e.target.value, 10) })}
+          onChange={(e) =>
+            onChange({ ...styling, margin: parseInt(e.target.value, 10) })
+          }
           className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-teal-600"
         />
         <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -143,21 +137,29 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           <span className="text-gray-500">
             <FaEyeDropper />
           </span>
-          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Colors</span>
+          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            Colors
+          </span>
         </div>
 
         <div className="grid grid-cols-1 gap-4">
           {/* Foreground Color */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wide">
+            <label
+              htmlFor="qr-foreground"
+              className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wide"
+            >
               QR Code Color
             </label>
             <div className="flex items-center space-x-3">
               <div className="relative">
                 <input
+                  id="qr-foreground"
                   type="color"
                   value={styling.foreground}
-                  onChange={(e) => handleColorChange('foreground', e.target.value)}
+                  onChange={(e) =>
+                    handleColorChange("foreground", e.target.value)
+                  }
                   className="w-10 h-10 cursor-pointer rounded-lg border-2 border-gray-200 dark:border-gray-600"
                 />
                 <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-xs pointer-events-none">
@@ -167,7 +169,9 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
               <input
                 type="text"
                 value={styling.foreground}
-                onChange={(e) => handleColorChange('foreground', e.target.value)}
+                onChange={(e) =>
+                  handleColorChange("foreground", e.target.value)
+                }
                 className="flex-1 p-2 border border-gray-300 rounded-lg text-sm font-mono dark:bg-gray-700 dark:border-gray-600"
                 placeholder="#000000"
                 maxLength={7}
@@ -177,15 +181,21 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
 
           {/* Background Color */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wide">
+            <label
+              htmlFor="qr-background"
+              className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wide"
+            >
               Background Color
             </label>
             <div className="flex items-center space-x-3">
               <div className="relative">
                 <input
+                  id="qr-background"
                   type="color"
                   value={styling.background}
-                  onChange={(e) => handleColorChange('background', e.target.value)}
+                  onChange={(e) =>
+                    handleColorChange("background", e.target.value)
+                  }
                   className="w-10 h-10 cursor-pointer rounded-lg border-2 border-gray-200 dark:border-gray-600"
                 />
                 <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none">
@@ -195,7 +205,9 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
               <input
                 type="text"
                 value={styling.background}
-                onChange={(e) => handleColorChange('background', e.target.value)}
+                onChange={(e) =>
+                  handleColorChange("background", e.target.value)
+                }
                 className="flex-1 p-2 border border-gray-300 rounded-lg text-sm font-mono dark:bg-gray-700 dark:border-gray-600"
                 placeholder="#FFFFFF"
                 maxLength={7}
@@ -204,63 +216,124 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           </div>
         </div>
 
-
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Color style
-            <select value={styling.colorMode ?? 'solid'} onChange={(e) => onChange({ ...styling, colorMode: e.target.value as QRStyling['colorMode'], template: 'custom' })} className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600">
+          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">
+            Color style
+            <select
+              value={styling.colorMode ?? "solid"}
+              onChange={(e) =>
+                onChange({
+                  ...styling,
+                  colorMode: e.target.value as QRStyling["colorMode"],
+                  template: "custom",
+                })
+              }
+              className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600"
+            >
               <option value="solid">Solid color</option>
               <option value="gradient">Gradient</option>
             </select>
           </label>
-          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Preview style
-            <select value={styling.previewStyle ?? 'card'} onChange={(e) => onChange({ ...styling, previewStyle: e.target.value as QRStyling['previewStyle'] })} className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600">
+          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">
+            Preview style
+            <select
+              value={styling.previewStyle ?? "card"}
+              onChange={(e) =>
+                onChange({
+                  ...styling,
+                  previewStyle: e.target.value as QRStyling["previewStyle"],
+                })
+              }
+              className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600"
+            >
               <option value="card">Clean card</option>
               <option value="phone">Mobile mockup</option>
               <option value="poster">Marketing poster</option>
             </select>
           </label>
-          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Module shape
-            <select value={styling.moduleStyle ?? 'square'} onChange={(e) => onChange({ ...styling, moduleStyle: e.target.value as QRStyling['moduleStyle'], template: 'custom' })} className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600">
+          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">
+            Module shape
+            <select
+              value={styling.moduleStyle ?? "square"}
+              onChange={(e) =>
+                onChange({
+                  ...styling,
+                  moduleStyle: e.target.value as QRStyling["moduleStyle"],
+                  template: "custom",
+                })
+              }
+              className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600"
+            >
               <option value="square">Square</option>
               <option value="rounded">Rounded</option>
               <option value="dots">Dots</option>
             </select>
           </label>
-          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Eye/frame style
-            <select value={styling.eyeStyle ?? 'square'} onChange={(e) => onChange({ ...styling, eyeStyle: e.target.value as QRStyling['eyeStyle'], template: 'custom' })} className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600">
+          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">
+            Eye/frame style
+            <select
+              value={styling.eyeStyle ?? "square"}
+              onChange={(e) =>
+                onChange({
+                  ...styling,
+                  eyeStyle: e.target.value as QRStyling["eyeStyle"],
+                  template: "custom",
+                })
+              }
+              className="mt-1 w-full p-2 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600"
+            >
               <option value="square">Square</option>
               <option value="rounded">Rounded</option>
               <option value="dots">Dots</option>
             </select>
           </label>
         </div>
-        {styling.colorMode === 'gradient' && (
+        {styling.colorMode === "gradient" && (
           <div className="mt-4 grid grid-cols-2 gap-3">
-            <input type="color" value={styling.gradientStart ?? styling.foreground} onChange={(e) => handleColorChange('gradientStart', e.target.value)} className="h-10 w-full rounded-lg" aria-label="Gradient start color" />
-            <input type="color" value={styling.gradientEnd ?? styling.foreground} onChange={(e) => handleColorChange('gradientEnd', e.target.value)} className="h-10 w-full rounded-lg" aria-label="Gradient end color" />
+            <input
+              type="color"
+              value={styling.gradientStart ?? styling.foreground}
+              onChange={(e) =>
+                handleColorChange("gradientStart", e.target.value)
+              }
+              className="h-10 w-full rounded-lg"
+              aria-label="Gradient start color"
+            />
+            <input
+              type="color"
+              value={styling.gradientEnd ?? styling.foreground}
+              onChange={(e) => handleColorChange("gradientEnd", e.target.value)}
+              className="h-10 w-full rounded-lg"
+              aria-label="Gradient end color"
+            />
           </div>
         )}
 
         {/* Transparency Toggle */}
         <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
           <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Transparent Background
-            </label>
+            </span>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               Remove background color entirely
             </p>
           </div>
           <button
-            onClick={() => onChange({ ...styling, transparent: !styling.transparent })}
+            type="button"
+            onClick={() =>
+              onChange({ ...styling, transparent: !styling.transparent })
+            }
             aria-pressed={styling.transparent}
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
-              styling.transparent ? 'bg-teal-600' : 'bg-gray-200 dark:bg-gray-700'
+              styling.transparent
+                ? "bg-teal-600"
+                : "bg-gray-200 dark:bg-gray-700"
             }`}
           >
             <span
               className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                styling.transparent ? 'translate-x-6' : 'translate-x-1'
+                styling.transparent ? "translate-x-6" : "translate-x-1"
               }`}
             />
           </button>
@@ -273,17 +346,22 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           <span className="text-gray-500">
             <FaShieldAlt />
           </span>
-          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Error Correction</span>
+          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            Error Correction
+          </span>
         </div>
 
         <select
           value={styling.errorCorrection}
           onChange={(e) =>
-            onChange({ ...styling, errorCorrection: e.target.value as QRStyling['errorCorrection'] })
+            onChange({
+              ...styling,
+              errorCorrection: e.target.value as QRStyling["errorCorrection"],
+            })
           }
           className="w-full p-3 border border-gray-300 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 focus:border-teal-500 focus:ring-2 focus:ring-teal-500"
         >
-          {errorCorrectionLevels.map(level => (
+          {errorCorrectionLevels.map((level) => (
             <option key={level.value} value={level.value}>
               {level.label}
             </option>
@@ -292,7 +370,11 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
 
         <div className="mt-2 p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
           <p className="text-xs text-gray-600 dark:text-gray-400">
-            {errorCorrectionLevels.find(level => level.value === styling.errorCorrection)?.description}
+            {
+              errorCorrectionLevels.find(
+                (level) => level.value === styling.errorCorrection,
+              )?.description
+            }
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
             Higher levels allow the QR code to be scanned even if damaged
@@ -306,7 +388,9 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
           <span className="text-gray-500">
             <FaImage />
           </span>
-          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Logo</span>
+          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            Logo
+          </span>
         </div>
 
         {!styling.logo ? (
@@ -318,7 +402,7 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
                 const file = e.target.files?.[0];
                 if (file) {
                   if (file.size > 50000) {
-                    alert('Logo must be smaller than 50KB');
+                    alert("Logo must be smaller than 50KB");
                     return;
                   }
                   onChange({ ...styling, logo: file });
@@ -331,8 +415,12 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
               <span className="mx-auto text-2xl text-gray-400 mb-2 block">
                 <FaImage />
               </span>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Click to upload logo</p>
-              <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">PNG, JPG up to 50KB</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Click to upload logo
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                PNG, JPG up to 50KB
+              </p>
             </label>
           </div>
         ) : (
@@ -351,6 +439,7 @@ export const StylingControls: React.FC<StylingControlsProps> = ({ styling, onCha
               </div>
             </div>
             <button
+              type="button"
               onClick={removeLogo}
               className="p-1 text-gray-400 hover:text-red-500 transition-colors"
               title="Remove logo"

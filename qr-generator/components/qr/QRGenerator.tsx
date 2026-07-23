@@ -6,6 +6,7 @@ import { FaBolt, FaDownload } from "react-icons/fa";
 import { useQRGenerator } from "../../hooks/useQRGenerator";
 import { displayAdSlots, hasSidebarAd } from "../../lib/ads/config";
 import type { QRType } from "../../lib/qr/modes";
+import { getQRTemplate } from "../../lib/qr/templates";
 import { hasValidQRContent } from "../../lib/qr/validation";
 import { AdSlot } from "../ads/AdSlot";
 import { SidebarAd } from "../ads/SidebarAd";
@@ -14,6 +15,7 @@ import { QRConfigurator } from "./ContentForm";
 import { DownloadControls } from "./DownloadControls";
 import { QRPreview } from "./QRPreview";
 import { StylingControls } from "./StylingControls";
+import { TemplatePicker } from "./TemplatePicker";
 
 export type QRGeneratorProps = { initialType?: QRType; showHeader?: boolean };
 
@@ -121,11 +123,22 @@ export function QRGenerator({
               </div>
             </section>
 
-            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-xl">
-              <div className="p-3 sm:p-6">
+            <TemplatePicker styling={styling} onChange={setStyling} />
+
+            <details className="group rounded-xl border border-gray-100 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between p-4 font-semibold text-gray-900 marker:hidden dark:text-white">
+                <span>More customization</span>
+                <span
+                  aria-hidden="true"
+                  className="text-xl text-teal-600 transition group-open:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <div className="border-t border-gray-100 p-3 sm:p-6 dark:border-gray-700">
                 <StylingControls styling={styling} onChange={setStyling} />
               </div>
-            </section>
+            </details>
 
             {/* Manual Generate Button */}
             <div className="flex justify-center">
@@ -151,13 +164,17 @@ export function QRGenerator({
                   </div>
                   <div>
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      Preview & Download
+                      Preview and Download
                     </h2>
                     <p className="text-gray-600 dark:text-gray-400 text-xs">
                       Real-time preview and export options
                     </p>
                   </div>
                 </div>
+
+                <p className="mb-3 text-center text-sm font-semibold text-teal-700 dark:text-teal-300">
+                  {getQRTemplate(styling.template)?.name ?? "Custom"} template
+                </p>
 
                 <div className="mb-4 flex justify-center sm:mb-6">
                   <QRPreview

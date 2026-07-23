@@ -15,6 +15,7 @@
     "lib/qr/modes.ts",
     "lib/qr/serialize.ts",
     "lib/qr/svg.ts",
+    "lib/qr/templates.ts",
     "lib/seo/metadata.ts",
     "lib/seo/guides.ts",
     "lib/seo/tools.ts",
