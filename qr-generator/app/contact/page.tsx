@@ -1,131 +1,45 @@
-'use client';
-
-import { Mail, MapPin, Clock, ArrowRight } from "lucide-react";
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FaMagic, FaHome } from "react-icons/fa";
+import { SiteFooter } from "@/components/marketing/SiteFooter";
+import { SiteHeader } from "@/components/marketing/SiteHeader";
 
 export default function ContactPage() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-100 dark:from-gray-900 dark:via-teal-950 dark:to-cyan-950 p-4 md:p-10 flex items-center justify-center">
-      {/* Navigation */}
-      <nav className="absolute top-0 left-0 right-0 container mx-auto px-6 py-6">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-3 group cursor-pointer">
-            <div className="flex items-center space-x-2">
-              <FaMagic className="text-2xl text-teal-600 dark:text-teal-400" />
-              <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
-                QR Studio
-              </span>
-            </div>
-          </Link>
-          
-          <Link 
-            href="/"
-            className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-all duration-300 cursor-pointer group"
-          >
-            <FaHome className="group-hover:scale-110 transition-transform" />
-            <span>Back to Home</span>
-          </Link>
-        </div>
-      </nav>
-
-      <div className="max-w-4xl w-full mx-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-10 border border-gray-200/50 dark:border-gray-700/50 mt-16 mb-20">
-        
-        {/* Header */}
-        <div className="text-center mb-10">
-          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center">
-            <Mail className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-4xl font-bold mb-3 text-gray-900 dark:text-white">
-            Get In Touch
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            I'm always open to discussing new opportunities, collaborations, and how we can work together to create amazing QR code solutions.
-          </p>
-        </div>
-
-        {/* Contact Cards in Grid */}
-        <div className="grid md:grid-cols-1 gap-6 mb-10 max-w-md mx-auto">
-          {/* Email */}
-          <a
-            href="mailto:ahad06074@gmail.com"
-            className={`group flex flex-col items-center gap-4 p-6 bg-white dark:bg-gray-700/50 hover:bg-blue-50 dark:hover:bg-teal-900/20 rounded-2xl shadow-lg hover:shadow-xl border border-gray-200/50 dark:border-gray-600/50 hover:border-teal-300 dark:hover:border-teal-500 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer ${
-              mounted ? "opacity-100" : "opacity-0 translate-y-2"
-            }`}
-            style={{ transitionDelay: "0.2s" }}
-          >
-            <div className="p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl group-hover:scale-110 transition-transform duration-300">
-              <Mail className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-              Email
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm text-center">ahad06074@gmail.com</p>
-            <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-teal-500 group-hover:translate-x-1 transition-all" />
-          </a>
-        </div>
-
-        {/* Extra Info Row */}
-        <div
-          className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ transitionDelay: "0.5s" }}
+    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
+      <SiteHeader />
+      <main className="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+        <p className="font-bold text-teal-700 dark:text-teal-300">
+          Contact QR Studio
+        </p>
+        <h1 className="mt-3 text-4xl font-black">Questions and feedback</h1>
+        <p className="mt-5 leading-8 text-slate-600 dark:text-slate-300">
+          QR Studio is a browser-based static QR code generator. Use the email
+          below to report a problem, suggest an improvement, or ask about the
+          site. Do not send passwords, private QR payloads, or other sensitive
+          information.
+        </p>
+        <a
+          className="mt-8 inline-flex rounded-xl bg-teal-700 px-5 py-3 font-bold text-white"
+          href="mailto:ahad06074@gmail.com"
         >
-          <div className="group bg-white dark:bg-gray-700/50 hover:bg-blue-50 dark:hover:bg-teal-900/20 rounded-2xl p-6 border border-gray-200/50 dark:border-gray-600/50 hover:border-teal-300 dark:hover:border-teal-500 transition-all duration-300 cursor-pointer">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg">
-                <MapPin className="w-4 h-4 text-white" />
-              </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-                Location & Availability
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-              • Open to freelance work worldwide
-              <br />
-              • Remote-first collaboration
-              <br />
-              • Flexible across timezones
-            </p>
-          </div>
-
-          <div className="group bg-white dark:bg-gray-700/50 hover:bg-blue-50 dark:hover:bg-teal-900/20 rounded-2xl p-6 border border-gray-200/50 dark:border-gray-600/50 hover:border-teal-300 dark:hover:border-teal-500 transition-all duration-300 cursor-pointer">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg">
-                <Clock className="w-4 h-4 text-white" />
-              </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-                Response Time
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-              • Usually respond within 24 hours
-              <br />
-              • Quick turnaround for urgent projects
-              <br />
-              • Available for scheduled calls
-            </p>
-          </div>
-        </div>
-
-      </div>
-      <footer className="fixed bottom-0 left-0 right-0 h-16 border-t border-gray-200/50 dark:border-gray-700/50 bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg">
-        <div className="container mx-auto h-full px-6 flex items-center justify-center">
-            <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-            <FaMagic className="text-teal-600 dark:text-teal-400" />
-            <span>QR Studio • Built with passion</span>
-            </div>
-        </div>
-      </footer>
+          Email the site maintainer
+        </a>
+        <section className="mt-12 rounded-2xl border border-slate-200 p-6 dark:border-slate-700">
+          <h2 className="text-2xl font-black">Before contacting us</h2>
+          <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">
+            QR payload creation happens in your browser. A contact email passes
+            through your email provider and the recipient's provider; it is
+            separate from QR generation. For data-handling details, read the{" "}
+            <Link
+              className="font-bold text-teal-700 underline dark:text-teal-300"
+              href="/privacy"
+            >
+              privacy policy
+            </Link>
+            .
+          </p>
+        </section>
+      </main>
+      <SiteFooter />
     </div>
-
   );
 }

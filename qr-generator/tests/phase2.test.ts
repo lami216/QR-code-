@@ -34,10 +34,10 @@ test("every supported mode resolves with its matching initial shape", () => {
   });
 });
 
-test("specialized configuration has exactly five complete unique routes", () => {
-  assert.equal(specializedTools.length, 5);
-  assert.equal(new Set(specializedTools.map((x) => x.slug)).size, 5);
-  assert.equal(new Set(specializedTools.map((x) => toolPath(x.slug))).size, 5);
+test("specialized configuration has complete unique routes", () => {
+  assert.equal(specializedTools.length, 10);
+  assert.equal(new Set(specializedTools.map((x) => x.slug)).size, 10);
+  assert.equal(new Set(specializedTools.map((x) => toolPath(x.slug))).size, 10);
   for (const tool of specializedTools) {
     assert.ok(QR_TYPE_KEYS.includes(tool.initialType));
     assert.ok(

@@ -30,3 +30,9 @@ Explain what the payload contains, how to create it, a realistic example, testin
 ## Suggested evaluation order
 
 Email and phone modes already exist in the broad generator and could be evaluated first if users need focused instructions. Calendar needs careful interoperability testing. Menu and social-media routes should be rejected unless they introduce a genuinely distinct supported workflow rather than simply wrapping a URL.
+
+## Phase 6 status (July 2026)
+
+Implemented focused email (`mailto:`), phone (`tel:`), calendar (VCALENDAR), URL-based menu, and one-profile social URL tools through the shared generator. A hosted menu content system and hosted social multi-link pages remain intentionally out of scope; their data, ownership, publishing, abuse, privacy, and accessibility requirements are documented in `FUTURE_MENU_QR_REQUIREMENTS.md`.
+
+Before expanding tool count again, prioritize calendar timezone-aware serialization, input validation, cross-device import fixtures, and user-controlled history/privacy settings.
